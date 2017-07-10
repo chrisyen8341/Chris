@@ -23,10 +23,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import com.member.bean.Member;
-import com.member.bean.MemberDAO;
-import com.pet.bean.Pet;
-import com.pet.bean.PetDAO;
+import com.member.model.Member;
+import com.member.model.MemberDAO;
+import com.pet.model.Pet;
+import com.pet.model.PetDAO;
 
 
 @WebServlet("/Register")
@@ -71,10 +71,14 @@ public class Register extends HttpServlet {
 		member.setMemReported(0);
 		member.setMemStatus(0);
 		member.setMemRelation("│цин");
+		member.setMemSelfintro("Test");
+		member.setMemPoint(1000);
+		member.setMemSaleRank(1000);
 		member.setMemFollowed(0);
 		member.setMemLocStatus(0);
-		
-
+		member.setMemLongtitude(0.00);
+		member.setMemLatitude(0.00);
+		member.setMemLocTime(new Timestamp((new java.util.Date()).getTime()));
 		dao.add(member);
 		
 		
