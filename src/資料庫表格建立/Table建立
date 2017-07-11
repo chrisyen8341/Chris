@@ -1,4 +1,5 @@
 drop table pet;
+Drop Table Albumimg;
 Drop Table Album;
 drop table member;
 DROP TABLE EMP;
@@ -6,6 +7,7 @@ drop sequence PETNO_SQ;
 drop sequence MEMNO_SQ;
 DROP SEQUENCE EMPNO_SQ;
 DROP SEQUENCE ALBUMNO_SQ;
+DROP SEQUENCE ALBUMIMG_SQ;
 
 
 
@@ -119,6 +121,33 @@ TO_DATE('20170111 05:50:20','YYYYMMDD HH24:MI:SS'),0,EMPTY_BLOB());
 INSERT INTO ALBUM VALUES(ALBUMNO_SQ.NEXTVAL,1,'相簿E',TO_DATE('20111210 11:50:20','YYYYMMDD HH24:MI:SS'),
 To_Date('20160411 05:50:20','YYYYMMDD HH24:MI:SS'),0,Empty_Blob());
 
+
+
+
+Create Table Albumimg(
+Imgno Number(10) Constraint Albumimg_Imgno_Pk Primary Key,
+albumNo NUMBER(10) NOT NULL CONSTRAINT ALBUMIMG_ALBUMNO_FK REFERENCES ALBUM(ALBUMNO),
+imgTitle VARCHAR2(100) NOT NULL,
+imgDesc VARCHAR2(2000) NOT NULL,
+imgCreatedTime DATE NOT NULL,
+imgModifiedTime DATE  NOT NULL,
+imgFileName VARCHAR2(200) NOT NULL,
+imgExtName VARCHAR2(50) NOT NULL,
+Imgfile Blob Not Null
+);
+
+Create Sequence ALBUMIMG_SQ Increment By 1 Start With 1 Nocache Nocycle;
+
+Insert Into Albumimg Values(Albumimg_SQ.Nextval,1,'相片Q','這是測試用的相片',To_Date('20170710 17:50:20','YYYYMMDD HH24:MI:SS'),
+To_Date('20170710 20:50:20','YYYYMMDD HH24:MI:SS'),'hello','video',Empty_Blob());
+Insert Into Albumimg Values(Albumimg_SQ.Nextval,1,'相片A','這是ER測QWE試用的相片',To_Date('20170710 17:50:20','YYYYMMDD HH24:MI:SS'),
+To_Date('20170710 20:50:20','YYYYMMDD HH24:MI:SS'),'QWEQW','jpeg',Empty_Blob());
+Insert Into Albumimg Values(Albumimg_SQ.Nextval,1,'相片S','這是測試用Q的相片',To_Date('20140210 17:50:20','YYYYMMDD HH24:MI:SS'),
+To_Date('20170710 20:50:20','YYYYMMDD HH24:MI:SS'),'IIII','png',Empty_Blob());
+Insert Into Albumimg Values(Albumimg_SQ.Nextval,1,'相片L','這QWE是測試用的相片',To_Date('20130710 17:50:20','YYYYMMDD HH24:MI:SS'),
+To_Date('20170710 20:50:20','YYYYMMDD HH24:MI:SS'),'123FEW','mp3',Empty_Blob());
+Insert Into Albumimg Values(Albumimg_SQ.Nextval,1,'相片Q','這FEW是測試RET用的相片',To_Date('20170710 17:50:20','YYYYMMDD HH24:MI:SS'),
+TO_DATE('20170710 20:50:20','YYYYMMDD HH24:MI:SS'),'RTYQWE','video',EMPTY_BLOB());
 
 
 
