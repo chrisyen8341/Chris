@@ -9,15 +9,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pet.model.Pet;
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
-public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
+public class AlbumImgDAO implements AlbumImgDAO_interface{
+	private static DataSource ds;
+	private int currSeq;
 
-	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "TEST";
-	private static final String PASSWORD = "c83758341";
-	
+	static {
+		try {
+			Context ctx = new javax.naming.InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private static final String INSERT_STMT = "INSERT INTO ALBUMIMG(IMGNO, ALBUMNO,IMGTITLE,IMGDESC,IMGCREATEDTIME,IMGMODIFIEDTIME,IMGFILENAME,"
 			+ "IMGEXTNAME,IMGFILE) VALUES(ALBUMIMG_SQ.NEXTVAL,?,?,?,?,?,?,?,?)";
@@ -27,7 +34,7 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 	private static final String FIND_BY_PK = "SELECT * FROM ALBUMIMG WHERE IMGNO = ?";
 	private static final String GET_ALL = "SELECT * FROM ALBUMIMG";
 	
-
+	
 	
 	@Override
 	public void add(AlbumImg albumImg) {
@@ -35,8 +42,7 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 		Connection con=null;
 		
 		try {
-			Class.forName(DRIVER);
-			con=DriverManager.getConnection(URL,USER,PASSWORD);
+			con=ds.getConnection();
 			pstmt=con.prepareStatement(INSERT_STMT);
 			pstmt.setInt(1, albumImg.getAlbumNo());
 			pstmt.setString(2, albumImg.getImgTitle());
@@ -50,8 +56,6 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 			pstmt.setBlob(8, blob);
 			pstmt.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,8 +85,7 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 		Connection con=null;
 		
 		try {
-			Class.forName(DRIVER);
-			con=DriverManager.getConnection(URL,USER,PASSWORD);
+			con=ds.getConnection();
 			pstmt=con.prepareStatement(UPDATE_STMT);
 			pstmt.setInt(1, albumImg.getImgNo());
 			pstmt.setInt(2, albumImg.getAlbumNo());
@@ -98,8 +101,6 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 			pstmt.setInt(10, albumImg.getImgNo());
 			pstmt.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -120,6 +121,7 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 				}
 			}
 		}
+		
 		
 	}
 
@@ -129,14 +131,11 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 		Connection con=null;
 		
 		try {
-			Class.forName(DRIVER);
-			con=DriverManager.getConnection(URL,USER,PASSWORD);
+			con=ds.getConnection();
 			pstmt=con.prepareStatement(DELETE_STMT);
 			pstmt.setInt(1, imgNo);
 			pstmt.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -157,6 +156,7 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 				}
 			}
 		}
+		
 		
 	}
 
@@ -168,8 +168,7 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 		AlbumImg albumImg=null;
 		
 		try {
-			Class.forName(DRIVER);
-			con=DriverManager.getConnection(URL,USER,PASSWORD);
+			con=ds.getConnection();
 			pstmt=con.prepareStatement(FIND_BY_PK);
 			pstmt.setInt(1, imgNo);
 			rs=pstmt.executeQuery();
@@ -186,8 +185,6 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 				albumImg.setImgFile(rs.getBytes("imgFile"));
 			}
 			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -226,8 +223,7 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 		ResultSet rs=null;
 		
 		try {
-			Class.forName(DRIVER);
-			con=DriverManager.getConnection(URL,USER,PASSWORD);
+			con=ds.getConnection();
 			pstmt=con.prepareStatement(GET_ALL);
 			rs=pstmt.executeQuery();
 			while(rs.next()){
@@ -244,8 +240,6 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 				albumImgList.add(albumImg);		
 			}
 			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
