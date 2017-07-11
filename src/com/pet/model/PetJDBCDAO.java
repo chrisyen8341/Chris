@@ -2,28 +2,22 @@ package com.pet.model;
 
 import java.sql.Blob;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 
-public class PetDAO implements PetDAO_interface {
-	private static DataSource ds;
-	private int currSeq;
+public class PetJDBCDAO implements PetDAO_interface {
 
-	static {
-		try {
-			Context ctx = new javax.naming.InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
+	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
+	private static final String USER = "TEST";
+	private static final String PASSWORD = "c83758341";
+	
+	
 	private static final String INSERT_STMT = "INSERT INTO PET(PETNO, MEMNO,PETNAME,PETKIND,PETGENDER,PETSPECIES,PETINTRO,PETBDAY,PETIMG)"
 			+ " VALUES(PETNO_SQ.NEXTVAL,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE_STMT = "UPDATE PET SET PETNO = ?, MEMNO = ?, PETNAME = ?, "
@@ -31,37 +25,37 @@ public class PetDAO implements PetDAO_interface {
 	private static final String DELETE_STMT = "DELETE FROM PET WHERE PETNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM PET WHERE PETNO = ?";
 	private static final String GET_ALL = "SELECT * FROM PET";
-	private static final String GET_CURRSEQ = "SELECT PETNO_SQ.CURRVAL FROM DUAL";
-
+	
+	
+	
 	@Override
 	public void add(Pet pet) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		PreparedStatement pstmt2 = null;
-
+		PreparedStatement pstmt=null;
+		Connection con=null;
+		
 		try {
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT);
+			Class.forName(DRIVER);
+			con=DriverManager.getConnection(URL,USER,PASSWORD);
+			pstmt=con.prepareStatement(INSERT_STMT);
 			pstmt.setInt(1, pet.getMemNo());
 			pstmt.setString(2, pet.getPetName());
 			pstmt.setString(3, pet.getPetKind());
 			pstmt.setString(4, pet.getPetGender());
-			pstmt.setString(5, pet.getPetSpecies());
+			pstmt.setString(5,pet.getPetSpecies());
 			pstmt.setString(6, pet.getPetIntro());
 			pstmt.setDate(7, pet.getPetBday());
-			Blob blob = con.createBlob();
+			Blob blob=con.createBlob();
 			blob.setBytes(1, pet.getPetImg());
 			pstmt.setBlob(8, blob);
 			pstmt.executeUpdate();
 
-			pstmt2 = con.prepareStatement(GET_CURRSEQ);
-			ResultSet rs2 = pstmt2.executeQuery();
-			rs2.next();
-			currSeq = rs2.getInt(1);
-
-		} catch (Exception se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} finally {
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -77,7 +71,6 @@ public class PetDAO implements PetDAO_interface {
 				}
 			}
 		}
-
 	}
 
 	@Override
@@ -86,7 +79,8 @@ public class PetDAO implements PetDAO_interface {
 		Connection con=null;
 		
 		try {
-			con=ds.getConnection();
+			Class.forName(DRIVER);
+			con=DriverManager.getConnection(URL,USER,PASSWORD);
 			pstmt=con.prepareStatement(UPDATE_STMT);
 			pstmt.setInt(1, pet.getPetNo());
 			pstmt.setInt(2, pet.getMemNo());
@@ -102,6 +96,8 @@ public class PetDAO implements PetDAO_interface {
 			pstmt.setInt(10, pet.getPetNo());
 			pstmt.executeUpdate();
 
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,7 +119,6 @@ public class PetDAO implements PetDAO_interface {
 			}
 		}
 		
-
 	}
 
 	@Override
@@ -132,11 +127,14 @@ public class PetDAO implements PetDAO_interface {
 		Connection con=null;
 		
 		try {
-			con=ds.getConnection();
+			Class.forName(DRIVER);
+			con=DriverManager.getConnection(URL,USER,PASSWORD);
 			pstmt=con.prepareStatement(DELETE_STMT);
 			pstmt.setInt(1, petNo);
 			pstmt.executeUpdate();
 
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -158,7 +156,6 @@ public class PetDAO implements PetDAO_interface {
 			}
 		}
 		
-
 	}
 
 	@Override
@@ -169,7 +166,8 @@ public class PetDAO implements PetDAO_interface {
 		Pet pet=null;
 		
 		try {
-			con=ds.getConnection();
+			Class.forName(DRIVER);
+			con=DriverManager.getConnection(URL,USER,PASSWORD);
 			pstmt=con.prepareStatement(FIND_BY_PK);
 			pstmt.setInt(1, petNo);
 			rs=pstmt.executeQuery();
@@ -186,6 +184,8 @@ public class PetDAO implements PetDAO_interface {
 				pet.setPetImg(rs.getBytes("petImg"));
 			}
 			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -224,7 +224,8 @@ public class PetDAO implements PetDAO_interface {
 		ResultSet rs=null;
 		
 		try {
-			con=ds.getConnection();
+			Class.forName(DRIVER);
+			con=DriverManager.getConnection(URL,USER,PASSWORD);
 			pstmt=con.prepareStatement(GET_ALL);
 			rs=pstmt.executeQuery();
 			while(rs.next()){
@@ -241,6 +242,8 @@ public class PetDAO implements PetDAO_interface {
 				petList.add(pet);		
 			}
 			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -270,9 +273,5 @@ public class PetDAO implements PetDAO_interface {
 		}
 		return petList;
 	}
-
-	public int getCurrSeq() {
-		return currSeq;
-	}
-
+	
 }

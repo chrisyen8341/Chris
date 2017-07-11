@@ -6,8 +6,8 @@ import java.sql.Date;
 public class Pet {
 	
 
-	private int petNo;
-	private int memNo;
+	private Integer petNo;
+	private Integer memNo;
 	private String petName;
 	private String petKind;
 	private String petGender;
@@ -18,7 +18,7 @@ public class Pet {
 	
 	public Pet(){}
 
-	public Pet(int petNo, int memNo, String petName, String petKind, String petGender, String petSpecies,
+	public Pet(Integer petNo, Integer memNo, String petName, String petKind, String petGender, String petSpecies,
 			String petIntro, Date petBday, byte[] petImg) {
 		super();
 		this.petNo = petNo;
@@ -32,19 +32,19 @@ public class Pet {
 		this.petImg = petImg;
 	}
 
-	public int getPetNo() {
+	public Integer getPetNo() {
 		return petNo;
 	}
 
-	public void setPetNo(int petNo) {
+	public void setPetNo(Integer petNo) {
 		this.petNo = petNo;
 	}
 
-	public int getMemNo() {
+	public Integer getMemNo() {
 		return memNo;
 	}
 
-	public void setMemNo(int memNo) {
+	public void setMemNo(Integer memNo) {
 		this.memNo = memNo;
 	}
 

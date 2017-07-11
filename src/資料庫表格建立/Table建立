@@ -1,4 +1,6 @@
+drop table pet;
 drop table member;
+drop sequence PETNO_SQ;
 drop sequence MEMNO_SQ;
 
 
@@ -46,6 +48,32 @@ Create Sequence MEMNO_SQ Increment By 1 Start With 1 Nocache Nocycle;
 
     INSERT INTO MEMBER VALUES (MEMNO_SQ.NEXTVAL,'OhjkjhkO','66666666U','陽宗委','小委','男','U113595436',TO_DATE('1987-05-20','YYYY-MM-DD'),'095466245','台灣大學','KKBOX@HOT.com'
 ,EMPTY_BLOB(),12,1,'穩定交往','會原自借廁事資料',99,1200,9,6.77,24.777,TO_DATE('20170710 06:15:20','YYYYMMDD HH24:MI:SS'),0);
+
+
+
+
+
+CREATE TABLE PET(
+petNo NUMBER(10) Constraint PET_PETNO_Pk Primary Key,
+memNo NUMBER(10) NOT NULL CONSTRAINT PET_MEMNO_FK REFERENCES MEMBER(MEMNO),
+petName VARCHAR2(50) NOT NULL,
+petKind VARCHAR2(50) NOT NULL,
+petGender VARCHAR2(20) NOT NULL,
+petSpecies VARCHAR2(100),
+petIntro VARCHAR2(1000),
+petBday DATE,
+petImg BLOB NOT NULL);
+
+
+Create Sequence PETNO_SQ Increment By 1 Start With 1 Nocache Nocycle;
+
+
+ INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,1,'小王狗','狗','公','貴賓狗','寵物介紹測試',TO_DATE('2007-12-17','YYYY-MM-DD'),EMPTY_BLOB());
+ INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,2,'小阿貓','貓','母','貴賓貓','寵物介紹測試',TO_DATE('2008-12-10','YYYY-MM-DD'),EMPTY_BLOB());
+ INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,3,'小王狗','狗','男','臘腸狗','寵物介紹測試',TO_DATE('2012-03-12','YYYY-MM-DD'),EMPTY_BLOB());
+ INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,4,'小郎貓','貓','男','流浪貓','寵物介紹測試',TO_DATE('2003-08-09','YYYY-MM-DD'),EMPTY_BLOB());
+
+
 
 
 commit;
