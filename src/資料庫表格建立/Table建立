@@ -2,6 +2,7 @@ drop table pet;
 Drop Table Albumimg;
 Drop Table Album;
 drop table member;
+Drop table empauth;
 Drop Table Auth;
 DROP TABLE EMP;
 drop sequence PETNO_SQ;
@@ -108,6 +109,20 @@ Create Sequence AuthNO_Sq Increment By 1 Start With 1 Nocache Nocycle;
 Insert Into Auth Values(AuthNo_Sq.Nextval,'審核上下商品');
 Insert Into Auth Values(AuthNo_Sq.Nextval,'審查約會商品檢舉');
 insert into auth values(AuthNo_sq.nextval,'審查約會商品申訴');
+
+
+Create Table Empauth(
+Empno Number(10),
+Authno Number(2),
+Constraint Empauth_Pk Primary Key(Empno,Authno),
+Constraint Auth_Empno_Fk Foreign Key(Empno) References Emp(Empno), 
+constraint Auth_authno_Fk foreign key(AuthNo) references auth(authno)
+);
+
+Insert Into Empauth Values(2,2);
+Insert Into Empauth Values(2,1);
+Insert Into Empauth Values(1,1);
+Insert Into Empauth Values(1,2);
 
 
 CREATE TABLE ALBUM(
