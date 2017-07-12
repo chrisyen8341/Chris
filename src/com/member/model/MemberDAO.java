@@ -20,7 +20,7 @@ public class MemberDAO implements MemberDAO_Interface{
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/petym");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
