@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>Title Page</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script>
+
+		$(function() {
+
+		//針對下面的七項特別驗證各自設標籤  因為每項不能為空值  故使用者ㄧ定會填 並促發下面七項blur驗證
+		//個別驗證為錯即為false
+		//最後在表單送出時會對這七項驗證判別 只要有ㄧ個為false  停止送出表單
+		var valids = new Array(true,true, true,true,true,true,true);
+
+		//帳號驗證 AJAX確認帳號是否存在
+		$("#memId").blur(function () {
+			var xmlhttp = new XMLHttpRequest();
+			var memid = $("#memId").val();
+			var url = "exist.jsp?memid=" + memid;
+			xmlhttp.onreadystatechange = function() {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					if (xmlhttp.responseText.trim() == "帳號長度需大於6"
+						||xmlhttp.responseText.trim() == "帳號需含英文字"
+						||xmlhttp.responseText.trim() == "很抱歉,帳號已存在")
+					{
+						$("#memIdShow").css('color','red');
+						valids[0]=false;
+						$("#memIdShow").html(xmlhttp.responseText);
+					}
+					else{
+						$("#memIdShow").css('color','green');
+						$("#memIdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;"+xmlhttp.responseText);
+						valids[0]=true;
+					}
+				}
+			};
+			try {
+				xmlhttp.open("GET", url, true);
+				xmlhttp.send();
+				console.log("有走進來3");
+			} catch (e) {
+				alert("unable to connect to server");
+			}
+		});
+		
+
+		//密碼驗證 至少包含一個英文字
+		$("#pwd").blur(function () {
+			var regex = new RegExp('.*[a-zA-Z]+.*');
+			if($("#pwd").val().length<6){
+				$("#pwdShow").css('color','red');
+				$("#pwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼長度需大於6");
+				valids[1]=false;
+			}
+			else if(!$("#pwd").val().match(regex)) {
+				$("#pwdShow").css('color','red');
+				$("#pwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼須包含英文字");
+				valids[1]=false;
+			} 
+			else{
+				$("#pwdShow").css('color','green');
+				$("#pwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;合格的密碼");
+				valids[1]=true;
+			}
+		});
+
+		//確認密碼驗證
+		$("#checkpwd").blur(function() {
+			if ($("#pwd").val().trim() == $("#checkpwd").val().trim()) {
+				$("#pwdCheck").css('color','green');
+				$("#pwdCheck").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼相符");
+				valids[2]=true;
+			} else {
+				$("#pwdCheck").css('color','red');
+				$("#pwdCheck").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼不相符");
+				valids[2]=false;
+			}
+			;
+		});
+
+
+
+ //身分證驗證
+ $("#idcard").blur(function (){
+ 	var toBeTest=document.getElementById("idcard").value;
+ 	isIdNo(toBeTest);
+ });
+
+
+ function isIdNo(id){
+ 	valid = false;
+ 	var re = new RegExp("[A-Z]{1}[1-2]{1}[0-9]{8}");
+ 	if (re.test(id)) {
+ 		ids = id.split("");
+ 		var test=0;
+ 		var z = createCityNum2(ids[0]);
+ 		for (var i = 1; i < 9; i++) {
+ 			test = test + parseInt(ids[i]) * (9 - i);
+ 		}
+ 		var remainder=((test +(Math.floor(z / 10) + (z%10)*9))%10);
+ 		(remainder==0)? (test=0) : (test=10-remainder);
+ 		if (test == parseInt(ids[9])) {
+ 			valid = true;
+ 		}
+ 	};
+ 	if(!valid){
+ 		$("#idShow").css('color','red');
+ 		$("#idShow").html("&nbsp;&nbsp;&nbsp;&nbsp;不合格的身分證");
+ 		valids[3]=false;
+ 	}
+ 	else{
+ 		$("#idShow").css('color','green');
+ 		$("#idShow").html("&nbsp;&nbsp;&nbsp;&nbsp;合格的身分證");
+ 		valids[3]=true;
+ 	}
+ };
+
+ function createCityNum2(c){
+ 	var chars=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+ 	var nums=[10,11,12,13,14,15,16,17,34,18,19,20,21,22,35,23,24,25,26,27,28,29,32,30,31,33];
+ 	return nums[chars.indexOf(c)];
+ };
+
+//生日最大可選天數
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+if(dd<10){
+	dd='0'+dd
+} 
+if(mm<10){
+	mm='0'+mm
+} 
+
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("datefield1").setAttribute("max", today);
+document.getElementById("datefield2").setAttribute("max", today);
+
+
+		//生日驗證 生日不可以大於今天
+		$("#datefield1,#datefield2").blur(function(e){
+			console.log(e.target.id);
+			var nDay=yyyy+mm+dd;
+			if(e.target.id=="datefield1"){
+				days=$("#datefield1").val().split("-");
+				tDay=days[0]+days[1]+days[2];
+				if(tDay>nDay){
+					$("#birthShow").css('color','red');
+					$("#birthShow").html("&nbsp;&nbsp;&nbsp;&nbsp;不合格的生日");
+					valids[4]=false;
+				}
+				else{
+					$("#birthShow").html("");
+					valids[4]=true;
+				}
+			}
+			else{
+				days=$("#datefield2").val().split("-");
+				tDay=days[0]+days[1]+days[2];
+				if(tDay>nDay){
+					$("#birthShow2").css('color','red');
+					$("#birthShow2").html("&nbsp;&nbsp;&nbsp;&nbsp;不合格的生日");
+					valids[5]=false;
+				}
+				else{
+					$("#birthShow2").html("");
+					valids[5]=true;
+				}
+			}
+
+		});
+
+
+		//信箱驗證
+		$("#email").blur(function() {
+			if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($("#email").val()))  
+			{  
+				$("#emailShow").css('color','green');
+				$("#emailShow").html("&nbsp;&nbsp;&nbsp;&nbsp;合格的EMAIL");
+				valids[6]=true;
+			}  
+			else{
+				$("#emailShow").css('color','red');
+				$("#emailShow").html("&nbsp;&nbsp;&nbsp;&nbsp;不合格的EMAIL");
+				valids[6]=false;
+			} 
+		});
+
+
+		//照片上傳預覽
+		$("#mempic,#petPic").change(function() {
+			readURL(this);
+		});
+
+		function readURL(input) {
+
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					//判斷input來源
+					if(input.id=="mempic"){
+						$('#mpic').attr('src', e.target.result);
+					}
+					else
+						$('#petPic2').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+
+		//檢驗是否有養寵物
+		$("input[name=petOrNot]").change(function(){
+			if($('input[name=petOrNot]').get(1).checked){
+				$("#petDiv").css("display","block");
+			}
+			else
+				$("#petDiv").css("display","none");
+		});
+
+
+		//送出表單時檢察有無未填
+		$('form').submit(function() {
+			
+			//預設是全部都填  
+			var isEmpty = null;
+			//只要input有沒填的 就改變為true
+			if($('input[name=petOrNot]').get(0).checked)
+			{
+				console.log("1111111111111111")
+				$("input").slice(0,12).each(function() {
+					if ($.trim($(this).val()) === "") {
+						alert('Text-field is empty.');
+						isEmpty = true;
+					}
+				});
+			}
+			else{
+				$("input").each(function() {
+					if ($.trim($(this).val()) === "") {
+						alert('Text-field is empty.');
+						isEmpty = true;
+					}
+				});
+			};
+
+			//只要有空 就讓submit送不出去
+			if (isEmpty) {
+				return false;
+			}
+
+
+			for (var i = 0; i < valids.length; i++) {
+				if(!valids[i]){
+					return false;
+				}
+				console.log(i+" : "+valids[i]);
+			}
+
+		});
+
+	});
+</script>
+
+		<!--[if lt IE 9]>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+			<![endif]-->
+		</head>
+		<body>
+			<div class="container">
+				<div class="row main">
+
+					<div class="col-sm-6 col-sm-offset-3">
+
+						<form class="" action="Register" method="post" enctype="multipart/form-data">
+
+							<div class="row">
+
+								<div class="col-sm-6 form-group">
+									<label for="memId" class="cols-sm-2 control-label">帳號</label><span id="memIdShow"></span>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+											<input type="text" class="form-control" name="memId" id="memId"  placeholder="請輸入帳號"/>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-sm-6 form-group">
+									<label for="memSname" class="cols-sm-2 control-label">暱稱</label>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+											<input type="text" class="form-control" name="memSname" id="memSname"  placeholder="請輸入暱稱"/>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							
+							<div class="row">
+								<div class="col-sm-6 form-group">
+									<label for="memPwd" class="cols-sm-2 control-label">密碼</label><span id="pwdShow"></span>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+											<input type="password" class="form-control" name="memPwd" id="pwd"  placeholder="請輸入密碼"/>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-sm-6 form-group">
+									<label for="conpwd" class="cols-sm-2 control-label">確認密碼</label><span id="pwdCheck"></span>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+											<input type="password" class="form-control" name="conpwd" id="checkpwd"  placeholder="請再次輸入密碼"/>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="row">
+								<div class="col-sm-6 form-group">
+									<label for="memName" class="cols-sm-2 control-label">姓名</label>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+											<input type="text" class="form-control" name="memName" id="name"  placeholder="請輸入您的姓名"/>
+										</div>
+									</div>
+								</div>
+
+
+
+								<div class="col-sm-6 form-group">
+									<label for="memIdNo" class="cols-sm-2 control-label">身分證字號</label><span id="idShow"></span>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+											<input type="text" class="form-control" name="memIdNo" id="idcard"  placeholder="請輸入身分證字號"/>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+
+
+
+
+							<div class="row">
+								<div class="col-sm-6 form-group">
+									<label for="memBday" class="cols-sm-2 control-label">生日</label><span id="birthShow"></span>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+											<input type="date" name="memBday" min="1910-01-01"  max='2000-13-13' id="datefield1" class="form-control" placeholder="Confirm your Password"/>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="col-sm-6 form-group">
+									<label for="memPhone" class="cols-sm-2 control-label">手機</label>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+											<input type="text" class="form-control" name="memPhone"  placeholder="請輸入您的手機"/>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<label for="memGender" class="control-label">性別</label><br>
+								<label class="radio-inline"><input type="radio" name="memGender" checked="true" value="男">男</label>
+								<label class="radio-inline"><input type="radio" name="memGender" value="女">女</label>
+								<label class="radio-inline"><input type="radio" name="memGender" value="第三性">第三性</label>
+							</div>
+
+
+							<div class="form-group">
+								<label for="memAddress" class="cols-sm-2 control-label">地址</label>
+								<div class="cols-sm-10">
+									<div class="input-group">
+										<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+										<textarea class="form-control" name="memAddress"  placeholder="請輸入您的地址"></textarea>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<label for="memEmail" class="cols-sm-2 control-label">電子信箱</label><span id="emailShow"></span>
+								<div class="cols-sm-10">
+									<div class="input-group">
+										<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+										<input type="text" class="form-control" name="memEmail" id="email"  placeholder="請輸入您的電子信箱"/>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="text-center form-group">
+								<label for="memImg" class="control-label">照片</label><br>
+								<img src="https://api.fnkr.net/testimg/350x200/00CED1/FFF/?text=img+placeholder" height="250px" width="200px" id="mpic" style="margin-bottom: 10px "><br>
+								<input type="file"  name="memImg" id="mempic"  placeholder="請輸入您的電子信箱"/>
+							</div>
+
+							<div class="form-group">
+								<label for="petOrNot" class="control-label">有無養寵物</label><br>
+								<label class="radio-inline"><input type="radio" name="petOrNot" value="0" checked="true">無</label>
+								<label class="radio-inline"><input type="radio" name="petOrNot" value="1">有</label>
+							</div>
+
+							<div id="petDiv" style="display:none;">
+								<div class="form-group">
+									<label for="petName" class="cols-sm-2 control-label">寵物姓名</label>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+											<input type="text" class="form-control" name="petName" id="name"  placeholder="請輸入您的寵物姓名"/>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="row">
+									<div class="col-sm-6 form-group">
+										<label for="petKind" class="control-label">寵物分類</label><br>
+										<label class="radio-inline"><input type="radio" name="petKind" value="狗" checked="true">狗</label>
+										<label class="radio-inline"><input type="radio" name="petKind" value="貓">貓</label>
+										<label class="radio-inline"><input type="radio" name="petKind" value="其他">其他</label>
+									</div>
+
+
+									<div class="col-sm-6 form-group">
+										<label for="petGender" class="control-label">寵物性別</label><br>
+										<label class="radio-inline"><input type="radio" name="petGender" value="男" checked="true">男</label>
+										<label class="radio-inline"><input type="radio" name="petGender" value="女">女</label>
+										<label class="radio-inline"><input type="radio" name="petGender" value="其他">第三性</label>
+									</div>
+
+								</div>
+
+
+								<div class="row">
+									<div class="col-sm-6 form-group">
+										<label for="petSpecies" class="cols-sm-2 control-label">寵物品種</label>
+										<div class="cols-sm-10">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+												<input type="text" class="form-control" name="petSpecies"  placeholder="請輸入您的寵物品種"/>
+											</div>
+										</div>
+									</div>
+
+
+									<div class="col-sm-6 form-group">
+										<label for="petBday" class="cols-sm-2 control-label">寵物生日</label><span id="birthShow2"></span>
+										<div class="cols-sm-10">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+												<input type="date" name="petBday" min="1910-01-01"  max='2000-13-13' id="datefield2" class="form-control"  placeholder="請輸入您的手機"/>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="text-center form-group">
+									<label for="petImg" class="control-label">寵物照片</label><br>
+									<img src="https://api.fnkr.net/testimg/350x200/00CED1/FFF/?text=img+placeholder" height="250px" width="200px" id="petPic2" style="margin-bottom: 10px "><br>
+									<input type="file"  name="petImg" id="petPic"  placeholder="請輸入您的電子信箱"/>
+								</div>
+
+							</div>
+
+
+							<input class="btn btn-primary btn-lg btn-block login-button" type="submit" value="註冊">
+						
+						</form>
+						
+					</div>
+				</div>
+			</div>
+			<script src="https://code.jquery.com/jquery.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		</body>
+		</html>

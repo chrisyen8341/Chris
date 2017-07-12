@@ -12,7 +12,7 @@
 	
 	
 		Context ctx = new javax.naming.InitialContext();
-		DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Test");
+		DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/petym");
 		Connection con = ds.getConnection();
 		PreparedStatement pstmt = con.prepareStatement("SELECT  * FROM MEMBER WHERE MEMID = ?");
 		String memid= request.getParameter("memid");

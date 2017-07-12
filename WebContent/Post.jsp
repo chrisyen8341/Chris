@@ -21,7 +21,7 @@ javax.sql.DataSource"%>
 	try {
 
 		Context ctx = new javax.naming.InitialContext();
-		DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Test");
+		DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/petym");
 		con = ds.getConnection();
 		pstmt = con.prepareStatement(FIND_BY_ID);
 
