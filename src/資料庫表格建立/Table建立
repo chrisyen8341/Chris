@@ -2,13 +2,14 @@ drop table pet;
 Drop Table Albumimg;
 Drop Table Album;
 drop table member;
+Drop Table Auth;
 DROP TABLE EMP;
 drop sequence PETNO_SQ;
 drop sequence MEMNO_SQ;
 DROP SEQUENCE EMPNO_SQ;
 DROP SEQUENCE ALBUMNO_SQ;
 DROP SEQUENCE ALBUMIMG_SQ;
-
+Drop Sequence AuthNO_Sq;
 
 
 CREATE TABLE Member 
@@ -96,6 +97,17 @@ INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'王阿鈞','協理','TYHYTAN','EWFWEF213');
 INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'陳興','打工仔','HYTHUFAN','CHOWEF213');
 INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'李宗霖','副理','CQWEAN','WEFEW213');
 
+
+
+Create Table Auth(
+AuthNo Number(2) Constraint Auth_Authno_Pk Primary Key,
+AuthName VARCHAR2(100)); 
+
+Create Sequence AuthNO_Sq Increment By 1 Start With 1 Nocache Nocycle;
+
+Insert Into Auth Values(AuthNo_Sq.Nextval,'審核上下商品');
+Insert Into Auth Values(AuthNo_Sq.Nextval,'審查約會商品檢舉');
+insert into auth values(AuthNo_sq.nextval,'審查約會商品申訴');
 
 
 CREATE TABLE ALBUM(
