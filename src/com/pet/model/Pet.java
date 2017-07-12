@@ -1,9 +1,10 @@
 package com.pet.model;
 
+import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Date;
 
-public class Pet {
+public class Pet implements Serializable {
 	
 
 	private Integer petNo;
