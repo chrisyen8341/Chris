@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="">
 <head>
-	<meta charset="utf-8">
+	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 	<title>Title Page</title>
@@ -11,13 +11,13 @@
 
 		$(function() {
 
-		//針對下面的七項特別驗證各自設標籤  因為每項不能為空值  故使用者ㄧ定會填 並促發下面七項blur驗證
+			//針對下面的七項特別驗證各自設標籤  因為每項不能為空值  故使用者ㄧ定會填 並促發下面七項blur驗證
 		//個別驗證為錯即為false
 		//最後在表單送出時會對這七項驗證判別 只要有ㄧ個為false  停止送出表單
 		var valids = new Array(true,true, true,true,true,true,true);
 
 		//帳號驗證 AJAX確認帳號是否存在
-		$("#memId").blur(function () {
+		$("#memId").blur($.fn.testMemId = function() {
 			var xmlhttp = new XMLHttpRequest();
 			var memid = $("#memId").val();
 			var url = "exist.jsp?memid=" + memid;
@@ -27,13 +27,11 @@
 						||xmlhttp.responseText.trim() == "帳號需含英文字"
 						||xmlhttp.responseText.trim() == "很抱歉,帳號已存在")
 					{
-						$("#memIdShow").css('color','red');
 						valids[0]=false;
-						$("#memIdShow").html(xmlhttp.responseText);
+						$("#memIdShow").html(xmlhttp.responseText).css('color','red');
 					}
 					else{
-						$("#memIdShow").css('color','green');
-						$("#memIdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;"+xmlhttp.responseText);
+						$("#memIdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;"+xmlhttp.responseText).css('color','green');
 						valids[0]=true;
 					}
 				}
@@ -41,42 +39,36 @@
 			try {
 				xmlhttp.open("GET", url, true);
 				xmlhttp.send();
-				console.log("有走進來3");
 			} catch (e) {
 				alert("unable to connect to server");
 			}
 		});
 		
 
-		//密碼驗證 至少包含一個英文字
-		$("#pwd").blur(function () {
+		////密碼驗證 至少包含一個英文字
+		$("#memPwd").blur(function () {
 			var regex = new RegExp('.*[a-zA-Z]+.*');
-			if($("#pwd").val().length<6){
-				$("#pwdShow").css('color','red');
-				$("#pwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼長度需大於6");
+			if($("#memPwd").val().length<6){
+				$("#memPwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼長度需大於6").css('color','red');
 				valids[1]=false;
 			}
-			else if(!$("#pwd").val().match(regex)) {
-				$("#pwdShow").css('color','red');
-				$("#pwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼須包含英文字");
+			else if(!$("#memPwd").val().match(regex)) {
+				$("#memPwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼須包含英文字").css('color','red');
 				valids[1]=false;
 			} 
 			else{
-				$("#pwdShow").css('color','green');
-				$("#pwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;合格的密碼");
+				$("#memPwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;合格的密碼").css('color','green');
 				valids[1]=true;
 			}
 		});
 
 		//確認密碼驗證
-		$("#checkpwd").blur(function() {
-			if ($("#pwd").val().trim() == $("#checkpwd").val().trim()) {
-				$("#pwdCheck").css('color','green');
-				$("#pwdCheck").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼相符");
+		$("#conPwd").blur(function() {
+			if ($("#memPwd").val().trim() == $("#conPwd").val().trim()) {
+				$("#conPwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼相符").css('color','green');
 				valids[2]=true;
 			} else {
-				$("#pwdCheck").css('color','red');
-				$("#pwdCheck").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼不相符");
+				$("#conPwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼不相符").css('color','red');
 				valids[2]=false;
 			}
 			;
@@ -84,9 +76,9 @@
 
 
 
- //身分證驗證
- $("#idcard").blur(function (){
- 	var toBeTest=document.getElementById("idcard").value;
+  //身分證驗證
+ $("#memIdNo").blur(function (){
+ 	var toBeTest=document.getElementById("memIdNo").value;
  	isIdNo(toBeTest);
  });
 
@@ -108,13 +100,11 @@
  		}
  	};
  	if(!valid){
- 		$("#idShow").css('color','red');
- 		$("#idShow").html("&nbsp;&nbsp;&nbsp;&nbsp;不合格的身分證");
+ 		$("#memIdNoShow").html("&nbsp;&nbsp;&nbsp;&nbsp;不合格的身分證").css('color','red');
  		valids[3]=false;
  	}
  	else{
- 		$("#idShow").css('color','green');
- 		$("#idShow").html("&nbsp;&nbsp;&nbsp;&nbsp;合格的身分證");
+ 		$("#memIdNoShow").html("&nbsp;&nbsp;&nbsp;&nbsp;合格的身分證").css('color','green');
  		valids[3]=true;
  	}
  };
@@ -138,62 +128,44 @@ if(mm<10){
 } 
 
 today = yyyy+'-'+mm+'-'+dd;
-document.getElementById("datefield1").setAttribute("max", today);
-document.getElementById("datefield2").setAttribute("max", today);
+document.getElementById("memBday").setAttribute("max", today);
 
 
 		//生日驗證 生日不可以大於今天
-		$("#datefield1,#datefield2").blur(function(e){
+		$("#memBday").blur(function(e){
 			console.log(e.target.id);
 			var nDay=yyyy+mm+dd;
-			if(e.target.id=="datefield1"){
-				days=$("#datefield1").val().split("-");
+			if(e.target.id=="memBday"){
+				days=$("#memBday").val().split("-");
 				tDay=days[0]+days[1]+days[2];
 				if(tDay>nDay){
-					$("#birthShow").css('color','red');
-					$("#birthShow").html("&nbsp;&nbsp;&nbsp;&nbsp;不合格的生日");
+					$("#memBdayShow").html("&nbsp;&nbsp;&nbsp;&nbsp;不合格的生日").css('color','red');
 					valids[4]=false;
 				}
 				else{
-					$("#birthShow").html("");
+					$("#memBdayShow").html("");
 					valids[4]=true;
 				}
 			}
-			else{
-				days=$("#datefield2").val().split("-");
-				tDay=days[0]+days[1]+days[2];
-				if(tDay>nDay){
-					$("#birthShow2").css('color','red');
-					$("#birthShow2").html("&nbsp;&nbsp;&nbsp;&nbsp;不合格的生日");
-					valids[5]=false;
-				}
-				else{
-					$("#birthShow2").html("");
-					valids[5]=true;
-				}
-			}
-
 		});
 
 
 		//信箱驗證
-		$("#email").blur(function() {
-			if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($("#email").val()))  
+		$("#memEmail").blur(function() {
+			if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($("#memEmail").val()))  
 			{  
-				$("#emailShow").css('color','green');
-				$("#emailShow").html("&nbsp;&nbsp;&nbsp;&nbsp;合格的EMAIL");
+				$("#memEmailShow").html("&nbsp;&nbsp;&nbsp;&nbsp;合格的EMAIL").css('color','green');
 				valids[6]=true;
 			}  
 			else{
-				$("#emailShow").css('color','red');
-				$("#emailShow").html("&nbsp;&nbsp;&nbsp;&nbsp;不合格的EMAIL");
+				$("#memEmailShow").html("&nbsp;&nbsp;&nbsp;&nbsp;不合格的EMAIL").css('color','red');
 				valids[6]=false;
 			} 
 		});
 
 
 		//照片上傳預覽
-		$("#mempic,#petPic").change(function() {
+		$("#memImg,#petImg").change(function() {
 			readURL(this);
 		});
 
@@ -203,11 +175,11 @@ document.getElementById("datefield2").setAttribute("max", today);
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					//判斷input來源
-					if(input.id=="mempic"){
-						$('#mpic').attr('src', e.target.result);
+					if(input.id=="memImg"){
+						$('#memPic').attr('src', e.target.result);
 					}
 					else
-						$('#petPic2').attr('src', e.target.result);
+						$('#petPic').attr('src', e.target.result);
 				}
 				reader.readAsDataURL(input.files[0]);
 			}
@@ -224,29 +196,46 @@ document.getElementById("datefield2").setAttribute("max", today);
 		});
 
 
-		//送出表單時檢察有無未填
+	//送出表單時檢察有無未填
 		$('form').submit(function() {
 			
-			//預設是全部都填  
+			//預設是全部都填   
 			var isEmpty = null;
 			//只要input有沒填的 就改變為true
 			if($('input[name=petOrNot]').get(0).checked)
 			{
-				console.log("1111111111111111")
-				$("input").slice(0,12).each(function() {
+				$("input").slice(0,13).each(function() {
 					if ($.trim($(this).val()) === "") {
-						alert('Text-field is empty.');
+						if($(this).prop("id")=="memImg"){
+							$(this).prev().prev().html("&nbsp;&nbsp;&nbsp;&nbsp;請填寫資料").css('color','red');
+						}
+						else{
+						$(this).parent().parent().prev().html("&nbsp;&nbsp;&nbsp;&nbsp;請填寫資料").css('color','red');
+						}
 						isEmpty = true;
 					}
 				});
+				if($("#memAddress").val()===""){
+					$("#memAddressShow").html("&nbsp;&nbsp;&nbsp;&nbsp;請填寫資料").css('color','red');
+					isEmpty = true;
+				}
 			}
 			else{
 				$("input").each(function() {
 					if ($.trim($(this).val()) === "") {
-						alert('Text-field is empty.');
+						if($(this).prop("id")=="memImg" || $(this).prop("id")=="petImg"){
+							$(this).prev().prev().html("&nbsp;&nbsp;&nbsp;&nbsp;請填寫資料").css('color','red');
+						}
+						else{
+						$(this).parent().parent().prev().html("&nbsp;&nbsp;&nbsp;&nbsp;請填寫資料").css('color','red');
+					}
 						isEmpty = true;
 					}
 				});
+				if($("#memAddress").val()===""){
+					$("#memAddressShow").html("&nbsp;&nbsp;&nbsp;&nbsp;請填寫資料").css('color','red');
+					isEmpty = true;
+				}
 			};
 
 			//只要有空 就讓submit送不出去
@@ -263,6 +252,39 @@ document.getElementById("datefield2").setAttribute("max", today);
 			}
 
 		});
+
+		$("#autoAddMem").click(function(){
+			$("#memId").val("chrisyen");
+			$("#memId").testMemId();
+			$("#memSname").val("小顏");
+			$("#memPwd").val("p123456");
+			$("#conPwd").val("p123456");
+			$("#memName").val("顏佑軒");
+			$("#memIdNo").val("A114900309");
+			$("#memBday").val("1990-01-16");
+			$("#memPhone").val("0930456158");
+			$("#memAddress").val("台北市大安區101");
+			$("#memEmail").val("chrisyen@gmail.com");
+		});
+
+
+		$("#autoAddMemPet").click(function(){
+					$("#memId").val("chrisyen");
+			$("#memId").testMemId();
+			$("#memSname").val("小顏");
+			$("#memPwd").val("p123456");
+			$("#conPwd").val("p123456");
+			$("#memName").val("顏佑軒");
+			$("#memIdNo").val("A114900309");
+			$("#memBday").val("1990-01-16");
+			$("#memPhone").val("0930456158");
+			$("#memAddress").val("台北市大安區101");
+			$("#memEmail").val("chrisyen@gmail.com");
+			$("#petOrNot_1").prop("checked", true);
+			$("#petDiv").css("display","block");
+			$("#petName").val("單身狗");
+		});
+
 
 	});
 </script>
@@ -293,7 +315,7 @@ document.getElementById("datefield2").setAttribute("max", today);
 								</div>
 
 								<div class="col-sm-6 form-group">
-									<label for="memSname" class="cols-sm-2 control-label">暱稱</label>
+									<label for="memSname" class="cols-sm-2 control-label">暱稱</label><span id="memSnameShow"></span>
 									<div class="cols-sm-10">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
@@ -306,21 +328,21 @@ document.getElementById("datefield2").setAttribute("max", today);
 							
 							<div class="row">
 								<div class="col-sm-6 form-group">
-									<label for="memPwd" class="cols-sm-2 control-label">密碼</label><span id="pwdShow"></span>
+									<label for="memPwd" class="cols-sm-2 control-label">密碼</label><span id="memPwdShow"></span>
 									<div class="cols-sm-10">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-											<input type="password" class="form-control" name="memPwd" id="pwd"  placeholder="請輸入密碼"/>
+											<input type="password" class="form-control" name="memPwd" id="memPwd"  placeholder="請輸入密碼"/>
 										</div>
 									</div>
 								</div>
 
 								<div class="col-sm-6 form-group">
-									<label for="conpwd" class="cols-sm-2 control-label">確認密碼</label><span id="pwdCheck"></span>
+									<label for="conpwd" class="cols-sm-2 control-label">確認密碼</label><span id="conPwdShow"></span>
 									<div class="cols-sm-10">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-											<input type="password" class="form-control" name="conpwd" id="checkpwd"  placeholder="請再次輸入密碼"/>
+											<input type="password" class="form-control" name="conpwd" id="conPwd"  placeholder="請再次輸入密碼"/>
 										</div>
 									</div>
 								</div>
@@ -329,11 +351,11 @@ document.getElementById("datefield2").setAttribute("max", today);
 
 							<div class="row">
 								<div class="col-sm-6 form-group">
-									<label for="memName" class="cols-sm-2 control-label">姓名</label>
+									<label for="memName" class="cols-sm-2 control-label">姓名</label><span id="memNameShow"></span>
 									<div class="cols-sm-10">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-											<input type="text" class="form-control" name="memName" id="name"  placeholder="請輸入您的姓名"/>
+											<input type="text" class="form-control" name="memName" id="memName"  placeholder="請輸入您的姓名"/>
 										</div>
 									</div>
 								</div>
@@ -341,11 +363,11 @@ document.getElementById("datefield2").setAttribute("max", today);
 
 
 								<div class="col-sm-6 form-group">
-									<label for="memIdNo" class="cols-sm-2 control-label">身分證字號</label><span id="idShow"></span>
+									<label for="memIdNo" class="cols-sm-2 control-label">身分證字號</label><span id="memIdNoShow"></span>
 									<div class="cols-sm-10">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-											<input type="text" class="form-control" name="memIdNo" id="idcard"  placeholder="請輸入身分證字號"/>
+											<input type="text" class="form-control" name="memIdNo" id="memIdNo"  placeholder="請輸入身分證字號"/>
 										</div>
 									</div>
 								</div>
@@ -354,26 +376,24 @@ document.getElementById("datefield2").setAttribute("max", today);
 
 
 
-
-
 							<div class="row">
 								<div class="col-sm-6 form-group">
-									<label for="memBday" class="cols-sm-2 control-label">生日</label><span id="birthShow"></span>
+									<label for="memBday" class="cols-sm-2 control-label">生日</label><span id="memBdayShow"></span>
 									<div class="cols-sm-10">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-											<input type="date" name="memBday" min="1910-01-01"  max='2000-13-13' id="datefield1" class="form-control" placeholder="Confirm your Password"/>
+											<input type="date" name="memBday" min="1910-01-01"  max='2000-13-13' id="memBday" class="form-control" placeholder="Confirm your Password"/>
 										</div>
 									</div>
 								</div>
 
 
 								<div class="col-sm-6 form-group">
-									<label for="memPhone" class="cols-sm-2 control-label">手機</label>
+									<label for="memPhone" class="cols-sm-2 control-label">手機</label><span id="memPhoneShow"></span>
 									<div class="cols-sm-10">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-											<input type="text" class="form-control" name="memPhone"  placeholder="請輸入您的手機"/>
+											<input type="text" class="form-control" name="memPhone" id="memPhone"  placeholder="請輸入您的手機"/>
 										</div>
 									</div>
 								</div>
@@ -382,53 +402,54 @@ document.getElementById("datefield2").setAttribute("max", today);
 
 							<div class="form-group">
 								<label for="memGender" class="control-label">性別</label><br>
-								<label class="radio-inline"><input type="radio" name="memGender" checked="true" value="男">男</label>
-								<label class="radio-inline"><input type="radio" name="memGender" value="女">女</label>
-								<label class="radio-inline"><input type="radio" name="memGender" value="第三性">第三性</label>
+								<label class="radio-inline"><input type="radio" name="memGender" checked="true" value="0">男</label>
+								<label class="radio-inline"><input type="radio" name="memGender" value="1">女</label>
+								<label class="radio-inline"><input type="radio" name="memGender" value="2">第三性</label>
 							</div>
 
 
 							<div class="form-group">
-								<label for="memAddress" class="cols-sm-2 control-label">地址</label>
+								<label for="memAddress" class="cols-sm-2 control-label">地址</label><span id="memAddressShow"></span>
 								<div class="cols-sm-10">
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-										<textarea class="form-control" name="memAddress"  placeholder="請輸入您的地址"></textarea>
+										<textarea class="form-control" id="memAddress" name="memAddress"  placeholder="請輸入您的地址"></textarea>
 									</div>
 								</div>
 							</div>
 
 
 							<div class="form-group">
-								<label for="memEmail" class="cols-sm-2 control-label">電子信箱</label><span id="emailShow"></span>
+								<label for="memEmail" class="cols-sm-2 control-label">電子信箱c</label><span id="memEmailShow"></span>
 								<div class="cols-sm-10">
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-										<input type="text" class="form-control" name="memEmail" id="email"  placeholder="請輸入您的電子信箱"/>
+										<input type="text" class="form-control" name="memEmail" id="memEmail"  placeholder="請輸入您的電子信箱"/>
 									</div>
 								</div>
 							</div>
 
+							<div class="row">
+								<div class="col-sm-6 form-group">
+									<label for="memImg" class="control-label ">照片</label><span id="memImgShow"></span> <br>
+									<input  type="file"  name="memImg" id="memImg" placeholder="翻�聶矇瞻J簣z穠繙繒q瞻l竄H翻c"/>
+									<img src="https://api.fnkr.net/testimg/350x200/00CED1/FFF/?text=img+placeholder" height="200px" width="150px" id="memPic" style="margin-top: 5px "><br>		
+								</div>
 
-							<div class="text-center form-group">
-								<label for="memImg" class="control-label">照片</label><br>
-								<img src="https://api.fnkr.net/testimg/350x200/00CED1/FFF/?text=img+placeholder" height="250px" width="200px" id="mpic" style="margin-bottom: 10px "><br>
-								<input type="file"  name="memImg" id="mempic"  placeholder="請輸入您的電子信箱"/>
-							</div>
-
-							<div class="form-group">
-								<label for="petOrNot" class="control-label">有無養寵物</label><br>
-								<label class="radio-inline"><input type="radio" name="petOrNot" value="0" checked="true">無</label>
-								<label class="radio-inline"><input type="radio" name="petOrNot" value="1">有</label>
+								<div class="col-sm-6 form-group">
+									<label for="petOrNot" class="control-label">有無養寵物</label><br>
+									<label class="radio-inline"><input type="radio" name="petOrNot" id="petOrNot_0" value="0" checked="true">無</label>
+									<label class="radio-inline"><input type="radio" name="petOrNot" id="petOrNot_1" value="1">有</label>
+								</div>
 							</div>
 
 							<div id="petDiv" style="display:none;">
 								<div class="form-group">
-									<label for="petName" class="cols-sm-2 control-label">寵物姓名</label>
+									<label for="petName" class="cols-sm-2 control-label">寵物姓名</label><span id="petNameShow"></span>
 									<div class="cols-sm-10">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-											<input type="text" class="form-control" name="petName" id="name"  placeholder="請輸入您的寵物姓名"/>
+											<input type="text" class="form-control" name="petName" id="petName"  placeholder="請輸入您的寵物姓名"/>
 										</div>
 									</div>
 								</div>
@@ -437,59 +458,38 @@ document.getElementById("datefield2").setAttribute("max", today);
 								<div class="row">
 									<div class="col-sm-6 form-group">
 										<label for="petKind" class="control-label">寵物分類</label><br>
-										<label class="radio-inline"><input type="radio" name="petKind" value="狗" checked="true">狗</label>
-										<label class="radio-inline"><input type="radio" name="petKind" value="貓">貓</label>
-										<label class="radio-inline"><input type="radio" name="petKind" value="其他">其他</label>
+										<label class="radio-inline"><input type="radio" name="petKind" id="petOrNot_0" value="狗" checked="true">狗</label>
+										<label class="radio-inline"><input type="radio" name="petKind" id="petOrNot_1" value="貓">貓</label>
+										<label class="radio-inline"><input type="radio" name="petKind" id="petOrNot_2" value="其他">其他</label>
 									</div>
 
 
 									<div class="col-sm-6 form-group">
 										<label for="petGender" class="control-label">寵物性別</label><br>
-										<label class="radio-inline"><input type="radio" name="petGender" value="男" checked="true">男</label>
-										<label class="radio-inline"><input type="radio" name="petGender" value="女">女</label>
-										<label class="radio-inline"><input type="radio" name="petGender" value="其他">第三性</label>
+										<label class="radio-inline"><input type="radio" name="petGender" value="0" checked="true">男</label>
+										<label class="radio-inline"><input type="radio" name="petGender" value="1">女</label>
 									</div>
 
 								</div>
 
 
-								<div class="row">
-									<div class="col-sm-6 form-group">
-										<label for="petSpecies" class="cols-sm-2 control-label">寵物品種</label>
-										<div class="cols-sm-10">
-											<div class="input-group">
-												<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-												<input type="text" class="form-control" name="petSpecies"  placeholder="請輸入您的寵物品種"/>
-											</div>
-										</div>
-									</div>
+								<div class="form-group">
+									<label for="petImg" class="control-label">寵物照片</label><span id="petImgShow"></span><br>
+									<input type="file"  name="petImg" id="petImg" />
+									<img src="https://api.fnkr.net/testimg/350x200/00CED1/FFF/?text=img+placeholder" height="200px" width="150px" id="petPic" style="margin-top: 5px "><br>
 
-
-									<div class="col-sm-6 form-group">
-										<label for="petBday" class="cols-sm-2 control-label">寵物生日</label><span id="birthShow2"></span>
-										<div class="cols-sm-10">
-											<div class="input-group">
-												<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-												<input type="date" name="petBday" min="1910-01-01"  max='2000-13-13' id="datefield2" class="form-control"  placeholder="請輸入您的手機"/>
-											</div>
-										</div>
-									</div>
-								</div>
-
-
-								<div class="text-center form-group">
-									<label for="petImg" class="control-label">寵物照片</label><br>
-									<img src="https://api.fnkr.net/testimg/350x200/00CED1/FFF/?text=img+placeholder" height="250px" width="200px" id="petPic2" style="margin-bottom: 10px "><br>
-									<input type="file"  name="petImg" id="petPic"  placeholder="請輸入您的電子信箱"/>
 								</div>
 
 							</div>
 
 
 							<input class="btn btn-primary btn-lg btn-block login-button" type="submit" value="註冊">
-						
+
 						</form>
 						
+						<button type="button" class="btn btn-info" id="autoAddMem" style="margin-top: 10px">新增一般會員</button>
+						<button type="button" class="btn btn-info" id="autoAddMemPet" style="margin-top: 10px">新增寵物會員</button>
+
 					</div>
 				</div>
 			</div>

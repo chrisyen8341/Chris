@@ -37,27 +37,19 @@ public class Register extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		req.setCharacterEncoding("BIG5");
+		req.setCharacterEncoding("UTF-8");
 		MemberDAO dao=new MemberDAO();
-		Hashtable<String,Object> table=new Hashtable<String,Object>();
-		Enumeration names=req.getParameterNames();
-		while(names.hasMoreElements()){
-			String name=(String)names.nextElement();
-			String value=req.getParameter(name);
-			table.put(name, value);
-			System.out.println(name+"  " +value);
-		}
 		Member member=new Member();
-		member.setMemId(((String)table.get("memId")));
-		member.setMemPwd((String)table.get("memPwd"));
-		member.setMemName((String)table.get("memName"));
-		member.setMemSname((String)table.get("memSname"));
-		member.setMemGender((Integer)table.get("memGender"));
-		member.setMemIdNo((String)table.get("memIdNo"));
-		member.setMemBday(makeDate((String)table.get("memBday")));
-		member.setMemPhone((String)table.get("memPhone"));
-		member.setMemAddress((String)table.get("memAddress"));
-		member.setMemEmail((String)table.get("memEmail"));
+		member.setMemId((req.getParameter("memId")));
+		member.setMemPwd(req.getParameter("memPwd"));
+		member.setMemName(req.getParameter("memName"));
+		member.setMemSname(req.getParameter(("memSname")));
+		member.setMemGender(Integer.parseInt(req.getParameter(("memGender"))));
+		member.setMemIdNo(req.getParameter(("memIdNo")));
+		member.setMemBday(makeDate(req.getParameter("memBday")));
+		member.setMemPhone(req.getParameter("memPhone"));
+		member.setMemAddress(req.getParameter("memAddress"));
+		member.setMemEmail(req.getParameter("memEmail"));
 		
 		
 		Collection<Part> parts = req.getParts();
@@ -67,7 +59,7 @@ public class Register extends HttpServlet {
 			}
 		}
 		
-		//下面5個是系統預設給定初始值 不能為null
+		//下面幾個是系統預設給定初始值 註冊時沒填 table不能為null
 		member.setMemReported(0);
 		member.setMemStatus(0);
 		member.setMemRelation(0);
@@ -82,24 +74,25 @@ public class Register extends HttpServlet {
 		dao.add(member);
 		
 		
-		if(((String)table.get("petOrNot")).equals("1")){
+		if(((String)req.getParameter("petOrNot")).equals("1")){
 			PetDAO petDao=new PetDAO();
 			Pet pet=new Pet();
 			pet.setMemNo(dao.getCurrSeq());
-			pet.setPetName((String) table.get("petName"));
-			pet.setPetKind((String)table.get("petKind"));
-			pet.setPetGender((Integer)table.get("petGender"));
-			pet.setPetSpecies((String)table.get("petSpecies"));
-			pet.setPetBday(makeDate((String)table.get("petBday")));
+			pet.setPetName(req.getParameter("petName"));
+			pet.setPetKind(req.getParameter("petKind"));
+			pet.setPetGender(Integer.parseInt((req.getParameter("petGender"))));
 			for (Part part : parts) {
 				if (part.getName().equals("petImg") && getFileNameFromPart(part) != null && part.getContentType() != null) {
 					pet.setPetImg(getPictureByteArray(part.getInputStream()));
 				}
 			}
+			pet.setPetBday(null);
+			pet.setPetSpecies(null);
 			pet.setPetIntro("Test");
 			petDao.add(pet);
 		}
 	}
+	
 	
 	
 		public static byte[] getPictureByteArray(InputStream fis) throws IOException {

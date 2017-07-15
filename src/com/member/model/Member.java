@@ -22,7 +22,7 @@ public class Member implements Serializable {
 	private Integer memRelation;
 	private String memSelfintro;
 	private Integer memFollowed;
-	private Integer memPoint;
+	private Integer memPoint=null;
 	private Integer memSaleRank;
 	private Double memLongtitude;
 	private Double memLatitude;
