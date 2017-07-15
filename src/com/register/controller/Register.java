@@ -14,7 +14,10 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -38,18 +41,76 @@ public class Register extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
+		
+		
+		//後端檢驗會員資料是否為null
+		String memId = req.getParameter("memId");
+		String memPwd = req.getParameter("memPwd");
+		String memName = req.getParameter("memName");
+		String memSname = req.getParameter("memSname");
+		String memGender = req.getParameter("memGender");
+		String memIdNo=req.getParameter("memIdNo");
+		String memBday=req.getParameter("memBday");
+		String memPhone= req.getParameter("memPhone");
+		String memAddress=req.getParameter("memAddress");
+		String memEmail= req.getParameter("memEmail");
+		
+		
+		List<String> errorMsgs = new LinkedList<String>();
+		req.setAttribute("errorMsgs", errorMsgs);
+		
+		if(memId==null||memId.isEmpty()){
+			errorMsgs.add("memId");
+		}
+		if(memPwd==null||memPwd.isEmpty()){
+			errorMsgs.add("memPwd");
+		}
+		if(memName==null||memName.isEmpty()){
+			errorMsgs.add("memName");
+		}
+		if(memSname==null||memSname.isEmpty()){
+			errorMsgs.add("memSname");
+		}
+		if(memGender==null||memGender.isEmpty()){
+			errorMsgs.add("memGender");
+		}
+		if(memIdNo==null||memIdNo.isEmpty()){
+			errorMsgs.add("memIdNo");
+		}
+		if(memBday==null||memBday.isEmpty()){
+			errorMsgs.add("memBday");
+		}
+		if(memPhone==null||memPhone.isEmpty()){
+			errorMsgs.add("memPhone");
+		}
+		if(memAddress==null||memAddress.isEmpty()){
+			errorMsgs.add("memAddress");
+		}
+		if(memEmail==null||memEmail.isEmpty()){
+			errorMsgs.add("memEmail");
+		}
+		if (!errorMsgs.isEmpty()) {
+			RequestDispatcher failureView = req
+					.getRequestDispatcher("/Register2.html");
+			failureView.forward(req, res);
+			return;//程式中斷
+		}
+	
+		
+		
+		//把會員資料存入db
 		MemberDAO dao=new MemberDAO();
 		Member member=new Member();
-		member.setMemId((req.getParameter("memId")));
-		member.setMemPwd(req.getParameter("memPwd"));
-		member.setMemName(req.getParameter("memName"));
-		member.setMemSname(req.getParameter(("memSname")));
-		member.setMemGender(Integer.parseInt(req.getParameter(("memGender"))));
-		member.setMemIdNo(req.getParameter(("memIdNo")));
-		member.setMemBday(makeDate(req.getParameter("memBday")));
-		member.setMemPhone(req.getParameter("memPhone"));
-		member.setMemAddress(req.getParameter("memAddress"));
-		member.setMemEmail(req.getParameter("memEmail"));
+		member.setMemId(memId);
+		member.setMemPwd(memPwd);
+		member.setMemName(memName);
+		member.setMemSname(memSname);
+		member.setMemGender(Integer.parseInt(memGender));
+		member.setMemIdNo(memIdNo);
+		member.setMemBday(makeDate(memBday));
+		member.setMemPhone(memPhone);
+		member.setMemAddress(memAddress);
+		member.setMemEmail(memEmail);
 		
 		
 		Collection<Part> parts = req.getParts();
@@ -74,13 +135,38 @@ public class Register extends HttpServlet {
 		dao.add(member);
 		
 		
+		
+		//使用者有養寵物時才會進來
 		if(((String)req.getParameter("petOrNot")).equals("1")){
+			
+			//判斷寵物資料是否為null
+			String petName=req.getParameter("petName");
+			String petKind=req.getParameter("petKind");
+			String petGender=req.getParameter("petGender");
+			if(petName==null||petName.isEmpty()){
+				errorMsgs.add("petName");
+			}
+			if(petKind==null||petKind.isEmpty()){
+				errorMsgs.add("petKind");
+			}
+			if(petGender==null||petGender.isEmpty()){
+				errorMsgs.add("petGender");
+			}
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Register2.html");
+				failureView.forward(req, res);
+				return;//程式中斷
+			}
+			
+			
+			//存db
 			PetDAO petDao=new PetDAO();
 			Pet pet=new Pet();
 			pet.setMemNo(dao.getCurrSeq());
-			pet.setPetName(req.getParameter("petName"));
-			pet.setPetKind(req.getParameter("petKind"));
-			pet.setPetGender(Integer.parseInt((req.getParameter("petGender"))));
+			pet.setPetName(petName);
+			pet.setPetKind(petKind);
+			pet.setPetGender(Integer.parseInt(petGender));
 			for (Part part : parts) {
 				if (part.getName().equals("petImg") && getFileNameFromPart(part) != null && part.getContentType() != null) {
 					pet.setPetImg(getPictureByteArray(part.getInputStream()));
