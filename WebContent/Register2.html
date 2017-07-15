@@ -11,9 +11,9 @@
 
 		$(function() {
 
-			//針對下面的七項特別驗證各自設標籤  因為每項不能為空值  故使用者ㄧ定會填 並促發下面七項blur驗證
+		//針對下面的七項特別驗證各自設標籤  因為每項不能為空值  故使用者ㄧ定會填 並促發下面七項blur驗證
 		//個別驗證為錯即為false
-		//最後在表單送出時會對這七項驗證判別 只要有ㄧ個為false  停止送出表單
+		//最後在表單送出時會對這八項驗證判別 只要有ㄧ個為false  停止送出表單
 		var valids = new Array(true,true, true,true,true,true,true);
 
 		//帳號驗證 AJAX確認帳號是否存在
@@ -150,6 +150,23 @@ document.getElementById("memBday").setAttribute("max", today);
 		});
 
 
+		//手機驗證
+		$("#memPhone").blur(function() {
+			var phone1 = new RegExp("[09]{2}[0-9]{2}\-[0-9]{6}");
+			var phone2 = new RegExp("[09]{2}[0-9]{8}");
+			if (phone1.test($("#memPhone").val())||phone2.test($("#memPhone").val()))  
+			{  
+				$("#memPhoneShow").html("&nbsp;&nbsp;&nbsp;&nbsp;合格的手機格式").css('color','green');
+				valids[5]=true;
+			}  
+			else{
+				$("#memPhoneShow").html("&nbsp;&nbsp;&nbsp;&nbsp;不合格的手機格式").css('color','red');
+				valids[5]=false;
+			} 
+		});
+
+
+
 		//信箱驗證
 		$("#memEmail").blur(function() {
 			if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($("#memEmail").val()))  
@@ -248,7 +265,6 @@ document.getElementById("memBday").setAttribute("max", today);
 				if(!valids[i]){
 					return false;
 				}
-				console.log(i+" : "+valids[i]);
 			}
 
 		});
@@ -420,7 +436,7 @@ document.getElementById("memBday").setAttribute("max", today);
 
 
 							<div class="form-group">
-								<label for="memEmail" class="cols-sm-2 control-label">電子信箱c</label><span id="memEmailShow"></span>
+								<label for="memEmail" class="cols-sm-2 control-label">電子信箱</label><span id="memEmailShow"></span>
 								<div class="cols-sm-10">
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
