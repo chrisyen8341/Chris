@@ -11,7 +11,7 @@ public class Pet implements Serializable {
 	private Integer memNo;
 	private String petName;
 	private String petKind;
-	private String petGender;
+	private Integer petGender;
 	private String petSpecies;
 	private String petIntro;
 	private Date petBday;
@@ -19,7 +19,7 @@ public class Pet implements Serializable {
 	
 	public Pet(){}
 
-	public Pet(Integer petNo, Integer memNo, String petName, String petKind, String petGender, String petSpecies,
+	public Pet(Integer petNo, Integer memNo, String petName, String petKind, Integer petGender, String petSpecies,
 			String petIntro, Date petBday, byte[] petImg) {
 		super();
 		this.petNo = petNo;
@@ -65,11 +65,11 @@ public class Pet implements Serializable {
 		this.petKind = petKind;
 	}
 
-	public String getPetGender() {
+	public Integer getPetGender() {
 		return petGender;
 	}
 
-	public void setPetGender(String petGender) {
+	public void setPetGender(Integer petGender) {
 		this.petGender = petGender;
 	}
 

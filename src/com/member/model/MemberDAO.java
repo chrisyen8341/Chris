@@ -51,7 +51,7 @@ public class MemberDAO implements MemberDAO_Interface{
 			pstmt.setString(2, member.getMemPwd());
 			pstmt.setString(3, member.getMemName());
 			pstmt.setString(4, member.getMemSname());
-			pstmt.setString(5, member.getMemGender());
+			pstmt.setInt(5, member.getMemGender());
 			pstmt.setString(6, member.getMemIdNo());
 			pstmt.setDate(7, member.getMemBday());
 			pstmt.setString(8, member.getMemPhone());
@@ -62,7 +62,7 @@ public class MemberDAO implements MemberDAO_Interface{
 			pstmt.setBlob(11, blob);
 			pstmt.setInt(12, member.getMemReported());
 			pstmt.setInt(13, member.getMemStatus());
-			pstmt.setString(14, member.getMemRelation());
+			pstmt.setInt(14, member.getMemRelation());
 			pstmt.setString(15, member.getMemSelfintro());
 			pstmt.setInt(16, member.getMemFollowed());
 			pstmt.setInt(17, member.getMemPoint());
@@ -115,7 +115,7 @@ public class MemberDAO implements MemberDAO_Interface{
 			pstmt.setString(3, member.getMemPwd());
 			pstmt.setString(4, member.getMemName());
 			pstmt.setString(5, member.getMemSname());
-			pstmt.setString(6, member.getMemGender());
+			pstmt.setInt(6, member.getMemGender());
 			pstmt.setString(7, member.getMemIdNo());
 			pstmt.setDate(8, member.getMemBday());
 			pstmt.setString(9, member.getMemPhone());
@@ -126,7 +126,7 @@ public class MemberDAO implements MemberDAO_Interface{
 			pstmt.setBlob(12, blob);
 			pstmt.setInt(13, member.getMemReported());
 			pstmt.setInt(14, member.getMemStatus());
-			pstmt.setString(15, member.getMemRelation());
+			pstmt.setInt(15, member.getMemRelation());
 			pstmt.setString(16, member.getMemSelfintro());
 			pstmt.setInt(17, member.getMemFollowed());
 			pstmt.setInt(18, member.getMemPoint());
@@ -220,7 +220,7 @@ public class MemberDAO implements MemberDAO_Interface{
 				member.setMemPwd(rs.getString("memPwd"));
 				member.setMemName(rs.getString("memName"));
 				member.setMemSname(rs.getString("memSname"));
-				member.setMemGender(rs.getString("memGender"));
+				member.setMemGender(rs.getInt("memGender"));
 				member.setMemIdNo(rs.getString("memIdNo"));
 				member.setMemBday(rs.getDate("memBday"));
 				member.setMemPhone(rs.getString("memPhone"));
@@ -229,7 +229,7 @@ public class MemberDAO implements MemberDAO_Interface{
 				member.setMemImg(rs.getBytes("memImg"));
 				member.setMemReported(rs.getInt("memReported"));
 				member.setMemStatus(rs.getInt("memStatus"));
-				member.setMemRelation(rs.getString("memRelation"));
+				member.setMemRelation(rs.getInt("memRelation"));
 				member.setMemSelfintro(rs.getString("memSelfintro"));
 				member.setMemFollowed(rs.getInt("memFollowed"));
 				member.setMemPoint(rs.getInt("memPoint"));
@@ -290,7 +290,7 @@ public class MemberDAO implements MemberDAO_Interface{
 				member.setMemPwd(rs.getString("memPwd"));
 				member.setMemName(rs.getString("memName"));
 				member.setMemSname(rs.getString("memSname"));
-				member.setMemGender(rs.getString("memGender"));
+				member.setMemGender(rs.getInt("memGender"));
 				member.setMemIdNo(rs.getString("memIdNo"));
 				member.setMemBday(rs.getDate("memBday"));
 				member.setMemPhone(rs.getString("memPhone"));
@@ -299,7 +299,7 @@ public class MemberDAO implements MemberDAO_Interface{
 				member.setMemImg(rs.getBytes("memImg"));
 				member.setMemReported(rs.getInt("memReported"));
 				member.setMemStatus(rs.getInt("memStatus"));
-				member.setMemRelation(rs.getString("memRelation"));
+				member.setMemRelation(rs.getInt("memRelation"));
 				member.setMemSelfintro(rs.getString("memSelfintro"));
 				member.setMemFollowed(rs.getInt("memFollowed"));
 				member.setMemPoint(rs.getInt("memPoint"));

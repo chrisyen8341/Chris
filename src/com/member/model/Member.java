@@ -10,7 +10,7 @@ public class Member implements Serializable {
 	private String memPwd;
 	private String memName;
 	private String memSname;
-	private String memGender;
+	private Integer memGender;
 	private String memIdNo;
 	private Date memBday;
 	private String memPhone;
@@ -19,7 +19,7 @@ public class Member implements Serializable {
 	private byte[] memImg;
 	private Integer memReported;
 	private Integer memStatus;
-	private String memRelation;
+	private Integer memRelation;
 	private String memSelfintro;
 	private Integer memFollowed;
 	private Integer memPoint;
@@ -31,9 +31,9 @@ public class Member implements Serializable {
 	
 	public Member(){}
 
-	public Member(Integer memNo, String memId, String memPwd, String memName, String memSname, String memGender,
+	public Member(Integer memNo, String memId, String memPwd, String memName, String memSname, Integer memGender,
 			String memIdNo, Date memBday, String memPhone, String memAddress, String memEmail, byte[] memImg,
-			Integer memReported, Integer memStatus, String memRelation, String memSelfintro, Integer memFollowed,
+			Integer memReported, Integer memStatus, Integer memRelation, String memSelfintro, Integer memFollowed,
 			Integer memPoint, Integer memSaleRank, Double memLongtitude, Double memLatitude, Timestamp memLocTime,
 			Integer memLocStatus) {
 		super();
@@ -102,11 +102,11 @@ public class Member implements Serializable {
 		this.memSname = memSname;
 	}
 
-	public String getMemGender() {
+	public Integer getMemGender() {
 		return memGender;
 	}
 
-	public void setMemGender(String memGender) {
+	public void setMemGender(Integer memGender) {
 		this.memGender = memGender;
 	}
 
@@ -174,11 +174,11 @@ public class Member implements Serializable {
 		this.memStatus = memStatus;
 	}
 
-	public String getMemRelation() {
+	public Integer getMemRelation() {
 		return memRelation;
 	}
 
-	public void setMemRelation(String memRelation) {
+	public void setMemRelation(Integer memRelation) {
 		this.memRelation = memRelation;
 	}
 

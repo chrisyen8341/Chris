@@ -52,7 +52,7 @@ public class Register extends HttpServlet {
 		member.setMemPwd((String)table.get("memPwd"));
 		member.setMemName((String)table.get("memName"));
 		member.setMemSname((String)table.get("memSname"));
-		member.setMemGender((String)table.get("memGender"));
+		member.setMemGender((Integer)table.get("memGender"));
 		member.setMemIdNo((String)table.get("memIdNo"));
 		member.setMemBday(makeDate((String)table.get("memBday")));
 		member.setMemPhone((String)table.get("memPhone"));
@@ -70,7 +70,7 @@ public class Register extends HttpServlet {
 		//下面5個是系統預設給定初始值 不能為null
 		member.setMemReported(0);
 		member.setMemStatus(0);
-		member.setMemRelation("單身");
+		member.setMemRelation(0);
 		member.setMemSelfintro("Test");
 		member.setMemPoint(1000);
 		member.setMemSaleRank(1000);
@@ -88,7 +88,7 @@ public class Register extends HttpServlet {
 			pet.setMemNo(dao.getCurrSeq());
 			pet.setPetName((String) table.get("petName"));
 			pet.setPetKind((String)table.get("petKind"));
-			pet.setPetGender((String)table.get("petGender"));
+			pet.setPetGender((Integer)table.get("petGender"));
 			pet.setPetSpecies((String)table.get("petSpecies"));
 			pet.setPetBday(makeDate((String)table.get("petBday")));
 			for (Part part : parts) {

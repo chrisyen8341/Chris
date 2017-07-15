@@ -40,7 +40,7 @@ public class PetJDBCDAO implements PetDAO_interface {
 			pstmt.setInt(1, pet.getMemNo());
 			pstmt.setString(2, pet.getPetName());
 			pstmt.setString(3, pet.getPetKind());
-			pstmt.setString(4, pet.getPetGender());
+			pstmt.setInt(4, pet.getPetGender());
 			pstmt.setString(5,pet.getPetSpecies());
 			pstmt.setString(6, pet.getPetIntro());
 			pstmt.setDate(7, pet.getPetBday());
@@ -86,7 +86,7 @@ public class PetJDBCDAO implements PetDAO_interface {
 			pstmt.setInt(2, pet.getMemNo());
 			pstmt.setString(3, pet.getPetName());
 			pstmt.setString(4, pet.getPetKind());
-			pstmt.setString(5, pet.getPetGender());
+			pstmt.setInt(5, pet.getPetGender());
 			pstmt.setString(6,pet.getPetSpecies());
 			pstmt.setString(7, pet.getPetIntro());
 			pstmt.setDate(8, pet.getPetBday());
@@ -177,7 +177,7 @@ public class PetJDBCDAO implements PetDAO_interface {
 				pet.setMemNo(rs.getInt("memNo"));
 				pet.setPetName(rs.getString("petName"));
 				pet.setPetKind(rs.getString("petKind"));
-				pet.setPetGender(rs.getString("petGender"));
+				pet.setPetGender(rs.getInt("petGender"));
 				pet.setPetSpecies(rs.getString("petSpecies"));
 				pet.setPetIntro(rs.getString("petIntro"));
 				pet.setPetBday(rs.getDate("petBday"));
@@ -234,7 +234,7 @@ public class PetJDBCDAO implements PetDAO_interface {
 				pet.setMemNo(rs.getInt("memNo"));
 				pet.setPetName(rs.getString("petName"));
 				pet.setPetKind(rs.getString("petKind"));
-				pet.setPetGender(rs.getString("petGender"));
+				pet.setPetGender(rs.getInt("petGender"));
 				pet.setPetSpecies(rs.getString("petSpecies"));
 				pet.setPetIntro(rs.getString("petIntro"));
 				pet.setPetBday(rs.getDate("petBday"));
