@@ -13,19 +13,20 @@ public class EmpService {
 		dao=new EmpDAO();
 	}
 	
-	public Emp addEmp(String empName, String empJob, String empId, String empPwd) {
+	public Emp addEmp(String empName, String empJob, String empId, String empPwd, Integer empStatus) {
 
 		Emp emp = new Emp();
 		emp.setEmpName(empName);
 		emp.setEmpJob(empJob);
 		emp.setEmpId(empId);
 		emp.setEmpPwd(empPwd);
+		emp.setEmpStatus(0);
 		dao.add(emp);
 
 		return emp ;
 	}
 
-	public Emp updateEmp(Integer empNo, String empName, String empJob, String empId, String empPwd) {
+	public Emp updateEmp(Integer empNo, String empName, String empJob, String empId, String empPwd, Integer empStatus) {
 
 		Emp emp = new Emp();
 		emp.setEmpNo(empNo);
@@ -33,6 +34,7 @@ public class EmpService {
 		emp.setEmpJob(empJob);
 		emp.setEmpId(empId);
 		emp.setEmpPwd(empPwd);
+		emp.setEmpStatus(0);
 		dao.update(emp);
 
 		return emp;

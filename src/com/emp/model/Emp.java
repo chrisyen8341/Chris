@@ -8,17 +8,19 @@ public class Emp implements Serializable{
 	private String empName;	
 	private String empJob;
 	private String empId;	
-	private String empPwd;	
+	private String empPwd;
+	private Integer empStatus;
 
 	public Emp(){}
 
-	public Emp(Integer empNo, String empName, String empJob, String empId, String empPwd) {
+	public Emp(Integer empNo, String empName, String empJob, String empId, String empPwd, Integer empStatus) {
 		super();
 		this.empNo = empNo;
 		this.empName = empName;
 		this.empJob = empJob;
 		this.empId = empId;
 		this.empPwd = empPwd;
+		this.empStatus=empStatus;
 	}
 
 	public Integer getEmpNo() {
@@ -59,6 +61,14 @@ public class Emp implements Serializable{
 
 	public void setEmpPwd(String empPwd) {
 		this.empPwd = empPwd;
+	}
+
+	public Integer getEmpStatus() {
+		return empStatus;
+	}
+
+	public void setEmpStatus(Integer empStatus) {
+		this.empStatus = empStatus;
 	}
 	
 

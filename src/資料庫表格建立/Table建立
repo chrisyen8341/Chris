@@ -88,15 +88,16 @@ empNo NUMBER(10) Constraint EMP_EMPNO_Pk Primary Key,
 empName VARCHAR2(30) NOT NULL,
 empJob VARCHAR2(50) NOT NULL,
 empId VARCHAR2(50) NOT NULL CONSTRAINT EMP_EMPID_UK UNIQUE,
-empPwd VARCHAR2(32) NOT NULL);
+empPwd VARCHAR2(32) NOT NULL,
+empStatus NUMBER(2) NOT NULL);
 
 Create Sequence EMPNO_SQ  Increment By 1 Start With 1 Nocache Nocycle;
 
-INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'周樊綱','工讀生','CHOUFAN','CHOODW213');
-INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'吳永志','總經理','DQWDH','EQWEDW213');
-INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'王阿鈞','協理','TYHYTAN','EWFWEF213');
-INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'陳興','打工仔','HYTHUFAN','CHOWEF213');
-INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'李宗霖','副理','CQWEAN','WEFEW213');
+INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'周樊綱','工讀生','CHOUFAN','CHOODW213',0);
+INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'吳永志','總經理','DQWDH','EQWEDW213',0);
+INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'王阿鈞','協理','TYHYTAN','EWFWEF213',0);
+INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'陳興','打工仔','HYTHUFAN','CHOWEF213',0);
+INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'李宗霖','副理','CQWEAN','WEFEW213',0);
 
 
 
@@ -167,11 +168,11 @@ Create Sequence ALBUMIMG_SQ Increment By 1 Start With 1 Nocache Nocycle;
 
 Insert Into Albumimg Values(Albumimg_SQ.Nextval,1,'相片Q','這是測試用的相片',To_Date('20170710 17:50:20','YYYYMMDD HH24:MI:SS'),
 To_Date('20170710 20:50:20','YYYYMMDD HH24:MI:SS'),'hello','video',Empty_Blob());
-Insert Into Albumimg Values(Albumimg_SQ.Nextval,1,'相片A','這是ER測QWE試用的相片',To_Date('20170710 17:50:20','YYYYMMDD HH24:MI:SS'),
+Insert Into Albumimg Values(Albumimg_SQ.Nextval,2,'相片A','這是ER測QWE試用的相片',To_Date('20170710 17:50:20','YYYYMMDD HH24:MI:SS'),
 To_Date('20170710 20:50:20','YYYYMMDD HH24:MI:SS'),'QWEQW','jpeg',Empty_Blob());
-Insert Into Albumimg Values(Albumimg_SQ.Nextval,1,'相片S','這是測試用Q的相片',To_Date('20140210 17:50:20','YYYYMMDD HH24:MI:SS'),
+Insert Into Albumimg Values(Albumimg_SQ.Nextval,2,'相片S','這是測試用Q的相片',To_Date('20140210 17:50:20','YYYYMMDD HH24:MI:SS'),
 To_Date('20170710 20:50:20','YYYYMMDD HH24:MI:SS'),'IIII','png',Empty_Blob());
-Insert Into Albumimg Values(Albumimg_SQ.Nextval,1,'相片L','這QWE是測試用的相片',To_Date('20130710 17:50:20','YYYYMMDD HH24:MI:SS'),
+Insert Into Albumimg Values(Albumimg_SQ.Nextval,3,'相片L','這QWE是測試用的相片',To_Date('20130710 17:50:20','YYYYMMDD HH24:MI:SS'),
 To_Date('20170710 20:50:20','YYYYMMDD HH24:MI:SS'),'123FEW','mp3',Empty_Blob());
 Insert Into Albumimg Values(Albumimg_SQ.Nextval,1,'相片Q','這FEW是測試RET用的相片',To_Date('20170710 17:50:20','YYYYMMDD HH24:MI:SS'),
 TO_DATE('20170710 20:50:20','YYYYMMDD HH24:MI:SS'),'RTYQWE','video',EMPTY_BLOB());

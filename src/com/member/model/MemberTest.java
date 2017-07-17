@@ -67,7 +67,7 @@ public class MemberTest {
 //		System.out.println("執行完畢");
 		
 		
-		//刪除
+		//刪除 多個表刪不動 member為多個table參照
 //		dao.delete(3);
 //		System.out.println("執行完畢");
 		

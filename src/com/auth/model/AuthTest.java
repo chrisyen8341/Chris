@@ -22,7 +22,7 @@ public class AuthTest {
 		
 		
 		//§R°£
-//		dao.delete(3);
+//		dao.delete(2);
 //		System.out.println("=======================");
 		
 		

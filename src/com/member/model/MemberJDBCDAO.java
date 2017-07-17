@@ -9,11 +9,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemberJDBCDAO implements MemberDAO_Interface {
+public class MemberJDBCDAO implements MemberDAO_interface {
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "TEST";
-	private static final String PASSWORD = "c83758341";
+	private static final String USER = "petym";
+	private static final String PASSWORD = "123456";
 	
 	private int currSeq;
 	private static final String INSERT_STMT = "INSERT INTO MEMBER(MEMNO, MEMID, MEMPWD, MEMNAME, MEMSNAME, MEMGENDER,MEMIDNO,MEMBDAY,MEMPHONE,MEMADDRESS,MEMEMAIL"
@@ -166,6 +166,7 @@ public class MemberJDBCDAO implements MemberDAO_Interface {
 		
 	}
 
+	//多個TABLE時刪不動，MEMBER是多個TABLE的參照，除非先把所有有關連之TABLE刪掉
 	@Override
 	public void delete(int memno) {
 		Connection con = null;

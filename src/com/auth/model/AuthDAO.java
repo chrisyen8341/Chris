@@ -1,6 +1,7 @@
 package com.auth.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +30,8 @@ public class AuthDAO implements AuthDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO AUTH(AUTHNO, AUTHNAME)"
 			+ " VALUES(AUTHNO_SQ.NEXTVAL,?)";
 	private static final String UPDATE_STMT = "UPDATE AUTH SET AUTHNO = ?, AUTHNAME = ? WHERE AUTHNO =　?";
-	private static final String DELETE_STMT = "DELETE FROM AUTH WHERE AUTHNO = ?";
+	private static final String DELETE_AUTH = "DELETE FROM AUTH WHERE AUTHNO = ?";
+	private static final String DELETE_EMPAUTH = "DELETE FROM EMPAUTH WHERE AUTHNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM AUTH WHERE AUTHNO = ?";
 	private static final String GET_ALL = "SELECT * FROM AUTH";
 	
@@ -106,14 +108,33 @@ public class AuthDAO implements AuthDAO_interface {
 
 	@Override
 	public void delete(int authNo) {
+		int updateCount_EmpAuths = 0;
 		PreparedStatement pstmt=null;
 		Connection con=null;
 		
 		try {
-			con=ds.getConnection();
-			pstmt=con.prepareStatement(DELETE_STMT);
+
+			con = ds.getConnection();
+
+			// 1●設定於 pstm.executeUpdate()之前
+			con.setAutoCommit(false);
+			
+			//先刪員工權限 EMPAUTH
+			pstmt = con.prepareStatement(DELETE_EMPAUTH);
+			pstmt.setInt(1, authNo);
+			updateCount_EmpAuths=pstmt.executeUpdate();
+			
+			//再刪權限 EMP
+			pstmt = con.prepareStatement(DELETE_AUTH);
 			pstmt.setInt(1, authNo);
 			pstmt.executeUpdate();
+			
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			System.out.println("刪除權限編號" + authNo + "時,共有" + updateCount_EmpAuths
+					+ "個員工權限同時被刪除");
+			
 
 		}  catch (SQLException e) {
 			// TODO Auto-generated catch block

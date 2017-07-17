@@ -15,8 +15,8 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "TEST";
-	private static final String PASSWORD = "c83758341";
+	private static final String USER = "petym";
+	private static final String PASSWORD = "123456";
 	
 	
 	private static final String INSERT_STMT = "INSERT INTO ALBUMIMG(IMGNO, ALBUMNO,IMGTITLE,IMGDESC,IMGCREATEDTIME,IMGMODIFIEDTIME,IMGFILENAME,"

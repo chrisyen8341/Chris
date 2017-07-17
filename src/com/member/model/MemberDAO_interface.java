@@ -2,7 +2,7 @@ package com.member.model;
 
 import java.util.List;
 
-public interface MemberDAO_Interface {
+public interface MemberDAO_interface {
 	void add(Member member);
 	void update(Member member);
 	void delete(int memno);

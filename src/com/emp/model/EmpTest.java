@@ -13,6 +13,7 @@ public class EmpTest {
 //		emp1.setEmpJob("工程師");
 //		emp1.setEmpId("dGRTG");
 //		emp1.setEmpPwd("RTGRTGE");
+//		emp1.setEmpStatus(0);
 //		dao.add(emp1);
 //		System.out.println("執行完畢");
 
@@ -24,10 +25,11 @@ public class EmpTest {
 //		emp2.setEmpJob("工程師");
 //		emp2.setEmpId("werTG");
 //		emp2.setEmpPwd("qweE");
+//		emp2.setEmpStatus(0);
 //		dao.update(emp2);;
 //		System.out.println("執行完畢");
 		
-		//刪除
+		//刪除 多個table測不了 emp為多個table參照
 //		dao.delete(4);
 //		System.out.println("執行完畢");
 		
@@ -39,7 +41,7 @@ public class EmpTest {
 //		System.out.println(emp3.getEmpJob());
 //		System.out.println(emp3.getEmpPwd());
 //		System.out.println(emp3.getEmpId());
-		
+//		System.out.println(emp3.getEmpStatus());
 		
 		//查全部
 //		List<Emp> empList=dao.getAll();
@@ -49,6 +51,7 @@ public class EmpTest {
 //			System.out.println(emp.getEmpJob());
 //			System.out.println(emp.getEmpPwd());
 //			System.out.println(emp.getEmpId());
+//			System.out.println(emp.getEmpStatus());
 //			System.out.println("========================");
 //		}
 		

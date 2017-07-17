@@ -15,15 +15,16 @@ public class AlbumJDBCDAO implements AlbumDAO_interface {
 
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "TEST";
-	private static final String PASSWORD = "c83758341";
+	private static final String USER = "petym";
+	private static final String PASSWORD = "123456";
 	
 	
 	private static final String INSERT_STMT = "INSERT INTO ALBUM(ALBUMNO, MEMNO,ALBUMTITLE,ALBUMCREATEDTIME,AlbumModifiedTime,ALBUMSTATUS,ALBUMIMGFILE)"
 			+ " VALUES(ALBUMNO_SQ.NEXTVAL,?,?,?,?,?,?)";
 	private static final String UPDATE_STMT = "UPDATE ALBUM SET ALBUMNO = ?, MEMNO = ?, ALBUMTITLE = ?, "
 			+ "ALBUMCREATEDTIME = ?, ALBUMMODIFIEDTIME = ?, ALBUMSTATUS = ?, ALBUMIMGFILE = ? WHERE ALBUMNO =　?";
-	private static final String DELETE_STMT = "DELETE FROM ALBUM WHERE ALBUMNO = ?";
+	private static final String DELETE_ALBUM = "DELETE FROM ALBUM WHERE ALBUMNO = ?";
+	private static final String DELETE_ALBUMIMG = "DELETE FROM ALBUMIMG WHERE ALBUMNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM ALBUM WHERE ALBUMNO = ?";
 	private static final String GET_ALL = "SELECT * FROM ALBUM";
 
@@ -121,16 +122,35 @@ public class AlbumJDBCDAO implements AlbumDAO_interface {
 
 	@Override
 	public void delete(int albumNo) {
+		int updateCount_AlbumImgs = 0;
 		PreparedStatement pstmt=null;
 		Connection con=null;
 		
 		try {
 			Class.forName(DRIVER);
 			con=DriverManager.getConnection(URL,USER,PASSWORD);
-			pstmt=con.prepareStatement(DELETE_STMT);
+			
+			// 1●設定於 pstm.executeUpdate()之前
+			con.setAutoCommit(false);
+			
+			
+			//先刪相片 ALBUMIMG
+			pstmt=con.prepareStatement(DELETE_ALBUMIMG);
+			pstmt.setInt(1, albumNo);
+			updateCount_AlbumImgs=pstmt.executeUpdate();
+			
+			//再刪相簿 ALBUM
+			pstmt=con.prepareStatement(DELETE_ALBUM);
 			pstmt.setInt(1, albumNo);
 			pstmt.executeUpdate();
-
+		
+			
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			System.out.println("刪除相簿編號" + albumNo + "時,共有" + updateCount_AlbumImgs
+					+ "張相片同時被刪除");
+			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

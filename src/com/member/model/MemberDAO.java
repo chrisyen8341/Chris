@@ -14,7 +14,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class MemberDAO implements MemberDAO_Interface{
+public class MemberDAO implements MemberDAO_interface{
 
 	private static DataSource ds = null;
 	static {
@@ -162,7 +162,8 @@ public class MemberDAO implements MemberDAO_Interface{
 		}
 		
 	}
-
+	
+	//多個TABLE時刪不動，MEMBER是多個TABLE的參照，除非先把所有有關連之TABLE刪掉
 	@Override
 	public void delete(int memno) {
 		Connection con = null;

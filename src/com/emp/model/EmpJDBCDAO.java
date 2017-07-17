@@ -16,14 +16,14 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 	
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "TEST";
-	private static final String PASSWORD = "c83758341";
+	private static final String USER = "petym";
+	private static final String PASSWORD = "123456";
 	
 	
-	private static final String INSERT_STMT = "INSERT INTO EMP(EMPNO,EMPNAME,EMPJOB,EMPID,EMPPWD)"
-			+ " VALUES(EMPNO_SQ.NEXTVAL,?,?,?,?)";
+	private static final String INSERT_STMT = "INSERT INTO EMP(EMPNO,EMPNAME,EMPJOB,EMPID,EMPPWD,EMPSTATUS)"
+			+ " VALUES(EMPNO_SQ.NEXTVAL,?,?,?,?,?)";
 	private static final String UPDATE_STMT = "UPDATE EMP SET EMPNO = ?, EMPNAME = ?, EMPJOB = ?, "
-			+ "EMPID = ?, EMPPWD = ? WHERE EMPNO =　?";
+			+ "EMPID = ?, EMPPWD = ?,EMPSTATUS = ? WHERE EMPNO =　?";
 	private static final String DELETE_STMT = "DELETE FROM EMP WHERE EMPNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM EMP WHERE EMPNO = ?";
 	private static final String GET_ALL = "SELECT * FROM EMP";
@@ -42,6 +42,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 			pstmt.setString(2, emp.getEmpJob());
 			pstmt.setString(3, emp.getEmpId());
 			pstmt.setString(4,emp.getEmpPwd());
+			pstmt.setInt(5, emp.getEmpStatus());
 			pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException e) {
@@ -83,7 +84,8 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 			pstmt.setString(3, emp.getEmpJob());
 			pstmt.setString(4, emp.getEmpId());
 			pstmt.setString(5, emp.getEmpPwd());
-			pstmt.setInt(6, emp.getEmpNo());
+			pstmt.setInt(6, emp.getEmpStatus());
+			pstmt.setInt(7, emp.getEmpNo());
 			pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException e) {
@@ -111,6 +113,8 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 		
 	}
 
+	
+	//多個表時刪不動  EMP維多個TABLE的參照  有一欄員工狀態
 	@Override
 	public void delete(int empNo) {
 		PreparedStatement pstmt=null;
@@ -168,6 +172,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 				emp.setEmpJob(rs.getString("empJob"));
 				emp.setEmpId(rs.getString("empId"));
 				emp.setEmpPwd(rs.getString("empPwd"));
+				emp.setEmpStatus(rs.getInt("empStatus"));
 			}
 			
 		} catch (ClassNotFoundException e) {
@@ -221,6 +226,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 				emp.setEmpJob(rs.getString("empJob"));
 				emp.setEmpId(rs.getString("empId"));
 				emp.setEmpPwd(rs.getString("empPwd"));
+				emp.setEmpStatus(rs.getInt("empStatus"));
 				empList.add(emp);		
 			}
 			
