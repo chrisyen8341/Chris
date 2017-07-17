@@ -3,23 +3,23 @@ package com.empauth.com;
 import java.io.Serializable;
 
 public class EmpAuth implements Serializable {
-	private Integer empNO;
+	private Integer empNo;
 	private Integer authNo;
 	
 	public EmpAuth(){}
 
-	public EmpAuth(Integer empNO, Integer authNo) {
+	public EmpAuth(Integer empNo, Integer authNo) {
 		super();
-		this.empNO = empNO;
+		this.empNo = empNo;
 		this.authNo = authNo;
 	}
 
-	public Integer getEmpNO() {
-		return empNO;
+	public Integer getEmpNo() {
+		return empNo;
 	}
 
-	public void setEmpNO(Integer empNO) {
-		this.empNO = empNO;
+	public void setEmpNO(Integer empNo) {
+		this.empNo = empNo;
 	}
 
 	public Integer getAuthNo() {

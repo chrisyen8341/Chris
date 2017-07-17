@@ -33,7 +33,7 @@ public class EmpAuthJDBCDAO implements EmpAuthDAO_interface {
 			Class.forName(DRIVER);
 			con=DriverManager.getConnection(URL,USER,PASSWORD);
 			pstmt=con.prepareStatement(INSERT_STMT);
-			pstmt.setInt(1,empAuth.getEmpNO());
+			pstmt.setInt(1,empAuth.getEmpNo());
 			pstmt.setInt(2, empAuth.getAuthNo());
 			pstmt.executeUpdate();
 
@@ -72,9 +72,9 @@ public class EmpAuthJDBCDAO implements EmpAuthDAO_interface {
 			Class.forName(DRIVER);
 			con=DriverManager.getConnection(URL,USER,PASSWORD);
 			pstmt=con.prepareStatement(UPDATE_STMT);
-			pstmt.setInt(1,empAuth.getEmpNO());
+			pstmt.setInt(1,empAuth.getEmpNo());
 			pstmt.setInt(2, empAuth.getAuthNo());
-			pstmt.setInt(3,empAuth.getEmpNO());
+			pstmt.setInt(3,empAuth.getEmpNo());
 			pstmt.setInt(4, empAuth.getAuthNo());
 			pstmt.executeUpdate();
 

@@ -42,7 +42,7 @@ public class EmpAuthDAO implements EmpAuthDAO_interface {
 		try {
 			con=ds.getConnection();
 			pstmt=con.prepareStatement(INSERT_STMT);
-			pstmt.setInt(1,empAuth.getEmpNO());
+			pstmt.setInt(1,empAuth.getEmpNo());
 			pstmt.setInt(2, empAuth.getAuthNo());
 			pstmt.executeUpdate();
 
@@ -77,9 +77,9 @@ public class EmpAuthDAO implements EmpAuthDAO_interface {
 		try {
 			con=ds.getConnection();
 			pstmt=con.prepareStatement(UPDATE_STMT);
-			pstmt.setInt(1,empAuth.getEmpNO());
+			pstmt.setInt(1,empAuth.getEmpNo());
 			pstmt.setInt(2, empAuth.getAuthNo());
-			pstmt.setInt(3,empAuth.getEmpNO());
+			pstmt.setInt(3,empAuth.getEmpNo());
 			pstmt.setInt(4, empAuth.getAuthNo());
 			pstmt.executeUpdate();
 
