@@ -48,50 +48,64 @@ public class Register extends HttpServlet {
 		String memPwd = req.getParameter("memPwd").trim();
 		String memName = req.getParameter("memName").trim();
 		String memSname = req.getParameter("memSname").trim();
-		String memGender = req.getParameter("memGender").trim();
 		String memIdNo=req.getParameter("memIdNo").trim();
-		String memBday=req.getParameter("memBday").trim();
 		String memPhone= req.getParameter("memPhone").trim();
 		String memAddress=req.getParameter("memAddress").trim();
 		String memEmail= req.getParameter("memEmail").trim();
-		
+
 		
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 		
 		if(memId==null||memId.isEmpty()){
-			errorMsgs.add("memId");
+			errorMsgs.add("請填寫帳號");
 		}
 		if(memPwd==null||memPwd.isEmpty()){
-			errorMsgs.add("memPwd");
+			errorMsgs.add("請填寫密碼");
 		}
 		if(memName==null||memName.isEmpty()){
-			errorMsgs.add("memName");
+			errorMsgs.add("請填寫姓名");
 		}
 		if(memSname==null||memSname.isEmpty()){
-			errorMsgs.add("memSname");
+			errorMsgs.add("請填寫暱稱");
 		}
-		if(memGender==null||memGender.isEmpty()){
-			errorMsgs.add("memGender");
+		
+		Integer memGender=null;
+		try {
+			memGender = Integer.parseInt(req.getParameter("memGender").trim());
+		} catch (IllegalArgumentException e) {
+			memGender = 1;
+			errorMsgs.add("請輸入性別");
 		}
+
 		if(memIdNo==null||memIdNo.isEmpty()){
-			errorMsgs.add("memIdNo");
+			errorMsgs.add("請填寫身分證字號");
 		}
-		if(memBday==null||memBday.isEmpty()){
-			errorMsgs.add("memBday");
+		
+		java.sql.Date memBday=null;
+		try {
+			memBday = java.sql.Date.valueOf(req.getParameter("memBday").trim());
+		} catch (IllegalArgumentException e) {
+			memBday=new java.sql.Date(System.currentTimeMillis());
+			errorMsgs.add("請輸入生日!");
 		}
+		
 		if(memPhone==null||memPhone.isEmpty()){
-			errorMsgs.add("memPhone");
+			errorMsgs.add("請填寫手機");
 		}
 		if(memAddress==null||memAddress.isEmpty()){
-			errorMsgs.add("memAddress");
+			errorMsgs.add("請填寫地址");
 		}
 		if(memEmail==null||memEmail.isEmpty()){
-			errorMsgs.add("memEmail");
+			errorMsgs.add("請填寫信箱");
 		}
+		
+		
+		
+		
 		if (!errorMsgs.isEmpty()) {
 			RequestDispatcher failureView = req
-					.getRequestDispatcher("/Register2.html");
+					.getRequestDispatcher("/newFileBig5.jsp");
 			failureView.forward(req, res);
 			return;//程式中斷
 		}
@@ -105,9 +119,9 @@ public class Register extends HttpServlet {
 		member.setMemPwd(memPwd);
 		member.setMemName(memName);
 		member.setMemSname(memSname);
-		member.setMemGender(Integer.parseInt(memGender));
+		member.setMemGender(memGender);
 		member.setMemIdNo(memIdNo);
-		member.setMemBday(java.sql.Date.valueOf(memBday));
+		member.setMemBday(memBday);
 		member.setMemPhone(memPhone);
 		member.setMemAddress(memAddress);
 		member.setMemEmail(memEmail);
