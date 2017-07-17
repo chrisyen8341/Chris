@@ -35,10 +35,10 @@ public class Login extends HttpServlet {
 		List<String> errorMsgs=new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 		
-		if(memId==null||memId.length()==0){
+		if(memId==null||memId.trim().length()==0){
 			errorMsgs.add("memId");
 		}
-		if(memPwd==null||memPwd.length()==0){
+		if(memPwd==null||memPwd.trim().length()==0){
 			errorMsgs.add("memPwd");
 		}
 		if(!errorMsgs.isEmpty()){

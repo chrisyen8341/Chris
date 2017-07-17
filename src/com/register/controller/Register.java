@@ -44,16 +44,16 @@ public class Register extends HttpServlet {
 		
 		
 		//後端檢驗會員資料是否為null
-		String memId = req.getParameter("memId");
-		String memPwd = req.getParameter("memPwd");
-		String memName = req.getParameter("memName");
-		String memSname = req.getParameter("memSname");
-		String memGender = req.getParameter("memGender");
-		String memIdNo=req.getParameter("memIdNo");
-		String memBday=req.getParameter("memBday");
-		String memPhone= req.getParameter("memPhone");
-		String memAddress=req.getParameter("memAddress");
-		String memEmail= req.getParameter("memEmail");
+		String memId = req.getParameter("memId").trim();
+		String memPwd = req.getParameter("memPwd").trim();
+		String memName = req.getParameter("memName").trim();
+		String memSname = req.getParameter("memSname").trim();
+		String memGender = req.getParameter("memGender").trim();
+		String memIdNo=req.getParameter("memIdNo").trim();
+		String memBday=req.getParameter("memBday").trim();
+		String memPhone= req.getParameter("memPhone").trim();
+		String memAddress=req.getParameter("memAddress").trim();
+		String memEmail= req.getParameter("memEmail").trim();
 		
 		
 		List<String> errorMsgs = new LinkedList<String>();
@@ -107,7 +107,7 @@ public class Register extends HttpServlet {
 		member.setMemSname(memSname);
 		member.setMemGender(Integer.parseInt(memGender));
 		member.setMemIdNo(memIdNo);
-		member.setMemBday(makeDate(memBday));
+		member.setMemBday(java.sql.Date.valueOf(memBday));
 		member.setMemPhone(memPhone);
 		member.setMemAddress(memAddress);
 		member.setMemEmail(memEmail);
@@ -140,9 +140,9 @@ public class Register extends HttpServlet {
 		if(((String)req.getParameter("petOrNot")).equals("1")){
 			
 			//判斷寵物資料是否為null
-			String petName=req.getParameter("petName");
-			String petKind=req.getParameter("petKind");
-			String petGender=req.getParameter("petGender");
+			String petName=req.getParameter("petName").trim();
+			String petKind=req.getParameter("petKind").trim();
+			String petGender=req.getParameter("petGender").trim();
 			if(petName==null||petName.isEmpty()){
 				errorMsgs.add("petName");
 			}
@@ -204,12 +204,4 @@ public class Register extends HttpServlet {
 		}
 		
 		
-		public Date makeDate(String date){
-			String[] dates=date.split("-");
-			int year=Integer.parseInt(dates[0]);
-			int month=Integer.parseInt(dates[1])-1;
-			int day=Integer.parseInt(dates[2]);
-			Calendar calendar = new GregorianCalendar(year, month, day);
-			return new Date(calendar.getTimeInMillis());
-		}
 }
