@@ -45,7 +45,12 @@ public class Login extends HttpServlet {
 			errorMsgs.add("±b¸¹±K½X¿ù»~");
 		}
 		
+		Member errMember=new Member();
+		errMember.setMemId(memId);
+		errMember.setMemPwd(memPwd);
+		
 		if(!errorMsgs.isEmpty()){
+			req.setAttribute("member", errMember);
 			RequestDispatcher sendBackView=req.getRequestDispatcher("/login4.html");
 			sendBackView.forward(req, res);
 			return;
@@ -57,6 +62,7 @@ public class Login extends HttpServlet {
 		
 				
 		    if (member==null) {
+		    	req.setAttribute("member", errMember);
 		    	errorMsgs.add("±b¸¹±K½X¿ù»~");
 		    	RequestDispatcher sendBackView=req.getRequestDispatcher("/login.jsp");
 				sendBackView.forward(req, res);
