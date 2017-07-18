@@ -53,7 +53,7 @@
 									<div class="cols-sm-10">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-											<input type="password" class="form-control" name="memPwd" id="memPwd"  placeholder="輸入密碼(包含英文字且長度大於6)"/>
+											<input type="password" class="form-control" name="memPwd" id="memPwd"  placeholder="需包含英文字且長度大於6"/>
 										</div>
 									</div>
 								</div>

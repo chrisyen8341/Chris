@@ -372,7 +372,6 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			pstmt.setString(1, memId);
 			pstmt.setString(2, memPwd);
 			rs = pstmt.executeQuery();
-
 			while (rs.next()) {
 				member = new Member();
 				member.setMemNo(rs.getInt("memNo"));

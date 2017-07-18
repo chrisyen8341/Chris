@@ -1,15 +1,364 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>Examples</title>
-<meta name="description" content="">
-<meta name="keywords" content="">
-<link href="" rel="stylesheet">
-</head>
-<body>
-    <h1>首頁</h1>
-    <a href="Album.html">相簿</a>
-</body>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <script src="code.jquery.com/jquery-1.10.1.min.js"></script>
+
+        <title>Modern Business - Start Bootstrap Template</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="css/nav.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="css/modern-business.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+    </head>
+
+    <body>
+
+        <!-- Navigation -->
+        <nav id="emerald-nav" class="navbar navbar-light navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand logo" href="index.html">寵物You&amp;Me</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="about.html">約會商品</a>
+                        </li>
+                        <li>
+                            <a href="services.html">商城</a>
+                        </li>
+                        <li>
+                            <a href="contact.html">活動</a>
+                        </li>
+                        <li>
+                            <a href="contact.html">寵物日誌</a>
+                        </li>
+                    </ul> 
+                    <div class="nav collapse navbar-collapse navbar-right" id="login">
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="about.html">購物車</a>
+                            </li>
+                            <li>
+                                <a href="about.html">站內信</a>
+                            </li>
+                            <li>
+                                <a href="services.html">會員專區</a>
+                            </li>
+                            <li>
+                                <a href="login.jsp">登入</a>
+                            </li>   
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+        <!-- Header Carousel -->
+        <header id="myCarousel" class="carousel slide">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div class="fill" style="background-image:url('images/pets_try1.jpg');"></div>
+                    <div class="carousel-caption">
+                        <h2>Caption 1</h2>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="fill" style="background-image:url('images/restaurant.jpg');"></div>
+                    <div class="carousel-caption">
+                        <h2>Caption 2</h2>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="fill" style="background-image:url('images/pets_try3_resized.jpg');"></div>
+                    <div class="carousel-caption">
+                        <h2>Caption 3</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="icon-prev"></span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="icon-next"></span>
+            </a>
+        </header>
+
+        <h4 class=" col-md-offset-3 col-md-6 page-header text-right">目前位置:首頁</h4>
+
+        <!-- Page Content -->
+        <div class="container">
+
+            <!-- Marketing Icons Section -->
+            <div class="col-md-offset-3 col-md-6 Search-bar-out">
+                <h1 class="page-header"></h1>
+                <ul class="list-unstyled">
+                    <li>
+                        <div style>
+                            <h4>開始找約會</h4>
+                        </div>
+                    </li>
+                    <li class="text-center">
+                        <div id="sites">
+                            <span class="add-border display-block">
+                                <input type="radio" name="site1" id="girl-button" value="girl" checked="checked"/>
+                                <label for="girl-button"><img src="images/girl.png" alt="" /></label>
+                                <input type="radio" name="site1" id="man-button" value="man" />
+                                <label for="man-button"><img src="images/man.png" alt="" /></label>
+                            </span >
+                            <span class="add-border display-block">
+                                <input type="radio" name="site2" id="dog-button" value="dog" checked="checked" />
+                                <label for="dog-button"><img src="images/dog.png" alt="" /></label>
+                                <input type="radio" name="site2" id="cat-button" value="cat" />
+                                <label for="cat-button"><img src="images/cat.png" alt="" /></label>
+                            </span>
+
+                        </div>
+                    </li>
+                    <li>
+                        <button class=" btn-fg btn-block btn btn-default">搜尋
+                        </button>
+                    </li>
+
+                </ul> 
+            </div>
+
+
+            <div class="container">
+                <div class="row">
+
+                    <!--                 <div class="col-md-4"> -->
+                    <!--                     <div class="panel panel-default">
+<div class="panel-heading">
+<h4><i class="fa fa-fw fa-check"></i> Bootstrap v3.3.7</h4>
+</div> -->
+                    <!--              <div class="panel-body">
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+<a href="#" class="btn btn-default">Learn More</a>
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4><i class="fa fa-fw fa-gift"></i> Free &amp; Open Source</h4>
+</div>
+<div class="panel-body">
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+<a href="#" class="btn btn-default">Learn More</a>
+</div> -->
+                    <!--            </div>
+</div>
+<div class="col-md-4">
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4><i class="fa fa-fw fa-compass"></i> Easy to Use</h4>
+</div>
+<div class="panel-body">
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+<a href="#" class="btn btn-default">Learn More</a>
+</div>
+</div>
+</div>
+</div> -->
+                    <!-- /.row -->
+
+                    <!-- Portfolio Section -->
+
+
+
+                </div>
+
+                <h2 class=" col-md-12 page-header top-margin">在這你可以</h2>
+
+                <div class="row container-fluid"> 
+                    <div class="pglink text-center col-md-offset-3 col-md-3 col-sm-6">
+                        <a href="portfolio-item.html">
+                            <h2><mark>寵物約會商品</mark></h2>
+                            <h3>找到附近的寵物和主人</h3>
+                            <h3>馬上認識新朋友和寵物</h3>
+
+                            <!--                                 <img class="img-responsive img-portfolio img-hover " src="http://placehold.it/700x450" alt=""> -->
+                        </a>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 view view-first">
+                        <a href="portfolio-item.html">
+                            <img class="img-rounded img-responsive img-portfolio img-hover" src="images/WP14-750x400.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="row container-fluid"> 
+                    <div class=" col-md-offset-2 col-md-4 col-sm-6 view view-first">
+                        <a href="portfolio-item.html">
+                            <img class="img-rounded img-responsive img-portfolio img-hover" src="images/WP7-750x400.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="text-center col-md-3 col-sm-6">
+                        <a href="portfolio-item.html">
+                            <h2><mark>寵物商城</mark></h2>
+                            <h3>精選個性化商品</h3>
+                            <h3>最殺價格限時購</h3>
+                        </a>
+                    </div>
+                </div>
+                <div class="row container-fluid"> 
+                    <div class="text-center col-md-offset-3 col-md-3 col-sm-6">
+                        <a href="portfolio-item.html">
+                            <h2><mark>寵物活動</mark></h2>
+                            <h3>寵物Party</h3>
+                            <h3>熱血開跑</h3>
+                        </a>
+                    </div>
+                    <div class="col-md-4 col-sm-6 view view-first">
+                        <a href="portfolio-item.html">
+                            <img class="img-rounded img-responsive img-portfolio img-hover" src="images/WP15-700x450.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="text-center row container-fluid view view-first"> 
+                    <div class=" col-md-offset-2 col-md-4 col-sm-6">
+                        <a href="portfolio-item.html">
+                            <img class="img-rounded img-responsive img-portfolio img-hover" src="images/WP17-750x400.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <a href="portfolio-item.html">
+                            <h2><mark>寵物日誌</mark></h2>
+                            <h3>分享寵物生活</h3>
+                            <h3>發掘有趣寵物</h3>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <!-- Features Section -->
+            <!--
+<div class="row">
+<div class="col-lg-12">
+<h2 class="page-header">Modern Business Features</h2>
+</div>
+<div class="col-md-6">
+<p>The Modern Business template by Start Bootstrap includes:</p>
+<ul>
+<li><strong>Bootstrap v3.3.7</strong>
+</li>
+<li>jQuery v1.11.1</li>
+<li>Font Awesome v4.2.0</li>
+<li>Working PHP contact form with validation</li>
+<li>Unstyled page elements for easy customization</li>
+<li>17 HTML pages</li>
+</ul>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, omnis doloremque non cum id reprehenderit, quisquam totam aspernatur tempora minima unde aliquid ea culpa sunt. Reiciendis quia dolorum ducimus unde.</p>
+</div>
+<div class="col-md-6">
+<img class="img-responsive" src="http://placehold.it/700x450" alt="">
+</div>
+</div>
+-->
+            <!-- /.row -->
+
+            <hr>
+
+            <!-- Call to Action Section -->
+            <!--
+<div class="well">
+<div class="row">
+<div class="col-md-8">
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, expedita, saepe, vero rerum deleniti beatae veniam harum neque nemo praesentium cum alias asperiores commodi.</p>
+</div>
+<div class="col-md-4">
+<a class="btn btn-lg btn-default btn-block" href="#">Call to Action</a>
+</div>
+</div>
+</div>
+-->
+
+            <hr>
+
+            <!-- Footer -->
+            <footer>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>Copyright 寵物You&amp;Me 2017</p>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+
+        <a href="#"><div class="" id="fixedbutton-talk">
+            <button class="button btn-lg btn-primary active">
+                交易聊天室               
+            </button>
+            </div>
+        </a>
+
+        <!-- /.container -->
+
+        <!-- jQuery -->
+        <script src="js/jquery.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- Script to Activate the Carousel -->
+        <script>
+            $('.carousel').carousel({
+                interval: 　10000 //changes the speed
+            });
+            function init(){
+                $('#sites input:radio').addClass('input_hidden');
+                $('#sites label').click(function() {
+                    $(this).addClass('selected').siblings().removeClass('selected');
+                });
+            };
+            window.onload=init;
+        </script>
+
+    </body>
+
 </html>

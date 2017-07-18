@@ -125,6 +125,7 @@ public class MemberTest {
 //		}
 		
 		//查會員登錄用(ID,PWD)
+		System.out.println("帳密正確");
 		Member member3=dao.findById("OOOOOOO","66666666U");
 		if(member3!=null){
 		System.out.println(member3.getMemNo()+",");
@@ -183,9 +184,10 @@ public class MemberTest {
 		}
 	
 		
+		System.out.println();
 		System.out.println("===================================");
 		
-		Member member35=dao.findById("OOOO","66666666U");
+		Member member35=dao.findById("OOOOOOO","66666U");
 		System.out.print(member34==null);
 		if(member35!=null){
 		System.out.println(member3.getMemNo()+",");

@@ -92,4 +92,10 @@ public class MemberService {
 	public List<Member> getAll() {
 		return dao.getAll();
 	}
+	
+	public Member getOneMemberById(String memId, String memPwd){
+		return dao.findById(memId, memPwd);
+	}
+	
+	
 }

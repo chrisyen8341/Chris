@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import com.member.model.Member;
+import com.member.model.MemberService;
+
 
 @WebServlet("/Login")
 public class Login extends HttpServlet {
@@ -36,11 +39,12 @@ public class Login extends HttpServlet {
 		req.setAttribute("errorMsgs", errorMsgs);
 		
 		if(memId==null||memId.trim().length()==0){
-			errorMsgs.add("memId");
+			errorMsgs.add("帳號密碼錯誤");
 		}
 		if(memPwd==null||memPwd.trim().length()==0){
-			errorMsgs.add("memPwd");
+			errorMsgs.add("帳號密碼錯誤");
 		}
+		
 		if(!errorMsgs.isEmpty()){
 			RequestDispatcher sendBackView=req.getRequestDispatcher("/login4.html");
 			sendBackView.forward(req, res);
@@ -48,49 +52,27 @@ public class Login extends HttpServlet {
 		}		
 		
 		//db查詢有無此帳號密碼
-		final String FIND_BY_ID = "SELECT * FROM MEMBER WHERE MEMID = ? AND MEMPWD = ? ";
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs=null;
-		HttpSession session=req.getSession();
-		try {
-			Context ctx = new javax.naming.InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/petym");
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(FIND_BY_ID);
-
-			pstmt.setString(1, memId);
-			pstmt.setString(2, memPwd);
-		    rs = pstmt.executeQuery();
-		    if (rs.next()) {
-		    	int memNo=Integer.parseInt(rs.getString("MEMNO"));
-		        session.setAttribute("memNo", memNo);
-		        res.sendRedirect("index.html");
+		MemberService memService=new MemberService();
+		Member member=memService.getOneMemberById(memId, memPwd);
+		
+				
+		    if (member==null) {
+		    	errorMsgs.add("帳號密碼錯誤");
+		    	RequestDispatcher sendBackView=req.getRequestDispatcher("/login.jsp");
+				sendBackView.forward(req, res);
+				return;
 		        
 		    } else {
-		    	errorMsgs.add("不存在");
-		    	RequestDispatcher sendBackView=req.getRequestDispatcher("/login4.html");
-				sendBackView.forward(req, res);
-				return;   	
+		    	HttpSession session=req.getSession();
+		        session.setAttribute("memId", memId);
+		        String location=(String)session.getAttribute("location");
+		        if(location!=null){
+		        res.sendRedirect(location);}
+		        else{
+		        res.sendRedirect(req.getContextPath()+"/index.html");	
+		        }
 		    }
-		} catch (Exception se) {
-			se.printStackTrace(System.err);
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
+		
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
