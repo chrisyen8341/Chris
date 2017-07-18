@@ -368,7 +368,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 		try {
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			pstmt = con.prepareStatement(FIND_BY_PK);
+			pstmt = con.prepareStatement(FIND_BY_ID);
 			pstmt.setString(1, memId);
 			pstmt.setString(2, memPwd);
 			rs = pstmt.executeQuery();

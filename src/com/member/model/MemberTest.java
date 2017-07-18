@@ -124,6 +124,95 @@ public class MemberTest {
 //			System.out.println(member4.getMemLocTime()+"。");
 //		}
 		
+		//查會員登錄用(ID,PWD)
+		Member member3=dao.findById("OOOOOOO","66666666U");
+		if(member3!=null){
+		System.out.println(member3.getMemNo()+",");
+		System.out.println(member3.getMemId()+",");
+		System.out.println(member3.getMemPwd()+",");
+		System.out.println(member3.getMemName()+",");
+		System.out.println(member3.getMemSname()+",");
+		System.out.println(member3.getMemGender()+",");
+		System.out.println(member3.getMemIdNo()+",");
+		System.out.println(member3.getMemBday()+",");
+		System.out.println(member3.getMemPhone()+",");
+		System.out.println(member3.getMemAddress()+",");
+		System.out.println(member3.getMemEmail()+",");
+		System.out.println(member3.getMemImg()+",");
+		System.out.println(member3.getMemReported()+",");
+		System.out.println(member3.getMemStatus()+",");
+		System.out.println(member3.getMemRelation()+",");
+		System.out.println(member3.getMemSelfintro()+",");
+		System.out.println(member3.getMemFollowed()+",");
+		System.out.println(member3.getMemPoint()+",");
+		System.out.println(member3.getMemSaleRank()+",");
+		System.out.println(member3.getMemLongtitude()+",");
+		System.out.println(member3.getMemLatitude()+",");
+		System.out.println(member3.getMemLocTime()+"。");
+		System.out.println(member3.getMemLocStatus()+"。");
+		}
+		
+		System.out.println("===================================");
+		
+		Member member34=dao.findById("OOOO","66666666U");
+		System.out.print(member34==null);
+		if(member34!=null){
+		System.out.println(member3.getMemNo()+",");
+		System.out.println(member3.getMemId()+",");
+		System.out.println(member3.getMemPwd()+",");
+		System.out.println(member3.getMemName()+",");
+		System.out.println(member3.getMemSname()+",");
+		System.out.println(member3.getMemGender()+",");
+		System.out.println(member3.getMemIdNo()+",");
+		System.out.println(member3.getMemBday()+",");
+		System.out.println(member3.getMemPhone()+",");
+		System.out.println(member3.getMemAddress()+",");
+		System.out.println(member3.getMemEmail()+",");
+		System.out.println(member3.getMemImg()+",");
+		System.out.println(member3.getMemReported()+",");
+		System.out.println(member3.getMemStatus()+",");
+		System.out.println(member3.getMemRelation()+",");
+		System.out.println(member3.getMemSelfintro()+",");
+		System.out.println(member3.getMemFollowed()+",");
+		System.out.println(member3.getMemPoint()+",");
+		System.out.println(member3.getMemSaleRank()+",");
+		System.out.println(member3.getMemLongtitude()+",");
+		System.out.println(member3.getMemLatitude()+",");
+		System.out.println(member3.getMemLocTime()+"。");
+		System.out.println(member3.getMemLocStatus()+"。");
+		}
+	
+		
+		System.out.println("===================================");
+		
+		Member member35=dao.findById("OOOO","66666666U");
+		System.out.print(member34==null);
+		if(member35!=null){
+		System.out.println(member3.getMemNo()+",");
+		System.out.println(member3.getMemId()+",");
+		System.out.println(member3.getMemPwd()+",");
+		System.out.println(member3.getMemName()+",");
+		System.out.println(member3.getMemSname()+",");
+		System.out.println(member3.getMemGender()+",");
+		System.out.println(member3.getMemIdNo()+",");
+		System.out.println(member3.getMemBday()+",");
+		System.out.println(member3.getMemPhone()+",");
+		System.out.println(member3.getMemAddress()+",");
+		System.out.println(member3.getMemEmail()+",");
+		System.out.println(member3.getMemImg()+",");
+		System.out.println(member3.getMemReported()+",");
+		System.out.println(member3.getMemStatus()+",");
+		System.out.println(member3.getMemRelation()+",");
+		System.out.println(member3.getMemSelfintro()+",");
+		System.out.println(member3.getMemFollowed()+",");
+		System.out.println(member3.getMemPoint()+",");
+		System.out.println(member3.getMemSaleRank()+",");
+		System.out.println(member3.getMemLongtitude()+",");
+		System.out.println(member3.getMemLatitude()+",");
+		System.out.println(member3.getMemLocTime()+"。");
+		System.out.println(member3.getMemLocStatus()+"。");
+		}
+		
 	}
 
 }
