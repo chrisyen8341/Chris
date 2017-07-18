@@ -11,15 +11,15 @@ public class AlbumTest {
 		
 		
 		//新增
-//		Album album1=new Album();
-//		album1.setMemNo(1);
-//		album1.setAlbumTitle("相簿Q");
-//		album1.setAlbumCreatedTime(new Timestamp((new Date()).getTime()));
-//		album1.setAlbumModifiedTime(new Timestamp((new Date()).getTime()));
-//		album1.setAlbumStatus(0);
-//		album1.setAlbumImgFile(new byte[123]);
-//		dao.add(album1);
-//		System.out.println("執行完畢");
+		Album album1=new Album();
+		album1.setMemNo(1);
+		album1.setAlbumTitle("相簿Q");
+		album1.setAlbumCreatedTime(new Timestamp((new Date()).getTime()));
+		album1.setAlbumModifiedTime(new Timestamp((new Date()).getTime()));
+		album1.setAlbumStatus(0);
+		album1.setAlbumImgFile(new byte[123]);
+		dao.add(album1);
+		System.out.println("執行完畢");
 		
 		
 		//修改

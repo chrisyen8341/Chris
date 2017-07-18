@@ -9,11 +9,11 @@ public class EmpAuthTest {
 		
 		
 		//·s¼W
-//		EmpAuth eAuth=new  EmpAuth();
-//		eAuth.setEmpNO(2);
-//		eAuth.setAuthNo(3);
-//		dao.add(eAuth);
-//		System.out.println("=================================");
+		EmpAuth eAuth=new  EmpAuth();
+		eAuth.setEmpNO(2);
+		eAuth.setAuthNo(3);
+		dao.add(eAuth);
+		System.out.println("=================================");
 
 		
 		//­×§ï
