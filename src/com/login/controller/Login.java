@@ -70,7 +70,7 @@ public class Login extends HttpServlet {
 		        
 		    } else {
 		    	HttpSession session=req.getSession();
-		        session.setAttribute("memId", memId);
+		        session.setAttribute("memNo", member.getMemNo());
 		        String location=(String)session.getAttribute("location");
 		        if(location!=null){
 		        res.sendRedirect(location);}

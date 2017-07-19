@@ -1,0 +1,266 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="BIG5"%>
+<script>
+
+		$(function() {
+
+		//針對下面的七項特別驗證各自設標籤  因為每項不能為空值  故使用者ㄧ定會填 並促發下面七項blur驗證
+		//個別驗證為錯即為false
+		//最後在表單送出時會對這八項驗證判別 只要有ㄧ個為false  停止送出表單
+		var valids = new Array(true,true, true,true,true,true,true);
+
+		//帳號驗證 AJAX確認帳號是否存在
+		$("#memId").blur($.fn.testMemId = function() {
+			var xmlhttp = new XMLHttpRequest();
+			var memid = $("#memId").val();
+			var url = "exist.jsp?memid=" + memid;
+			xmlhttp.onreadystatechange = function() {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					if (xmlhttp.responseText.trim() == "帳號長度需大於6"
+						||xmlhttp.responseText.trim() == "帳號需含英文字"
+						||xmlhttp.responseText.trim() == "很抱歉,帳號已存在")
+					{
+						valids[0]=false;
+						$("#memIdShow").html(xmlhttp.responseText).css('color','red');
+					}
+					else{
+						$("#memIdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;"+xmlhttp.responseText).css('color','green');
+						valids[0]=true;
+					}
+				}
+			};
+			try {
+				xmlhttp.open("GET", url, true);
+				xmlhttp.send();
+			} catch (e) {
+				alert("unable to connect to server");
+			}
+		});
+		
+
+		////密碼驗證 至少包含一個英文字
+		$("#memPwd").blur(function () {
+			var regex = new RegExp('.*[a-zA-Z]+.*');
+			if($("#memPwd").val().length<6){
+				$("#memPwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼長度需大於6").css('color','red');
+				valids[1]=false;
+			}
+			else if(!$("#memPwd").val().match(regex)) {
+				$("#memPwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼須包含英文字").css('color','red');
+				valids[1]=false;
+			} 
+			else{
+				$("#memPwdShow").html("").css('color','green');
+				valids[1]=true;
+			}
+		});
+
+		//確認密碼驗證
+		$("#conPwd").blur(function() {
+			if ($("#memPwd").val().trim() == $("#conPwd").val().trim()) {
+				$("#conPwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼相符").css('color','green');
+				valids[2]=true;
+			} else {
+				$("#conPwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼不相符").css('color','red');
+				valids[2]=false;
+			}
+			;
+		});
+
+
+
+  //身分證驗證
+ $("#memIdNo").blur(function (){
+ 	var toBeTest=document.getElementById("memIdNo").value;
+ 	isIdNo(toBeTest);
+ });
+
+
+ function isIdNo(id){
+ 	valid = false;
+ 	var re = new RegExp("[A-Z]{1}[1-2]{1}[0-9]{8}");
+ 	if (re.test(id)) {
+ 		ids = id.split("");
+ 		var test=0;
+ 		var z = createCityNum2(ids[0]);
+ 		for (var i = 1; i < 9; i++) {
+ 			test = test + parseInt(ids[i]) * (9 - i);
+ 		}
+ 		var remainder=((test +(Math.floor(z / 10) + (z%10)*9))%10);
+ 		(remainder==0)? (test=0) : (test=10-remainder);
+ 		if (test == parseInt(ids[9])) {
+ 			valid = true;
+ 		}
+ 	};
+ 	if(!valid){
+ 		$("#memIdNoShow").html("&nbsp;&nbsp;&nbsp;&nbsp;不合格的身分證").css('color','red');
+ 		valids[3]=false;
+ 	}
+ 	else{
+ 		$("#memIdNoShow").html("").css('color','green');
+ 		valids[3]=true;
+ 	}
+ };
+
+ function createCityNum2(c){
+ 	var chars=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+ 	var nums=[10,11,12,13,14,15,16,17,34,18,19,20,21,22,35,23,24,25,26,27,28,29,32,30,31,33];
+ 	return nums[chars.indexOf(c)];
+ };
+
+//生日最大可選天數
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+if(dd<10){
+	dd='0'+dd
+} 
+if(mm<10){
+	mm='0'+mm
+} 
+
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("memBday").setAttribute("max", today);
+
+
+		//生日驗證 生日不可以大於今天
+		$("#memBday").blur(function(e){
+			console.log(e.target.id);
+			var nDay=yyyy+mm+dd;
+			if(e.target.id=="memBday"){
+				days=$("#memBday").val().split("-");
+				tDay=days[0]+days[1]+days[2];
+				if(tDay>nDay){
+					$("#memBdayShow").html("&nbsp;&nbsp;&nbsp;&nbsp;不合格的生日").css('color','red');
+					valids[4]=false;
+				}
+				else{
+					$("#memBdayShow").html("");
+					valids[4]=true;
+				}
+			}
+		});
+
+
+		//手機驗證
+		$("#memPhone").blur(function() {
+			var phone1 = new RegExp("[09]{2}[0-9]{2}\-[0-9]{6}");
+			var phone2 = new RegExp("[09]{2}[0-9]{8}");
+			if (phone1.test($("#memPhone").val())||phone2.test($("#memPhone").val()))  
+			{  
+				$("#memPhoneShow").html("").css('color','green');
+				valids[5]=true;
+			}  
+			else{
+				$("#memPhoneShow").html("&nbsp;&nbsp;&nbsp;&nbsp;不合格的手機格式").css('color','red');
+				valids[5]=false;
+			} 
+		});
+
+
+
+		//信箱驗證
+		$("#memEmail").blur(function() {
+			if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($("#memEmail").val()))  
+			{  
+				$("#memEmailShow").html("").css('color','green');
+				valids[6]=true;
+			}  
+			else{
+				$("#memEmailShow").html("&nbsp;&nbsp;&nbsp;&nbsp;不合格的EMAIL").css('color','red');
+				valids[6]=false;
+			} 
+		});
+
+
+		//照片上傳預覽
+		$("#memImg").change(function() {
+			readURL(this);
+		});
+
+		function readURL(input) {
+
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+						$('#memPic').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+
+	//送出表單時檢察有無未填
+		$('form').submit(function() {
+			
+			//預設是全部都填   
+			var isEmpty = null;
+			//只要input有沒填的 就改變為true
+			if($('input[name=petOrNot]').get(0).checked)
+			{
+				$("input").slice(0,13).each(function() {
+					if ($.trim($(this).val()) === "") {
+						if($(this).prop("id")=="memImg"){
+							$(this).prev().prev().html("&nbsp;&nbsp;&nbsp;&nbsp;請填寫資料").css('color','red');
+						}
+						else{
+						$(this).parent().parent().prev().html("&nbsp;&nbsp;&nbsp;&nbsp;請填寫資料").css('color','red');
+						}
+						isEmpty = true;
+					}
+				});
+				if($("#memAddress").val()===""){
+					$("#memAddressShow").html("&nbsp;&nbsp;&nbsp;&nbsp;請填寫資料").css('color','red');
+					isEmpty = true;
+				}
+			}
+			else{
+				$("input").each(function() {
+					if ($.trim($(this).val()) === "") {
+						if($(this).prop("id")=="memImg" || $(this).prop("id")=="petImg"){
+							$(this).prev().prev().html("&nbsp;&nbsp;&nbsp;&nbsp;請填寫資料").css('color','red');
+						}
+						else{
+						$(this).parent().parent().prev().html("&nbsp;&nbsp;&nbsp;&nbsp;請填寫資料").css('color','red');
+					}
+						isEmpty = true;
+					}
+				});
+				if($("#memAddress").val()===""){
+					$("#memAddressShow").html("&nbsp;&nbsp;&nbsp;&nbsp;請填寫資料").css('color','red');
+					isEmpty = true;
+				}
+			};
+
+			//只要有空 就讓submit送不出去
+			if (isEmpty) {
+				return false;
+			}
+
+
+			for (var i = 0; i < valids.length; i++) {
+				if(!valids[i]){
+					return false;
+				}
+			}
+
+		});
+
+		$("#autoAddMem").click(function(){
+			$("#memId").val("chrisyen");
+			$("#memId").testMemId();
+			$("#memSname").val("小顏");
+			$("#memPwd").val("p123456");
+			$("#conPwd").val("p123456");
+			$("#memName").val("顏佑軒");
+			$("#memIdNo").val("A114900309");
+			$("#memBday").val("1990-01-16");
+			$("#memPhone").val("0930456158");
+			$("#memAddress").val("台北市大安區101");
+			$("#memEmail").val("chrisyen@gmail.com");
+		});
+
+
+
+	});
+</script>
