@@ -93,8 +93,8 @@ public class MemberService {
 		return dao.getAll();
 	}
 	
-	public Member getOneMemberById(String memId, String memPwd){
-		return dao.findById(memId, memPwd);
+	public Member getOneMemberById(String memId){
+		return dao.findById(memId);
 	}
 	
 	

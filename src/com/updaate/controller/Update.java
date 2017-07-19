@@ -28,14 +28,23 @@ public class Update extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		if("getOne_For_Update".equals(action)){
+			
 			List<String> errorMsgs = new LinkedList<String>();
+			
+			HttpSession session=req.getSession();
+			Object memNot = session.getAttribute("memNo");                  // 從 session內取出 (key) account的值
+		    if (memNot == null) {                                             // 如為 null, 代表此user未登入過 , 才做以下工作
+		      session.setAttribute("location", req.getContextPath()+"/member_update.jsp");       //*工作1 : 同時記下目前位置 , 以便於login.html登入成功後 , 能夠直接導至此網頁(須配合LoginHandler.java)
+		      res.sendRedirect(req.getContextPath()+"/login.jsp");   //*工作2 : 請該user去登入網頁(login.html) , 進行登入
+		      return;
+		    }
+		    
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 			try {
 				/***************************1.接收請求參數****************************************/
-				HttpSession session=req.getSession();
 				Integer memNo = (Integer)session.getAttribute("memNo");
 				
 				/***************************2.開始查詢資料****************************************/

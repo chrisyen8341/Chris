@@ -34,7 +34,7 @@ public class MemberDAO implements MemberDAO_interface{
 	private static final String DELETE_STMT = "DELETE FROM MEMBER WHERE MEMNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM MEMBER WHERE MEMNO = ?";
 	private static final String GET_ALL = "SELECT * FROM MEMBER";
-	private static final String FIND_BY_ID = "SELECT * FROM MEMBER WHERE MEMID = ? AND MEMPWD = ? ";
+	private static final String FIND_BY_ID = "SELECT * FROM MEMBER WHERE MEMID = ?";
 	private static final String GET_CURRSEQ = "SELECT MEMNO_SQ.CURRVAL FROM DUAL";
 	
 	@Override
@@ -346,7 +346,7 @@ public class MemberDAO implements MemberDAO_interface{
 	}
 
 	@Override
-	public Member findById(String memId, String memPwd) {
+	public Member findById(String memId) {
 		Member member = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -356,7 +356,6 @@ public class MemberDAO implements MemberDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(FIND_BY_ID);
 			pstmt.setString(1, memId);
-			pstmt.setString(2, memPwd);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

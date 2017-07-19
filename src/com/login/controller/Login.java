@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import com.emp.model.Emp;
+import com.emp.model.EmpService;
 import com.member.model.Member;
 import com.member.model.MemberService;
 
@@ -26,8 +28,21 @@ import com.member.model.MemberService;
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	
-
+	 
+	protected Member allowUser(String memId, String password) {
+			MemberService memSvc=new MemberService();
+			Member member=memSvc.getOneMemberById(memId);
+			
+			if(member==null){
+				return null;
+			}
+			else if(member.getMemPwd().equals(memPwd)){
+				return null;
+			}
+			else{
+				return member;
+			}
+		  }
 
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -35,23 +50,20 @@ public class Login extends HttpServlet {
 		//§PÂ_¬O§_¬°ªÅ­È
 		String memId = req.getParameter("memId");
 		String memPwd = req.getParameter("memPwd");
+		
 		List<String> errorMsgs=new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 		
-		if(memId==null||memId.trim().length()==0){
-			errorMsgs.add("±b¸¹±K½X¿ù»~");
-		}
-		if(memPwd==null||memPwd.trim().length()==0){
-			errorMsgs.add("±b¸¹±K½X¿ù»~");
-		}
 		
+
+
 		Member errMember=new Member();
 		errMember.setMemId(memId);
 		errMember.setMemPwd(memPwd);
 		
 		if(!errorMsgs.isEmpty()){
 			req.setAttribute("member", errMember);
-			RequestDispatcher sendBackView=req.getRequestDispatcher("/login4.html");
+			RequestDispatcher sendBackView=req.getRequestDispatcher("/login.jsp");
 			sendBackView.forward(req, res);
 			return;
 		}		
@@ -73,10 +85,11 @@ public class Login extends HttpServlet {
 		        session.setAttribute("memNo", member.getMemNo());
 		        String location=(String)session.getAttribute("location");
 		        if(location!=null){
-		        res.sendRedirect(location);}
-		        else{
-		        res.sendRedirect(req.getContextPath()+"/index.html");	
+		        res.sendRedirect(location);
+		        return;
 		        }
+		        res.sendRedirect(req.getContextPath()+"/index.html");	
+
 		    }
 		
 	}

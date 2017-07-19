@@ -93,7 +93,7 @@ empId VARCHAR2(50) NOT NULL CONSTRAINT EMP_EMPID_UK UNIQUE,
 empPwd VARCHAR2(32) NOT NULL,
 empStatus NUMBER(2) NOT NULL);
 
-Create Sequence EMPNO_SQ  Increment By 1 Start With 1 Nocache Nocycle;
+Create Sequence EMPNO_SQ  Increment By 1 Start With 7001 Nocache Nocycle;
 
 INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'周樊綱','工讀生','CHOUFAN','CHOODW213',0);
 INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'吳永志','總經理','DQWDH','EQWEDW213',0);
@@ -104,28 +104,38 @@ INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'李宗霖','副理','CQWEAN','WEFEW213',0);
 
 
 Create Table Auth(
-AuthNo Number(2) Constraint Auth_Authno_Pk Primary Key,
+AuthNo Number(10) Constraint Auth_Authno_Pk Primary Key,
 AuthName VARCHAR2(100)); 
 
-Create Sequence AuthNO_Sq Increment By 1 Start With 1 Nocache Nocycle;
+Create Sequence AuthNO_Sq Increment By 1 Start With 5001 Nocache Nocycle;
 
-Insert Into Auth Values(AuthNo_Sq.Nextval,'審核上下商品');
-Insert Into Auth Values(AuthNo_Sq.Nextval,'審查約會商品檢舉');
-insert into auth values(AuthNo_sq.nextval,'審查約會商品申訴');
+Insert Into Auth Values(AuthNo_Sq.Nextval,'商城商品上架審核');
+Insert Into Auth Values(AuthNo_Sq.Nextval,'約會商品上架審核');
+Insert Into Auth Values(AuthNo_Sq.Nextval,'活動發起審核');
+Insert Into Auth Values(AuthNo_Sq.Nextval,'餐廳會員註冊審核');
+Insert Into Auth Values(AuthNo_Sq.Nextval,'約會商品檢舉審核');
+insert into auth values(AuthNo_sq.nextval,'約會商品申訴審核');
 
 
 Create Table Empauth(
 Empno Number(10),
-Authno Number(2),
+Authno Number(10),
 Constraint Empauth_Pk Primary Key(Empno,Authno),
 Constraint Auth_Empno_Fk Foreign Key(Empno) References Emp(Empno), 
 constraint Auth_authno_Fk foreign key(AuthNo) references auth(authno)
 );
 
-Insert Into Empauth Values(2,2);
-Insert Into Empauth Values(2,1);
-Insert Into Empauth Values(1,1);
-Insert Into Empauth Values(1,2);
+Insert Into Empauth Values(7002,5001);
+Insert Into Empauth Values(7002,5002);
+Insert Into Empauth Values(7002,5003);
+Insert Into Empauth Values(7002,5004);
+Insert Into Empauth Values(7002,5005);
+Insert Into Empauth Values(7002,5006);
+Insert Into Empauth Values(7003,5002);
+Insert Into Empauth Values(7003,5004);
+Insert Into Empauth Values(7003,5006);
+Insert Into Empauth Values(7001,5001);
+Insert Into Empauth Values(7001,5002);
 
 
 CREATE TABLE ALBUM(

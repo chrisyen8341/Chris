@@ -1,8 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="BIG5" %>
 <%@ page import="com.member.model.*" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
-<% Member member=(Member)request.getAttribute("member"); %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+    Object account = session.getAttribute("memNo");                  // 從 session內取出 (key) account的值
+    if (account == null) {                                             // 如為 null, 代表此user未登入過 , 才做以下工作
+      session.setAttribute("location", request.getRequestURI());       //*工作1 : 同時記下目前位置 , 以便於login.html登入成功後 , 能夠直接導至此網頁(須配合LoginHandler.java)
+      response.sendRedirect(request.getContextPath()+"/login.jsp");   //*工作2 : 請該user去登入網頁(login.html) , 進行登入
+      return;
+    }
+%>    
+<% Member member=(Member)session.getAttribute("memNo"); %>
 
 <!DOCTYPE html>
 <html lang="">
@@ -130,7 +138,7 @@
 						<div class="cols-sm-10">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-								<textarea class="form-control" id="memSelfintro" name="memSelfintro" value="${member.memSelfintro}" placeholder="輸入些關於你的資訊吧"></textarea>
+								<textarea class="form-control" id="memSelfintro" name="memSelfintro" placeholder="輸入些關於你的資訊吧">${member.memSelfintro}</textarea>
 							</div>
 						</div>
 					</div>

@@ -8,5 +8,5 @@ public interface MemberDAO_interface {
 	void delete(int memno);
 	Member findByPk(int memno);
 	List<Member> getAll();
-	Member findById(String memId,String memPwd);
+	Member findById(String memId);
 }
