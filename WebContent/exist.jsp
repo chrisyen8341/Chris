@@ -25,6 +25,9 @@
 		else if(!memid.matches(".*[a-zA-Z]+.*")){
 			out.print("帳號需含英文字");
 		}
+		else if(memid.length()>20){
+			out.print("帳號過長");
+		}
 		else{
 		if (rs.next()) {
 			out.print("很抱歉,帳號已存在");
