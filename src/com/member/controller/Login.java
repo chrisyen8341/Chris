@@ -1,4 +1,4 @@
-package com.emp.controller;
+package com.member.controller;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -23,9 +23,9 @@ public class Login extends HttpServlet {
 		Member member = memSvc.getOneMemberById(memId);
 
 		if (member == null) {
-			return member;
+			return null;
 		} else if (!member.getMemPwd().equals(memPwd)) {
-			return member;
+			return null;
 		} else {
 			return member;
 		}

@@ -41,7 +41,7 @@ memLocStatus NUMBER(2) NOT NULL
 
 
 
-Create Sequence MEMNO_SQ Increment By 1 Start With 1 Nocache Nocycle;
+Create Sequence MEMNO_SQ Increment By 1 Start With 5001 Nocache Nocycle;
 
 
 	INSERT INTO MEMBER VALUES (MEMNO_SQ.NEXTVAL,'petym','123456','黃楷章','小張',0,'M134129471',TO_DATE('2000-11-17','YYYY-MM-DD'),'0930160401','中壢事中央大學','chrisqwe@gmail.com'
@@ -75,13 +75,14 @@ petBday DATE,
 petImg BLOB NOT NULL);
 
 
-Create Sequence PETNO_SQ Increment By 1 Start With 1 Nocache Nocycle;
+Create Sequence PETNO_SQ Increment By 1 Start With 1001 Nocache Nocycle;
 
 
- INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,1,'小王狗','狗',0,'貴賓狗','寵物介紹測試',TO_DATE('2007-12-17','YYYY-MM-DD'),EMPTY_BLOB());
- INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,2,'小阿貓','貓',1,'貴賓貓','寵物介紹測試',TO_DATE('2008-12-10','YYYY-MM-DD'),EMPTY_BLOB());
- INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,3,'小王狗','狗',0,'臘腸狗','寵物介紹測試',TO_DATE('2012-03-12','YYYY-MM-DD'),EMPTY_BLOB());
- INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,4,'小郎貓','貓',0,'流浪貓','寵物介紹測試',TO_DATE('2003-08-09','YYYY-MM-DD'),EMPTY_BLOB());
+ INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5001,'小王狗','狗',0,'貴賓狗','寵物介紹測試',TO_DATE('2007-12-17','YYYY-MM-DD'),EMPTY_BLOB());
+ INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5002,'小阿貓','貓',1,'貴賓貓','寵物介紹測試',TO_DATE('2008-12-10','YYYY-MM-DD'),EMPTY_BLOB());
+ INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5003,'小王狗','狗',0,'臘腸狗','寵物介紹測試',TO_DATE('2012-03-12','YYYY-MM-DD'),EMPTY_BLOB());
+ INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5004,'小郎貓','貓',0,'暴力貓','寵物介紹測試',TO_DATE('2003-08-09','YYYY-MM-DD'),EMPTY_BLOB());
+ INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5005,'小天貓','貓',0,'美女貓','寵物介紹測試',TO_DATE('2001-09-08','YYYY-MM-DD'),EMPTY_BLOB());
 
 
 
@@ -93,7 +94,7 @@ empId VARCHAR2(50) NOT NULL CONSTRAINT EMP_EMPID_UK UNIQUE,
 empPwd VARCHAR2(32) NOT NULL,
 empStatus NUMBER(2) NOT NULL);
 
-Create Sequence EMPNO_SQ  Increment By 1 Start With 7001 Nocache Nocycle;
+Create Sequence EMPNO_SQ  Increment By 1 Start With 6001 Nocache Nocycle;
 
 INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'周樊綱','工讀生','CHOUFAN','CHOODW213',0);
 INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'吳永志','總經理','DQWDH','EQWEDW213',0);
@@ -107,7 +108,7 @@ Create Table Auth(
 AuthNo Number(10) Constraint Auth_Authno_Pk Primary Key,
 AuthName VARCHAR2(100)); 
 
-Create Sequence AuthNO_Sq Increment By 1 Start With 5001 Nocache Nocycle;
+Create Sequence AuthNO_Sq Increment By 1 Start With 4001 Nocache Nocycle;
 
 Insert Into Auth Values(AuthNo_Sq.Nextval,'商城商品上架審核');
 Insert Into Auth Values(AuthNo_Sq.Nextval,'約會商品上架審核');
@@ -125,17 +126,17 @@ Constraint Auth_Empno_Fk Foreign Key(Empno) References Emp(Empno),
 constraint Auth_authno_Fk foreign key(AuthNo) references auth(authno)
 );
 
-Insert Into Empauth Values(7002,5001);
-Insert Into Empauth Values(7002,5002);
-Insert Into Empauth Values(7002,5003);
-Insert Into Empauth Values(7002,5004);
-Insert Into Empauth Values(7002,5005);
-Insert Into Empauth Values(7002,5006);
-Insert Into Empauth Values(7003,5002);
-Insert Into Empauth Values(7003,5004);
-Insert Into Empauth Values(7003,5006);
-Insert Into Empauth Values(7001,5001);
-Insert Into Empauth Values(7001,5002);
+Insert Into Empauth Values(6002,4001);
+Insert Into Empauth Values(6002,4002);
+Insert Into Empauth Values(6002,4003);
+Insert Into Empauth Values(6002,4004);
+Insert Into Empauth Values(6002,4005);
+Insert Into Empauth Values(6002,4006);
+Insert Into Empauth Values(6003,4002);
+Insert Into Empauth Values(6003,4004);
+Insert Into Empauth Values(6003,4006);
+Insert Into Empauth Values(6001,4001);
+Insert Into Empauth Values(6001,4002);
 
 
 CREATE TABLE ALBUM(
@@ -150,15 +151,15 @@ albumimgfile Blob Not Null);
 
 Create Sequence ALBUMNO_SQ Increment By 1 Start With 1 Nocache Nocycle;
 
-INSERT INTO ALBUM VALUES(ALBUMNO_SQ.NEXTVAL,1,'相簿A',TO_DATE('20170710 17:50:20','YYYYMMDD HH24:MI:SS'),
+INSERT INTO ALBUM VALUES(ALBUMNO_SQ.NEXTVAL,5001,'相簿A',TO_DATE('20170710 17:50:20','YYYYMMDD HH24:MI:SS'),
 TO_DATE('20170710 20:50:20','YYYYMMDD HH24:MI:SS'),0,EMPTY_BLOB());
-INSERT INTO ALBUM VALUES(ALBUMNO_SQ.NEXTVAL,2,'相簿B',TO_DATE('20170610 11:50:20','YYYYMMDD HH24:MI:SS'),
+INSERT INTO ALBUM VALUES(ALBUMNO_SQ.NEXTVAL,5002,'相簿B',TO_DATE('20170610 11:50:20','YYYYMMDD HH24:MI:SS'),
 TO_DATE('20170620 20:50:20','YYYYMMDD HH24:MI:SS'),0,EMPTY_BLOB());
-INSERT INTO ALBUM VALUES(ALBUMNO_SQ.NEXTVAL,2,'相簿C',TO_DATE('20150710 20:50:20','YYYYMMDD HH24:MI:SS'),
+INSERT INTO ALBUM VALUES(ALBUMNO_SQ.NEXTVAL,5002,'相簿C',TO_DATE('20150710 20:50:20','YYYYMMDD HH24:MI:SS'),
 TO_DATE('20160720 11:50:20','YYYYMMDD HH24:MI:SS'),0,EMPTY_BLOB());
-INSERT INTO ALBUM VALUES(ALBUMNO_SQ.NEXTVAL,3,'相簿D',TO_DATE('20141210 12:50:20','YYYYMMDD HH24:MI:SS'),
+INSERT INTO ALBUM VALUES(ALBUMNO_SQ.NEXTVAL,5003,'相簿D',TO_DATE('20141210 12:50:20','YYYYMMDD HH24:MI:SS'),
 TO_DATE('20170111 05:50:20','YYYYMMDD HH24:MI:SS'),0,EMPTY_BLOB());
-INSERT INTO ALBUM VALUES(ALBUMNO_SQ.NEXTVAL,1,'相簿E',TO_DATE('20111210 11:50:20','YYYYMMDD HH24:MI:SS'),
+INSERT INTO ALBUM VALUES(ALBUMNO_SQ.NEXTVAL,5001,'相簿E',TO_DATE('20111210 11:50:20','YYYYMMDD HH24:MI:SS'),
 To_Date('20160411 05:50:20','YYYYMMDD HH24:MI:SS'),0,Empty_Blob());
 
 
