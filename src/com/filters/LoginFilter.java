@@ -35,7 +35,7 @@ public class LoginFilter implements Filter{
 			throws IOException, ServletException {
 		
 		HttpServletRequest req=(HttpServletRequest)request;
-		HttpServletResponse res=(HttpServletResponse)request;
+		HttpServletResponse res=(HttpServletResponse)response;
 		
 		HttpSession session= req.getSession();
 		Member member=(Member)session.getAttribute("member");

@@ -59,10 +59,8 @@ public class Update extends HttpServlet {
 
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
-				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/listAllEmp.jsp");
-				failureView.forward(req, res);
+				session.setAttribute("locaton",req.getContextPath()+"/member_update.jsp");
+				res.sendRedirect(req.getContextPath()+"/login.jsp");
 			}
 		}
 	}

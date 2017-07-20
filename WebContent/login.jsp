@@ -42,7 +42,7 @@ Member member=(Member)request.getAttribute("member");
 			<div class="col-sm-6 col-sm-offset-3">
 
 				<div align="center">
-					<Img src="images/logo123.png" height="250px" width="400px" />
+					<Img src="images/logo.png" height="250px" width="400px" />
 				</div>
 
 				<form class="" action="Login" method="post">
