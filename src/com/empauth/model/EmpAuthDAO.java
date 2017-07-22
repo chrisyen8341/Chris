@@ -1,4 +1,4 @@
-package com.empauth.com;
+package com.empauth.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

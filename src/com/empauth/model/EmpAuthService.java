@@ -1,4 +1,4 @@
-package com.empauth.com;
+package com.empauth.model;
 
 import java.util.List;
 

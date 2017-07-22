@@ -220,12 +220,14 @@ public class DateItemJDBCDAO implements DateItemDAO_interface{
 				dateItem.setDateItemPeople(rs.getInt("dateItemPeople"));
 				dateItem.setHasMate(rs.getBoolean("hasMate"));
 				dateItem.setDateItemPrice(rs.getInt("dateItemPrice"));
+				dateItem.setDateItemShow(rs.getInt("dateItemShow"));;
 				dateItem.setDateItemStatus(rs.getInt("dateItemStatus"));
+				dateItem.setDateItemViewer(rs.getInt("dateItemViewer"));
 				dateItem.setBuyerNo(rs.getInt("buyerNo"));
 				dateItem.setIsQRCChecked(rs.getBoolean("isQRCChecked"));
 				dateItem.setBuyerRep(rs.getInt("buyerRep"));
-				dateItem.setSellerRep(rs.getInt("SellerRep"));		
-				
+				dateItem.setSellerRep(rs.getInt("sellerRep"));		
+				dateItem.setIsInstantDate(rs.getBoolean("isInstantDate"));
 			}
 			
 		} catch (ClassNotFoundException e) {

@@ -103,37 +103,45 @@
 											<tbody>
 												<tr>
 													<td>暱稱</td>
-													<td>${member.memSname}</td>
+													<td><input type="text" class="form-control"
+														name="memSname" id="memSname" value="${member.memSname}"
+														placeholder="請輸入暱稱" /></td>
 												</tr>
 												<tr>
 													<td>姓名</td>
-													<td>${member.memName}</td>
+													<td><input type="text" class="form-control"
+														name="memName" id="memName" value="${member.memName}"
+														placeholder="請輸入您的姓名" /></td>
 												</tr>
 												<tr>
 													<td>生日</td>
-													<td>${member.memBday}</td>
+													<td><input type="date" name="memBday" min="1910-01-01"
+														max='2000-13-13' id="memBday" value="${member.memBday}"
+														class="form-control" placeholder="Confirm your Password" /></td>
 												</tr>
 												<tr>
 													<td>手機</td>
-													<td>${member.memPhone}</td>
+													<td><input type="text" class="form-control"
+														name="memPhone" id="memPhone" value="${member.memPhone}"
+														placeholder="請輸入您的手機" /></td>
 												</tr>
 												<tr>
 													<td>性別</td>
-													<%
-														Member member = (Member) session.getAttribute("member");
-														String memGender = String.valueOf(member.getMemGender());
-														HashMap mGender = (HashMap) application.getAttribute("mGender");
-													%>
-													<td><%=mGender.get(memGender)%></td>
+													<td>		
+														<input type="radio" name="memGender"
+														checked="true" value="0">男 <input type="radio"
+														name="memGender" value="1">女 <input type="radio"
+														name="memGender" value="2">不願透漏
+													</td>
 												</tr>
 												<tr>
 
 													<td>感情</td>
-													<%
-														String memRelation = String.valueOf(member.getMemRelation());
-														HashMap mRelation = (HashMap) application.getAttribute("mRelation");
-													%>
-													<td><%=mRelation.get(memRelation)%></td>
+
+													<td><input type="radio" name="memRelation"
+														checked="true" value="0">單身 <input type="radio"
+														name="memRelation" value="1">穩定交往 <input type="radio"
+														name="memRelation" value="2">不公開</td>
 												</tr>
 												<tr>
 													<td>多少人追蹤我</td>
@@ -145,20 +153,20 @@
 												</tr>
 												<tr>
 													<td>Email</td>
-													<td>${member.memEmail}</td>
+													<td><input type="text" class="form-control" name="memEmail" id="memEmail" value="${member.memEmail}"  placeholder="請輸入您的電子信箱"/></td>
 												</tr>
 												<td>地址</td>
-												<td>${member.memAddress}</td>
+												<td><textarea class="form-control" id="memAddress" name="memAddress" placeholder="請輸入您的地址">${member.memAddress}</textarea></td>
 												<tr>
 													<td>關於我</td>
-													<td>${member.memSelfintro}</td>
+													<td><textarea class="form-control" id="memAddress" name="memSelintro" placeholder="請輸入您的地址">${member.memSelfintro}</textarea></td>
 												</tr>
 
 
 											</tbody>
 										</table>
 
-										<a href="memberInfoUpdate.jsp" class="btn btn-primary">編輯個人資訊</a>
+										<a href="#" class="btn btn-primary">修改</a>
 									</div>
 								</div>
 							</div>
