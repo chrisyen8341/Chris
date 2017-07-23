@@ -22,15 +22,38 @@
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet"
 	type="text/css">
 <link href="css/date.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script>
+	//照片上傳預覽
+	$(function() {
+
+		$("#petImg").change(function() {
+			readURL(this);
+		});
+
+		function readURL(input) {
+
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$('#petPic').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+		;
+
+	});
+</script>
+<STYLE>
+.title {
+	width: 120px; /* 設定 H1 的樣式*/
+}
+</STYLE>
 <!--[if lt IE 9]>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
             <![endif]-->
-            </script>
-  <STYLE>
-    .title { width : 70px;          /* 設定 H1 的樣式*/
-         }
-  </STYLE>
 </head>
 
 <body>
@@ -75,9 +98,9 @@
 			<div class="col-xs-12 col-sm-2 postion-left-group ">
 				<div id="menu">
 					<div class="panel list-group list-color">
-						<a href="#" class="list-group-item">個人資訊</a> <a href="<%=request.getContextPath()+"/petInfo.jsp" %>"
-							class="list-group-item">寵物資訊</a> <a href="<%=request.getContextPath()+"/memPwdChange.jsp" %>"
-							class="list-group-item">變更密碼</a> <a href="#" 
+						<a href="#" class="list-group-item">個人資訊</a> <a href="#"
+							class="list-group-item">寵物資訊</a> <a href="#"
+							class="list-group-item">安全性</a> <a href="#"
 							class="list-group-item">相簿管理</a>
 					</div>
 				</div>
@@ -96,75 +119,82 @@
 								<h3 class="panel-title">${member.memId}</h3>
 							</div>
 							<div class="panel-body">
-								<div class="row">
-									<div class="col-md-3 col-lg-3 " align="center">
-										<img alt="User Pic" id="memImg" src="DBGifReader" height="350px" width="250px" class="img-circle img-responsive">
+								<form method="post" action=Update enctype="multipart/form-data">
+									<div class="row">
+										<div class="col-md-3 col-lg-3 " align="center">
+											<img alt="User Pic" id="petPic" src="PetImgReader"
+												height="350px" width="250px"
+												class="img-circle img-responsive"> <input type="file"
+												name="petImg" id="petImg" placeholder="編輯相片" />
+										</div>
+
+
+										<div class=" col-md-9 col-lg-9 ">
+											<table class="table table-user-information">
+												<tbody>
+													<tr>
+														<td class="title">寵物姓名</td>
+														<td><input type="text" class="form-control"
+															name="petName" id="petName" value="${pet.petName}"
+															placeholder="請輸入暱稱" /></td>
+													</tr>
+													<tr>
+														<td class="title">寵物分類</td>
+														<td><input type="radio" name="petKind"
+															${pet.petKind.equals("狗 ")?'checked':''} value="狗 ">狗 <input
+															type="radio" name="petKind"
+															${pet.petKind.equals("貓")?'checked':''} value="貓 ">貓 <input
+															type="radio" name="petKind"
+															${pet.petKind.equals("其他 ")?'checked':''} value="其它">其它
+													</tr>
+													<tr>
+														<td class="title">寵物性別</td>
+														<td><input type="radio" name="petGender"
+															${pet.petGender==0?'checked':''} value="0">公 <input
+															type="radio" name="petGender"
+															${pet.petGender==1?'checked':''} value="1">母 
+														</td>
+													</tr>
+													
+													<tr>
+														<td class="title">寵物品種</td>
+														<td><input type="text" class="form-control"
+															name="petSpecies" id="petSpecies" value="${pet.petSpecies}"
+															placeholder="請輸入您的姓名" /></td>
+													</tr>
+													
+													<tr>
+														<td class="title">寵物生日</td>
+														<td><input type="date" name="petBday"
+															min="1910-01-01" max='2000-13-13' id="memBday"
+															value="${pet.petBday}" class="form-control"
+															placeholder="Confirm your Password" /></td>
+													</tr>
+
+
+													<tr>
+														<td class="title">寵物介紹</td>
+														<td><textarea class="form-control" id="petIntro"
+																name="petIntro" placeholder="請輸入您的地址">${pet.petIntro}</textarea></td>
+													</tr>
+
+
+												</tbody>
+											</table>
+											<input type="hidden" name="action" value="memUpdate"> 
+											<input type="submit" value="修改" class="btn btn-primary">
+											<c:if test="${not empty errorMsgs}">
+												<font color="red">
+													<ul>
+														<c:forEach var="message" items="${errorMsgs}">
+															<li>${message}</li>
+														</c:forEach>
+													</ul>
+												</font>
+											</c:if>
+										</div>
 									</div>
-
-
-									<div class=" col-md-9 col-lg-9 ">
-										<table class="table table-user-information">
-											<tbody>
-												<tr>
-													<td class="title">暱稱</td>
-													<td>${member.memSname}</td>
-												</tr>
-												<tr>
-													<td class="title">姓名</td>
-													<td>${member.memName}</td>
-												</tr>
-												<tr>
-													<td class="title">生日</td>
-													<td>${member.memBday}</td>
-												</tr>
-												<tr>
-													<td class="title">手機</td>
-													<td>${member.memPhone}</td>
-												</tr>
-												<tr>
-													<td class="title">性別</td>
-													<%
-														Member member = (Member) session.getAttribute("member");
-														String memGender = String.valueOf(member.getMemGender());
-														HashMap mGender = (HashMap) application.getAttribute("mGender");
-													%>
-													<td><%=mGender.get(memGender)%></td>
-												</tr>
-												<tr>  
-
-													<td class="title">感情</td>
-													<%
-														String memRelation = String.valueOf(member.getMemRelation());
-														HashMap mRelation = (HashMap) application.getAttribute("mRelation");
-													%>
-													<td><%=mRelation.get(memRelation)%></td>
-												</tr>
-												<tr>
-													<td class="title">粉絲</td>
-													<td>${member.memFollowed}人</td>
-												</tr>
-												<tr>
-													<td class="title">點數</td>
-													<td>${member.memPoint}點</td>
-												</tr>
-												<tr>
-													<td class="title">Email</td>
-													<td>${member.memEmail}</td>
-												</tr>
-												<td class="title">地址</td>
-												<td>${member.memAddress}</td>
-												<tr>
-													<td class="title">關於我</td>
-													<td>${member.memSelfintro}</td>
-												</tr>
-
-
-											</tbody>
-										</table>
-
-										<a href="memberInfoUpdate.jsp" class="btn btn-primary">編輯個人資訊</a>
-									</div>
-								</div>
+								</form>
 							</div>
 							<div class="panel-footer">
 								<a data-original-title="Broadcast Message" data-toggle="tooltip"
@@ -220,7 +250,7 @@
 					</footer>
 				</div>
 				<a href="#">
-					<div class="" id="fixedbutton-talk">
+					<div id="fixedbutton-talk">
 						<button class="button btn-lg btn-primary active">交易聊天室</button>
 					</div>
 				</a>

@@ -22,15 +22,48 @@
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet"
 	type="text/css">
 <link href="css/date.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script>
+
+$(function(){
+	
+	$("#memNewPwd").blur(function () {
+		var regex = new RegExp('.*[a-zA-Z]+.*');
+		if($("#memNewPwd").val().length<6){
+			$("#memPwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼長度需大於6").css('color','red');
+		}
+		else if(!$("#memNewPwd").val().match(regex)) {
+			$("#memNewPwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼須包含英文字").css('color','red');
+		} 
+		else{
+			$("#memNewPwdShow").html("").css('color','green');
+		}
+	});
+
+	//確認密碼驗證
+	$("#conPwd").blur(function() {
+		if ($("#memNewPwd").val().trim() == $("#conPwd").val().trim()) {
+			$("#conPwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼相符").css('color','green');
+		} else {
+			$("#conPwdShow").html("&nbsp;&nbsp;&nbsp;&nbsp;密碼不相符").css('color','red');
+		}
+		;
+	});
+	
+	
+});
+
+
+</script>
+<STYLE>
+.title {
+	width: 150px; /* 設定 H1 的樣式*/
+}
+</STYLE>
 <!--[if lt IE 9]>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
             <![endif]-->
-            </script>
-  <STYLE>
-    .title { width : 70px;          /* 設定 H1 的樣式*/
-         }
-  </STYLE>
 </head>
 
 <body>
@@ -75,9 +108,9 @@
 			<div class="col-xs-12 col-sm-2 postion-left-group ">
 				<div id="menu">
 					<div class="panel list-group list-color">
-						<a href="#" class="list-group-item">個人資訊</a> <a href="<%=request.getContextPath()+"/petInfo.jsp" %>"
-							class="list-group-item">寵物資訊</a> <a href="<%=request.getContextPath()+"/memPwdChange.jsp" %>"
-							class="list-group-item">變更密碼</a> <a href="#" 
+						<a href="#" class="list-group-item">個人資訊</a> <a href="#"
+							class="list-group-item">寵物資訊</a> <a href="#"
+							class="list-group-item">安全性</a> <a href="#"
 							class="list-group-item">相簿管理</a>
 					</div>
 				</div>
@@ -96,75 +129,63 @@
 								<h3 class="panel-title">${member.memId}</h3>
 							</div>
 							<div class="panel-body">
-								<div class="row">
-									<div class="col-md-3 col-lg-3 " align="center">
-										<img alt="User Pic" id="memImg" src="DBGifReader" height="350px" width="250px" class="img-circle img-responsive">
+								<form method="post" action=Update>
+									<div class="row">
+										<div class="col-md-3 col-lg-3 " align="center">
+											<img alt="User Pic" id="memPic" src="DBGifReader"
+												height="350px" width="250px"
+												class="img-circle img-responsive"> 
+										</div>
+
+
+										<div class=" col-md-9 col-lg-9 ">
+											<table class="table table-user-information">
+												<tbody>
+													<tr>
+														<td class="title">目前的密碼</td>
+														<td><input type="password" class="form-control"
+															name="memPwd" id="memPwd"
+															placeholder="請輸入目前的密碼" /></td>
+													</tr>
+													<tr>
+														<td class="title">新密碼</td>
+														<td><input type="password" class="form-control"
+															name="memNewPwd" id="memNewPwd"
+															placeholder="請輸入您的新密碼" /><span id="memNewPwdShow"></span></td>
+													</tr>
+													<tr>
+														<td class="title">重新輸入新密碼</td>
+														<td><input type="password" name="conPwd"
+															id="conPwd"
+														    class="form-control"
+															placeholder="請確認您的密碼" /><span id="conPwdShow"></span></td>
+													</tr>
+	
+
+												</tbody>
+											</table>
+											<input type="hidden" name="action" value="pwdChange">
+											<input type="submit" value="修改密碼" class="btn btn-primary">
+											<c:if test="${not empty errorMsgs}">
+												<font color="red">
+													<ul>
+														<c:forEach var="message" items="${errorMsgs}">
+															<li>${message}</li>
+														</c:forEach>
+													</ul>
+												</font>
+											</c:if>
+											
+											<c:if test="${success!=null}">
+											<font color="green">
+											<ul>
+											<li>${success}</li>
+											</ul>
+											</font>
+											</c:if>
+										</div>
 									</div>
-
-
-									<div class=" col-md-9 col-lg-9 ">
-										<table class="table table-user-information">
-											<tbody>
-												<tr>
-													<td class="title">暱稱</td>
-													<td>${member.memSname}</td>
-												</tr>
-												<tr>
-													<td class="title">姓名</td>
-													<td>${member.memName}</td>
-												</tr>
-												<tr>
-													<td class="title">生日</td>
-													<td>${member.memBday}</td>
-												</tr>
-												<tr>
-													<td class="title">手機</td>
-													<td>${member.memPhone}</td>
-												</tr>
-												<tr>
-													<td class="title">性別</td>
-													<%
-														Member member = (Member) session.getAttribute("member");
-														String memGender = String.valueOf(member.getMemGender());
-														HashMap mGender = (HashMap) application.getAttribute("mGender");
-													%>
-													<td><%=mGender.get(memGender)%></td>
-												</tr>
-												<tr>  
-
-													<td class="title">感情</td>
-													<%
-														String memRelation = String.valueOf(member.getMemRelation());
-														HashMap mRelation = (HashMap) application.getAttribute("mRelation");
-													%>
-													<td><%=mRelation.get(memRelation)%></td>
-												</tr>
-												<tr>
-													<td class="title">粉絲</td>
-													<td>${member.memFollowed}人</td>
-												</tr>
-												<tr>
-													<td class="title">點數</td>
-													<td>${member.memPoint}點</td>
-												</tr>
-												<tr>
-													<td class="title">Email</td>
-													<td>${member.memEmail}</td>
-												</tr>
-												<td class="title">地址</td>
-												<td>${member.memAddress}</td>
-												<tr>
-													<td class="title">關於我</td>
-													<td>${member.memSelfintro}</td>
-												</tr>
-
-
-											</tbody>
-										</table>
-
-										<a href="memberInfoUpdate.jsp" class="btn btn-primary">編輯個人資訊</a>
-									</div>
-								</div>
+								</form>
 							</div>
 							<div class="panel-footer">
 								<a data-original-title="Broadcast Message" data-toggle="tooltip"
@@ -220,7 +241,7 @@
 					</footer>
 				</div>
 				<a href="#">
-					<div class="" id="fixedbutton-talk">
+					<div id="fixedbutton-talk">
 						<button class="button btn-lg btn-primary active">交易聊天室</button>
 					</div>
 				</a>

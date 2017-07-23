@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.member.model.Member;
 import com.member.model.MemberService;
+import com.pet.model.Pet;
 
 @WebServlet("/Login")
 public class Login extends HttpServlet {
@@ -32,7 +33,7 @@ public class Login extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
+		MemberService memSvc = new MemberService();
 		// §PÂ_¬O§_¬°ªÅ­È
 		String memId = req.getParameter("memId");
 		String memPwd = req.getParameter("memPwd");
@@ -51,7 +52,12 @@ public class Login extends HttpServlet {
 			sendBackView.forward(req, res);
 		} else {
 			HttpSession session = req.getSession();
-			session.setAttribute("member", allowUser(memId, memPwd));
+			Member member=allowUser(memId, memPwd);
+			Pet pet=memSvc.getOnePetByMemNo(member.getMemNo());
+			session.setAttribute("member", member);
+			if(pet!=null){
+				session.setAttribute("pet", pet);
+			}
 			String location = (String) session.getAttribute("location");
 			if (location != null) {
 				session.removeAttribute("location");

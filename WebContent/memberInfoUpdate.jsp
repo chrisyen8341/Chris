@@ -208,6 +208,7 @@
 
 												</tbody>
 											</table>
+											<input type="hidden" name="action" value="memUpdate"> 
 											<input type="submit" value="н╫зя" class="btn btn-primary">
 											<c:if test="${not empty errorMsgs}">
 												<font color="red">

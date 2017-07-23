@@ -163,7 +163,9 @@ public class MemberDAO implements MemberDAO_interface {
 			con.setAutoCommit(true);
 			
 			// Handle any driver errors
-		}  catch (SQLException se) {
+		}  
+
+		catch (SQLException se) {
 			if (con != null) {
 				try {
 					// 3●設定於當有exception發生時之catch區塊內
@@ -178,7 +180,11 @@ public class MemberDAO implements MemberDAO_interface {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
-		} finally {
+		} 
+		catch(Exception e){
+			System.out.println("有錯");
+		}
+		finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -206,7 +212,6 @@ public class MemberDAO implements MemberDAO_interface {
 
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STMT);
-
 			pstmt.setInt(1, member.getMemNo());
 			pstmt.setString(2, member.getMemId());
 			pstmt.setString(3, member.getMemPwd());
@@ -233,7 +238,6 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.setTimestamp(22, member.getMemLocTime());
 			pstmt.setInt(23, member.getMemLocStatus());
 			pstmt.setInt(24, member.getMemNo());
-
 			pstmt.executeUpdate();
 
 			// Handle any driver errors

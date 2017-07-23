@@ -36,9 +36,9 @@ public class PutMap extends HttpServlet {
     	
     	
     	//寵物性別
-    	Map<Integer,String> pGender=new HashMap<Integer,String>();
-    	pGender.put(0, "公");
-    	pGender.put(1, "母");
+    	Map<String,String> pGender=new HashMap<String,String>();
+    	pGender.put("0", "公");
+    	pGender.put("1", "母");
     	context.setAttribute("pGender", pGender);
     	System.out.println("===============");
     	
