@@ -9,6 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import com.pet.model.Pet;
+import com.pet.model.PetJDBCDAO;
+
 public class MemberJDBCDAO implements MemberDAO_interface {
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -23,6 +27,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			+ ",MEMIMG = ?, MEMREPORTED = ?, MEMSTATUS = ?, MEMRELATION = ?, MEMSELFINTRO = ?, MEMFOLLOWED = ?, MEMPOINT = ?, MEMSALERANK = ?, MEMLONGTITUDE = ?, MEMLATITUDE = ?, MEMLOCTIME = ?, MEMLOCSTATUS = ? WHERE MEMNO = ?";
 	private static final String DELETE_STMT = "DELETE FROM MEMBER WHERE MEMNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM MEMBER WHERE MEMNO = ?";
+	private static final String FIND_PET_BY_MEMNO = "SELECT * FROM PET WHERE MEMNO = ?";
 	private static final String GET_ALL = "SELECT * FROM MEMBER";
 	private static final String FIND_BY_ID = "SELECT * FROM MEMBER WHERE MEMID = ?";
 	private static final String GET_CURRSEQ = "SELECT MEMNO_SQ.CURRVAL FROM DUAL";
@@ -100,6 +105,111 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 		
 	}
 
+	
+	@Override
+	public void addWithPet(Member member, Pet pet) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			
+			// 1●設定於 pstm.executeUpdate()之前
+    		con.setAutoCommit(false);
+			
+    		// 先新增會原
+			String cols[] = {"MEMNO"};
+			pstmt = con.prepareStatement(INSERT_STMT , cols);			
+			pstmt.setString(1, member.getMemId());
+			pstmt.setString(2, member.getMemPwd());
+			pstmt.setString(3, member.getMemName());
+			pstmt.setString(4, member.getMemSname());
+			pstmt.setInt(5, member.getMemGender());
+			pstmt.setString(6, member.getMemIdNo());
+			pstmt.setDate(7, member.getMemBday());
+			pstmt.setString(8, member.getMemPhone());
+			pstmt.setString(9, member.getMemAddress());
+			pstmt.setString(10, member.getMemEmail());
+			Blob blob=con.createBlob();
+			blob.setBytes(1,member.getMemImg());
+			pstmt.setBlob(11, blob);
+			pstmt.setInt(12, member.getMemReported());
+			pstmt.setInt(13, member.getMemStatus());
+			pstmt.setInt(14, member.getMemRelation());
+			pstmt.setString(15, member.getMemSelfintro());
+			pstmt.setInt(16, member.getMemFollowed());
+			pstmt.setInt(17, member.getMemPoint());
+			pstmt.setInt(18, member.getMemSaleRank());
+			pstmt.setDouble(19, member.getMemLongtitude());
+			pstmt.setDouble(20, member.getMemLatitude());
+			pstmt.setTimestamp(21, member.getMemLocTime());
+			pstmt.setInt(22, member.getMemLocStatus());
+			pstmt.executeUpdate();
+			//掘取對應的自增主鍵值
+			String next_memno = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				next_memno = rs.getString(1);
+				System.out.println("自增主鍵值= " + next_memno +"(剛新增成功的會員編號)");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+			rs.close();
+			// 再同時新增員工
+			PetJDBCDAO dao = new PetJDBCDAO();
+			pet.setMemNo(new Integer(next_memno)) ;
+			dao.add2(pet,con);
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-dept");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public void update(Member member) {
 		Connection con = null;
@@ -168,7 +278,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 
 	//多個TABLE時刪不動，MEMBER是多個TABLE的參照，除非先把所有有關連之TABLE刪掉
 	@Override
-	public void delete(int memno) {
+	public void delete(Integer memno) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -209,7 +319,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 	}
 
 	@Override
-	public Member findByPk(int memno) {
+	public Member findByPk(Integer memno) {
 		Member member = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -432,5 +542,61 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 	}
 
 
+	@Override
+	public Pet findPetByMemNo(Integer memno) {
+		PreparedStatement pstmt=null;
+		Connection con=null;
+		ResultSet rs=null;
+		Pet pet=null;
+		try{
+			Class.forName(DRIVER);
+			con=DriverManager.getConnection(URL,USER,PASSWORD);
+			pstmt=con.prepareStatement(FIND_PET_BY_MEMNO);
+			pstmt.setInt(1,memno);
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+			pet.setPetNo(rs.getInt("petNo"));
+			pet.setMemNo(rs.getInt("memNo"));
+			pet.setPetName(rs.getString("petName"));
+			pet.setPetKind(rs.getString("petKind"));
+			pet.setPetGender(rs.getInt("petGender"));
+			pet.setPetSpecies(rs.getString("petSpecies"));
+			pet.setPetIntro(rs.getString("petIntro"));
+			pet.setPetBday(rs.getDate("petBday"));
+			pet.setPetImg(rs.getBytes("petImg"));
+			}
+		}
+		catch(ClassNotFoundException e){
+			e.printStackTrace();	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		return pet;
+	}
 
 }

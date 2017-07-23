@@ -37,18 +37,23 @@ public class PetJDBCDAO implements PetDAO_interface {
 			Class.forName(DRIVER);
 			con=DriverManager.getConnection(URL,USER,PASSWORD);
 			pstmt=con.prepareStatement(INSERT_STMT);
+			System.out.println("33333333333");
 			pstmt.setInt(1, pet.getMemNo());
 			pstmt.setString(2, pet.getPetName());
 			pstmt.setString(3, pet.getPetKind());
 			pstmt.setInt(4, pet.getPetGender());
+			System.out.println("5555555555");
 			pstmt.setString(5,pet.getPetSpecies());
+			System.out.println("22226662222");
 			pstmt.setString(6, pet.getPetIntro());
+			System.out.println("222252222");
 			pstmt.setDate(7, pet.getPetBday());
 			Blob blob=con.createBlob();
 			blob.setBytes(1, pet.getPetImg());
 			pstmt.setBlob(8, blob);
+			System.out.println("6245684");
 			pstmt.executeUpdate();
-
+			System.out.println("222222222");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -72,6 +77,41 @@ public class PetJDBCDAO implements PetDAO_interface {
 			}
 		}
 	}
+
+	@Override
+	public void add2(Pet pet, Connection con) {
+		PreparedStatement pstmt=null;
+		
+		try {
+			pstmt=con.prepareStatement(INSERT_STMT);
+			pstmt.setInt(1, pet.getMemNo());
+			pstmt.setString(2, pet.getPetName());
+			pstmt.setString(3, pet.getPetKind());
+			pstmt.setInt(4, pet.getPetGender());
+			pstmt.setString(5,pet.getPetSpecies());
+			pstmt.setString(6, pet.getPetIntro());
+			pstmt.setDate(7, pet.getPetBday());
+			Blob blob=con.createBlob();
+			blob.setBytes(1, pet.getPetImg());
+			pstmt.setBlob(8, blob);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+
+		}
+		
+	}
+
 
 	@Override
 	public void update(Pet pet) {
@@ -273,5 +313,13 @@ public class PetJDBCDAO implements PetDAO_interface {
 		}
 		return petList;
 	}
+
+
+
+
+
+
+
+
 	
 }

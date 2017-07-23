@@ -80,6 +80,44 @@ public class PetDAO implements PetDAO_interface {
 
 	}
 
+	
+	
+	@Override
+	public void add2(Pet pet, Connection con) {
+		PreparedStatement pstmt=null;
+		
+		try {
+			pstmt=con.prepareStatement(INSERT_STMT);
+			pstmt.setInt(1, pet.getMemNo());
+			pstmt.setString(2, pet.getPetName());
+			pstmt.setString(3, pet.getPetKind());
+			pstmt.setInt(4, pet.getPetGender());
+			pstmt.setString(5,pet.getPetSpecies());
+			pstmt.setString(6, pet.getPetIntro());
+			pstmt.setDate(7, pet.getPetBday());
+			Blob blob=con.createBlob();
+			blob.setBytes(1, pet.getPetImg());
+			pstmt.setBlob(8, blob);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+
+		}
+		
+	}
+	
+	
+
 	@Override
 	public void update(Pet pet) {
 		PreparedStatement pstmt=null;
@@ -274,5 +312,7 @@ public class PetDAO implements PetDAO_interface {
 	public int getCurrSeq() {
 		return currSeq;
 	}
+
+
 
 }

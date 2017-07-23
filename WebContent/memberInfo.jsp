@@ -26,6 +26,11 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
             <![endif]-->
+            </script>
+  <STYLE>
+    .title { width : 70px;          /* 設定 H1 的樣式*/
+         }
+  </STYLE>
 </head>
 
 <body>
@@ -93,8 +98,7 @@
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-md-3 col-lg-3 " align="center">
-										<img alt="User Pic" src="DBGifReader"
-											class="img-circle img-responsive">
+										<img alt="User Pic" id="memImg" src="DBGifReader" height="350px" width="250px" class="img-circle img-responsive">
 									</div>
 
 
@@ -102,23 +106,23 @@
 										<table class="table table-user-information">
 											<tbody>
 												<tr>
-													<td>暱稱</td>
+													<td class="title">暱稱</td>
 													<td>${member.memSname}</td>
 												</tr>
 												<tr>
-													<td>姓名</td>
+													<td class="title">姓名</td>
 													<td>${member.memName}</td>
 												</tr>
 												<tr>
-													<td>生日</td>
+													<td class="title">生日</td>
 													<td>${member.memBday}</td>
 												</tr>
 												<tr>
-													<td>手機</td>
+													<td class="title">手機</td>
 													<td>${member.memPhone}</td>
 												</tr>
 												<tr>
-													<td>性別</td>
+													<td class="title">性別</td>
 													<%
 														Member member = (Member) session.getAttribute("member");
 														String memGender = String.valueOf(member.getMemGender());
@@ -128,7 +132,7 @@
 												</tr>
 												<tr>
 
-													<td>感情</td>
+													<td class="title">感情</td>
 													<%
 														String memRelation = String.valueOf(member.getMemRelation());
 														HashMap mRelation = (HashMap) application.getAttribute("mRelation");
@@ -136,21 +140,21 @@
 													<td><%=mRelation.get(memRelation)%></td>
 												</tr>
 												<tr>
-													<td>多少人追蹤我</td>
+													<td class="title">粉絲</td>
 													<td>${member.memFollowed}人</td>
 												</tr>
 												<tr>
-													<td>點數</td>
+													<td class="title">點數</td>
 													<td>${member.memPoint}點</td>
 												</tr>
 												<tr>
-													<td>Email</td>
+													<td class="title">Email</td>
 													<td>${member.memEmail}</td>
 												</tr>
-												<td>地址</td>
+												<td class="title">地址</td>
 												<td>${member.memAddress}</td>
 												<tr>
-													<td>關於我</td>
+													<td class="title">關於我</td>
 													<td>${member.memSelfintro}</td>
 												</tr>
 

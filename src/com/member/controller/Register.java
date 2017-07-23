@@ -24,12 +24,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.member.model.Member;
 import com.member.model.MemberDAO;
+import com.member.model.MemberService;
 import com.pet.model.Pet;
 import com.pet.model.PetDAO;
+import com.pet.model.PetService;
 
 
 @WebServlet("/Register")
@@ -41,9 +44,9 @@ public class Register extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
+		HttpSession session=req.getSession();
 		
-		
-		//後端檢驗會員資料是否為null
+		/**************************** 1.接收請求參數 - 輸入格式的錯誤處理**********************/
 		String memId = req.getParameter("memId").trim();
 		String memPwd = req.getParameter("memPwd").trim();
 		String memName = req.getParameter("memName").trim();
@@ -100,97 +103,85 @@ public class Register extends HttpServlet {
 			errorMsgs.add("請填寫信箱");
 		}
 		
+		byte[] memImg=null;
+		Collection<Part> parts = req.getParts();
+		for (Part part : parts) {
+			if (part.getName().equals("memImg") && getFileNameFromPart(part) != null 
+					&& part.getContentType().startsWith("image")) {
+				memImg=getPictureByteArray(part.getInputStream());
+			}
+			if(getFileNameFromPart(part) != null && part.getName().equals("memImg")&& !(part.getContentType().startsWith("image"))){
+				errorMsgs.add("會員照片格式有誤");
+			}	
+		}
+	
 		
+		
+		/******************有寵物會執行下方 *****************/
+		String petName=null;
+		String petKind=null;
+		Integer petGender=null;
+		byte[] petImg=null;
+		
+		if(((String)req.getParameter("petOrNot")).equals("1")){
+			petName=req.getParameter("petName").trim();
+			if(petName==null||petName.isEmpty()){
+				errorMsgs.add("請輸入寵物姓名");
+			}
+			
+			petKind=req.getParameter("petKind").trim();
+			if(petKind==null||petKind.isEmpty()){
+				errorMsgs.add("請輸入寵物類別");
+			}
+			
+			petGender=Integer.parseInt(req.getParameter("petGender").trim());
+
+
+			for (Part part : parts) {
+				if (part.getName().equals("petImg") && getFileNameFromPart(part) != null && part.getContentType() != null) {
+					petImg=getPictureByteArray(part.getInputStream());
+		  		}
+				if(getFileNameFromPart(part) != null && part.getName().equals("petImg")&& !(part.getContentType().startsWith("image"))){
+					errorMsgs.add("寵物照片格式有誤");
+				}	
+			}
+		}
 		
 		
 		if (!errorMsgs.isEmpty()) {
 			RequestDispatcher failureView = req
 					.getRequestDispatcher("/newFileBig5.jsp");
+			req.setAttribute("errorMsgs", errorMsgs);
 			failureView.forward(req, res);
 			return;//程式中斷
 		}
 	
 		
+		/***************************2.開始修改資料*****************************************/
+		MemberService memSvc=new MemberService();		
+
 		
-		//把會員資料存入db
-		MemberDAO dao=new MemberDAO();
-		Member member=new Member();
-		member.setMemId(memId);
-		member.setMemPwd(memPwd);
-		member.setMemName(memName);
-		member.setMemSname(memSname);
-		member.setMemGender(memGender);
-		member.setMemIdNo(memIdNo);
-		member.setMemBday(memBday);
-		member.setMemPhone(memPhone);
-		member.setMemAddress(memAddress);
-		member.setMemEmail(memEmail);
-		
-		
-		Collection<Part> parts = req.getParts();
-		for (Part part : parts) {
-			if (part.getName().equals("memImg") && getFileNameFromPart(part) != null && part.getContentType() != null) {
-				member.setMemImg(getPictureByteArray(part.getInputStream()));
-			}
+		//判斷是否有養寵物
+		if(((String)req.getParameter("petOrNot")).equals("0")){
+		memSvc.addMember(memId, memPwd, memName, memSname, memGender, memIdNo, memBday, memPhone, memAddress, 
+				memEmail, memImg, 0, 0, 2, "test", 0, 0, 0,  0.00,  0.00, new Timestamp((new java.util.Date()).getTime()), 0);}
+		else{
+			memSvc.addMemberWithPet(memId, memPwd, memName, memSname, memGender, memIdNo, memBday, memPhone, memAddress, 
+					memEmail, memImg, 0, 0, 2, "test", 0, 
+					0, 0, 0.00, 0.00, new Timestamp((new java.util.Date()).getTime()), 0, 
+					petName, petKind, petGender, "test", "test", new Date(2010-05-02), petImg);
 		}
+				
+
 		
-		//下面幾個是系統預設給定初始值 註冊時沒填 table不能為null
-		member.setMemReported(0);
-		member.setMemStatus(0);
-		member.setMemRelation(0);
-		member.setMemSelfintro("Test");
-		member.setMemPoint(1000);
-		member.setMemSaleRank(1000);
-		member.setMemFollowed(0);
-		member.setMemLocStatus(0);
-		member.setMemLongtitude(0.00);
-		member.setMemLatitude(0.00);
-		member.setMemLocTime(new Timestamp((new java.util.Date()).getTime()));
-		dao.add(member);
+	
 		
-		
-		
-		//使用者有養寵物時才會進來
-		if(((String)req.getParameter("petOrNot")).equals("1")){
-			
-			//判斷寵物資料是否為null
-			String petName=req.getParameter("petName").trim();
-			String petKind=req.getParameter("petKind").trim();
-			String petGender=req.getParameter("petGender").trim();
-			if(petName==null||petName.isEmpty()){
-				errorMsgs.add("petName");
-			}
-			if(petKind==null||petKind.isEmpty()){
-				errorMsgs.add("petKind");
-			}
-			if(petGender==null||petGender.isEmpty()){
-				errorMsgs.add("petGender");
-			}
-			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Register2.html");
-				failureView.forward(req, res);
-				return;//程式中斷
-			}
-			
-			
-			//存db
-			PetDAO petDao=new PetDAO();
-			Pet pet=new Pet();
-			pet.setMemNo(dao.getCurrSeq());
-			pet.setPetName(petName);
-			pet.setPetKind(petKind);
-			pet.setPetGender(Integer.parseInt(petGender));
-			for (Part part : parts) {
-				if (part.getName().equals("petImg") && getFileNameFromPart(part) != null && part.getContentType() != null) {
-					pet.setPetImg(getPictureByteArray(part.getInputStream()));
-				}
-			}
-			pet.setPetBday(null);
-			pet.setPetSpecies(null);
-			pet.setPetIntro("Test");
-			petDao.add(pet);
-		}
+		/***************************3.修改完成,準備轉交(Send the Success view)*************/
+		Member member=memSvc.getOneMemberById(memId);
+		session.setAttribute("member", member);
+		System.out.println(member==null);
+		session.setAttribute("pet",memSvc.getOnePetByMemNo(member.getMemNo()));
+		res.sendRedirect(req.getContextPath()+"/index.html");
 	}
 	
 	
