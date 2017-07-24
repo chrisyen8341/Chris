@@ -16,11 +16,12 @@ public class Pet implements Serializable {
 	private String petIntro;
 	private Date petBday;
 	private byte[] petImg;
+	private Integer petStatus;
 	
 	public Pet(){}
 
 	public Pet(Integer petNo, Integer memNo, String petName, String petKind, Integer petGender, String petSpecies,
-			String petIntro, Date petBday, byte[] petImg) {
+			String petIntro, Date petBday, byte[] petImg,Integer petStatus) {
 		super();
 		this.petNo = petNo;
 		this.memNo = memNo;
@@ -31,6 +32,7 @@ public class Pet implements Serializable {
 		this.petIntro = petIntro;
 		this.petBday = petBday;
 		this.petImg = petImg;
+		this.petStatus = petStatus;
 	}
 
 	public Integer getPetNo() {
@@ -104,8 +106,14 @@ public class Pet implements Serializable {
 	public void setPetImg(byte[] petImg) {
 		this.petImg = petImg;
 	}
-	
-	
 
+	public Integer getPetStatus() {
+		return petStatus;
+	}
+
+	public void setPetStatus(Integer petStatus) {
+		this.petStatus = petStatus;
+	}
+	
 
 }

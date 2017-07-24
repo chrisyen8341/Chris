@@ -53,18 +53,14 @@ public class Login extends HttpServlet {
 		} else {
 			HttpSession session = req.getSession();
 			Member member=allowUser(memId, memPwd);
-			Pet pet=memSvc.getOnePetByMemNo(member.getMemNo());
 			session.setAttribute("member", member);
-			if(pet!=null){
-				session.setAttribute("pet", pet);
-			}
 			String location = (String) session.getAttribute("location");
 			if (location != null) {
 				session.removeAttribute("location");
 				res.sendRedirect(location);
 				return;
 			}
-			res.sendRedirect(req.getContextPath() + "/index.html");
+			res.sendRedirect(req.getContextPath() + "/index.jsp");
 		}
 
 	}

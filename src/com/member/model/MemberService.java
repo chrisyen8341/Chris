@@ -144,8 +144,8 @@ public class MemberService {
 		return dao.findById(memId);
 	}
 	
-	public Pet getOnePetByMemNo(Integer memno){
-		return dao.findPetByMemNo(memno);
+	public List<Pet> getPetsByMemNo(Integer memno){
+		return dao.findPetsByMemNo(memno);
 	}
 	
 }

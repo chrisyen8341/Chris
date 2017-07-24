@@ -14,7 +14,7 @@ public class PetService {
 	}
 	
 	public Pet addPet(Integer memNo, String petName, String petKind, Integer petGender, String petSpecies,
-			String petIntro, Date petBday, byte[] petImg) {
+			String petIntro, Date petBday, byte[] petImg,Integer petStatus) {
 		
 		Pet pet =new Pet();
 		pet.setMemNo(memNo);
@@ -25,13 +25,14 @@ public class PetService {
 		pet.setPetIntro(petIntro);
 		pet.setPetBday(petBday);
 		pet.setPetImg(petImg);
+		pet.setPetStatus(petStatus);	
 		dao.add(pet);
 
 		return pet ;
 	}
 
 	public Pet updateMember(Integer petNo, Integer memNo, String petName, String petKind, Integer petGender, String petSpecies,
-			String petIntro, Date petBday, byte[] petImg) {
+			String petIntro, Date petBday, byte[] petImg,Integer petStatus) {
 
 		Pet pet = new Pet();
 		pet.setPetNo(petNo);
@@ -43,6 +44,7 @@ public class PetService {
 		pet.setPetIntro(petIntro);
 		pet.setPetBday(petBday);
 		pet.setPetImg(petImg);
+		pet.setPetStatus(petStatus);
 		dao.update(pet);
 
 		return pet;

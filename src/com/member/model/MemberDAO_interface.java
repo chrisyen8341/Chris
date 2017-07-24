@@ -11,7 +11,7 @@ public interface MemberDAO_interface {
 	void update(Member member);
 	void delete(Integer memno);
 	Member findByPk(Integer memno);
-	Pet findPetByMemNo(Integer memno);
+	List<Pet> findPetsByMemNo(Integer memno);
 	List<Member> getAll();
 	Member findById(String memId);
 	

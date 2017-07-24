@@ -37,7 +37,7 @@
 	<%@ include file="memNavBar.file" %>
 	<div class="container-fluid">
 		<div class="row">
-
+			
 			<div class="col-xs-12 col-sm-2 postion-left-group ">
 				<%@ include file="memZoneLSide.file" %>
 			</div>
@@ -83,7 +83,6 @@
 												<tr>
 													<td class="title">©Ê§O</td>
 													<%
-														Member member = (Member) session.getAttribute("member");
 														String memGender = String.valueOf(member.getMemGender());
 														HashMap mGender = (HashMap) application.getAttribute("mGender");
 													%>

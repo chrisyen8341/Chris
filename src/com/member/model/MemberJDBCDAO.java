@@ -27,7 +27,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			+ ",MEMIMG = ?, MEMREPORTED = ?, MEMSTATUS = ?, MEMRELATION = ?, MEMSELFINTRO = ?, MEMFOLLOWED = ?, MEMPOINT = ?, MEMSALERANK = ?, MEMLONGTITUDE = ?, MEMLATITUDE = ?, MEMLOCTIME = ?, MEMLOCSTATUS = ? WHERE MEMNO = ?";
 	private static final String DELETE_STMT = "DELETE FROM MEMBER WHERE MEMNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM MEMBER WHERE MEMNO = ?";
-	private static final String FIND_PET_BY_MEMNO = "SELECT * FROM PET WHERE MEMNO = ?";
+	private static final String FIND_PETS_BY_MEMNO = "SELECT * FROM PET WHERE MEMNO = ? ORDER BY PETNO DESC";
 	private static final String GET_ALL = "SELECT * FROM MEMBER";
 	private static final String FIND_BY_ID = "SELECT * FROM MEMBER WHERE MEMID = ?";
 	private static final String GET_CURRSEQ = "SELECT MEMNO_SQ.CURRVAL FROM DUAL";
@@ -543,18 +543,20 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 
 
 	@Override
-	public Pet findPetByMemNo(Integer memno) {
+	public List<Pet> findPetsByMemNo(Integer memno) {
 		PreparedStatement pstmt=null;
 		Connection con=null;
 		ResultSet rs=null;
-		Pet pet=null;
+		List<Pet> list=new ArrayList<Pet>();
+		
 		try{
 			Class.forName(DRIVER);
 			con=DriverManager.getConnection(URL,USER,PASSWORD);
-			pstmt=con.prepareStatement(FIND_PET_BY_MEMNO);
+			pstmt=con.prepareStatement(FIND_PETS_BY_MEMNO);
 			pstmt.setInt(1,memno);
 			rs=pstmt.executeQuery();
 			while(rs.next()){
+			Pet pet=new Pet();
 			pet.setPetNo(rs.getInt("petNo"));
 			pet.setMemNo(rs.getInt("memNo"));
 			pet.setPetName(rs.getString("petName"));
@@ -564,6 +566,8 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			pet.setPetIntro(rs.getString("petIntro"));
 			pet.setPetBday(rs.getDate("petBday"));
 			pet.setPetImg(rs.getBytes("petImg"));
+			pet.setPetStatus(rs.getInt("petStatus"));
+			list.add(pet);
 			}
 		}
 		catch(ClassNotFoundException e){
@@ -596,7 +600,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			}
 		}
 		
-		return pet;
+		return list;
 	}
 
 }

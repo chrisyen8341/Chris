@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="BIG5"%>
 <%@ page import="com.pet.model.*"%>
+<%@ page import="com.member.model.*"%>
 <%@ page import="java.util.HashMap"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -59,9 +60,12 @@
 									<div class="col-md-3 col-lg-3 " align="center">
 										<img alt="User Pic" id="petImg" src="PetImgReader" height="350px" width="250px" class="img-circle img-responsive">
 									</div>
-
-
 									<div class=" col-md-9 col-lg-9 ">
+									
+									
+
+									<%@ include file="page1.file" %> 
+									<c:forEach var="pet" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 										<table class="table table-user-information">
 											<tbody>
 												<tr>
@@ -75,7 +79,6 @@
 												<tr>
 													<td class="title">寵物性別</td>
 													<%
-														Pet pet = (Pet) session.getAttribute("pet");
 														String petGender = String.valueOf(pet.getPetGender());
 														HashMap pGender = (HashMap) application.getAttribute("mGender");
 													%>
@@ -94,14 +97,20 @@
 													<td class="title">寵物介紹</td>
 													<td>${pet.petIntro}</td>
 												</tr>
-
+											</c:forEach>
 
 											</tbody>
 										</table>
 
 										<a href="petInfoUpdate.jsp" class="btn btn-primary">編輯寵物資訊</a>
 										<a href="petInfoUpdate.jsp" class="btn btn-primary">更換寵物</a>
+										
+										
+										
+										
 									</div>
+									
+									
 								</div>
 							</div>
 							<div class="panel-footer">
@@ -125,7 +134,7 @@
 
 
 				<div class="text-center">
-
+					<%@ include file="page2.file" %>
 					<ul class="pagination">
 						<li><a href="#">&laquo;</a></li>
 						<li><a href="#">1</a></li>

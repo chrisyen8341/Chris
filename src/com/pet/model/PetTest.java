@@ -9,37 +9,39 @@ public class PetTest {
 		
 		//新增
 //		Pet pet1 =new Pet();
-//		pet1.setMemNo(1);
+//		pet1.setMemNo(5010);
 //		pet1.setPetName("小小狗");
 //		pet1.setPetKind("狗");
-//		pet1.setPetGender("公");
+//		pet1.setPetGender(1);
 //		pet1.setPetSpecies("台灣土狗");
 //		pet1.setPetIntro("測試寵物介紹");
 //		pet1.setPetBday(java.sql.Date.valueOf("2012-06-10"));
 //		pet1.setPetImg(new byte[123]);
+//		pet1.setPetStatus(0);
 //		dao.add(pet1);
 //		System.out.println("執行完畢");
 		
 		//修改
 //		Pet pet2=new Pet();
-//		pet2.setPetNo(2);
-//		pet2.setMemNo(1);
+//		pet2.setPetNo(1006);
+//		pet2.setMemNo(5003);
 //		pet2.setPetName("小小狗");
 //		pet2.setPetKind("狗");
-//		pet2.setPetGender("公");
+//		pet2.setPetGender(0);
 //		pet2.setPetSpecies("單身狗");
 //		pet2.setPetIntro("測試寵物介紹");
 //		pet2.setPetBday(java.sql.Date.valueOf("2011-02-10"));
 //		pet2.setPetImg(new byte[123]);
+//		pet2.setPetStatus(0);
 //		dao.update(pet2);
 //		System.out.println("執行完畢");
 		
 		//刪除
-//		dao.delete(3);
+//		dao.delete(1006);
 //		System.out.println("執行完畢");
 		
 		//查詢
-//		Pet pet3=dao.findByPk(4);
+//		Pet pet3=dao.findByPk(1004);
 //		System.out.println(pet3.getPetNo());
 //		System.out.println(pet3.getMemNo());
 //		System.out.println(pet3.getPetName());
@@ -49,6 +51,7 @@ public class PetTest {
 //		System.out.println(pet3.getPetIntro());
 //		System.out.println(pet3.getPetBday());
 //		System.out.println(pet3.getPetImg());
+//		System.out.println(pet3.getPetStatus());
 //		System.out.println("執行完畢");
 		
 		
@@ -65,6 +68,7 @@ public class PetTest {
 //			System.out.println(pet.getPetBday());
 //			System.out.println(pet.getPetImg());
 //			System.out.println("===================");
+//			System.out.println(pet.getPetStatus());
 //		}
 		
 		

@@ -179,8 +179,6 @@ public class Register extends HttpServlet {
 		/***************************3.修改完成,準備轉交(Send the Success view)*************/
 		Member member=memSvc.getOneMemberById(memId);
 		session.setAttribute("member", member);
-		System.out.println(member==null);
-		session.setAttribute("pet",memSvc.getOnePetByMemNo(member.getMemNo()));
 		res.sendRedirect(req.getContextPath()+"/index.html");
 	}
 	

@@ -1,11 +1,20 @@
 				<%@ page contentType="text/html; charset=UTF-8" pageEncoding="BIG5"%>
+				<%@ page import="com.pet.model.*"%>
+				<%@ page import="java.util.*"%>
+                <%@ page import="com.member.model.*"%>
 				<div id="menu">
 					<div class="panel list-group list-color">
-						<a href="#" class="list-group-item">個人資訊</a> 
-						<c:if test="${pet!=null}">
+						<a href="<%=request.getContextPath()+"/memberInfo.jsp" %>" class="list-group-item">個人資訊</a> 
+						<% 
+						MemberService memSvc=new MemberService();
+						Member member=(Member)session.getAttribute("member"); 
+						List<Pet> list=memSvc.getPetsByMemNo(member.getMemNo()); 
+						pageContext.setAttribute("list",list);
+						%>
+						<c:if test="${list!=null}">
 						<a href="<%=request.getContextPath()+"/petInfo.jsp" %>" class="list-group-item">寵物資訊</a>
 						</c:if> 
-					    <c:if test="${pet==null}">
+					    <c:if test="${list==null}">
 						<a href="<%=request.getContextPath()+"/petRegister.jsp" %>" class="list-group-item">註冊寵物</a>
 						</c:if> 
 						<a href="<%=request.getContextPath()+"/memPwdChange.jsp" %>" class="list-group-item">變更密碼</a> 
