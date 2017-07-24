@@ -34,53 +34,12 @@
 </head>
 
 <body>
-	<nav id="emerald-nav" class="navbar navbar-light navbar-fixed-top"
-		role="navigation">
-		<div class="container-fluid">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand logo" href="index.html">寵物You&amp;Me</a>
-			</div>
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li><a href="date.html">約會商品</a></li>
-					<li><a href="product.html">商城</a></li>
-					<li><a href="activity.html">活動</a></li>
-					<li><a href="diary.html">寵物日誌</a></li>
-				</ul>
-				<div class="nav collapse navbar-collapse navbar-right" id="login">
-					<ul class="nav navbar-nav">
-						<li><a href="about.html">購物車</a></li>
-						<li><a href="about.html">站內信</a></li>
-						<li><a href="services.html">會員專區</a></li>
-						<li><a href="contact.html">登出</a></li>
-					</ul>
-				</div>
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-		<!-- /.container -->
-	</nav>
+	<%@ include file="memNavBar.file" %>
 	<div class="container-fluid">
 		<div class="row">
 
 			<div class="col-xs-12 col-sm-2 postion-left-group ">
-				<div id="menu">
-					<div class="panel list-group list-color">
-						<a href="#" class="list-group-item">個人資訊</a> <a href="<%=request.getContextPath()+"/petInfo.jsp" %>"
-							class="list-group-item">寵物資訊</a> <a href="<%=request.getContextPath()+"/memPwdChange.jsp" %>"
-							class="list-group-item">變更密碼</a> <a href="#" 
-							class="list-group-item">相簿管理</a>
-					</div>
-				</div>
+				<%@ include file="memZoneLSide.file" %>
 			</div>
 
 			<div class="col-xs-12 col-sm-8 ">

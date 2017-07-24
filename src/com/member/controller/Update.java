@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -151,7 +153,7 @@ public class Update extends HttpServlet {
 			}
 		}
 
-		
+		//修改密碼
 		if ("pwdChange".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			
@@ -167,12 +169,14 @@ public class Update extends HttpServlet {
 				errorMsgs.add("新密碼格式不符");
 			}
 			
-			Member fMember=new Member();
-			fMember.setMemPwd(memPwd);
+
+			Map<String,String> falsePwd=new HashMap<String,String>();
+			falsePwd.put("memPwd", memPwd);
+			falsePwd.put("memNewPwd", memNewPwd);
 			
 			if(!errorMsgs.isEmpty()){
 				RequestDispatcher dispatcher=req.getRequestDispatcher("memPwdChange.jsp");
-				req.setAttribute("member", fMember);
+				req.setAttribute("falsePwd", falsePwd);
 				req.setAttribute("errorMsgs", errorMsgs);
 				dispatcher.forward(req, res);
 				return;
