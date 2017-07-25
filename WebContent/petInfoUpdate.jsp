@@ -71,9 +71,20 @@
 			</div>
 
 			<%
-				Integer petOrd = Integer.parseInt(request.getParameter("petOrd"));
-				Pet pet = list.get(petOrd);
+				
+			Integer petOrd=0;
+			boolean petOedIsNull=false;
+			try{
+				petOrd = Integer.parseInt(request.getParameter("petOrd"));
+			}
+			catch(Exception e){
+				petOrd=0;
+				petOedIsNull=true;
+			}
+			if(!petOedIsNull){	
+			 Pet pet = list.get(petOrd);
 				pageContext.setAttribute("pet", pet);
+			}
 			%>
 
 
@@ -92,7 +103,7 @@
 							<div class="panel-body">
 
 								<div class="row">
-									<form method="post" action=Update enctype="multipart/form-data">
+									<form method="post" action="petUpdate" enctype="multipart/form-data">
 										<div class="col-md-3 col-lg-3 " align="center">
 											<img alt="User Pic" id="petPic"
 												src="PetImgReader?petNo=${pet.petNo}" height="350px"
@@ -116,10 +127,7 @@
 													</tr>
 													<tr>
 														<td class="title">寵物性別</td>
-														<td><input type="radio" name="petGender"
-															${pet.petGender==0?'checked':''} value="0">公 <input
-															type="radio" name="petGender"
-															${pet.petGender==1?'checked':''} value="1">母</td>
+														<td>${pet.petGender}</td>
 													</tr>
 
 													<tr>
@@ -149,7 +157,7 @@
 
 											</table>
 											<input type="hidden" name="action" value="petUpdate">
-											<input type="hidden" name="action" value="petUpdate">
+											<input type="hidden" name="petNo" value="${pet.petNo}">
 											<input type="submit" value="修改" class="btn btn-primary">
 											
 											<!-- 下方會停用會 呼叫modal-->

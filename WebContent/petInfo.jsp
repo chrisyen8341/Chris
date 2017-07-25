@@ -45,6 +45,7 @@
 		<div class="row">
 
 			<div class="col-xs-12 col-sm-2 postion-left-group ">
+           <!--在這裡面有取出 會員的所有寵物 存成list -->
 				<%@ include file="memZoneLSide.file"%>
 			</div>
 

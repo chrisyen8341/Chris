@@ -31,7 +31,7 @@ public class PetService {
 		return pet ;
 	}
 
-	public Pet updateMember(Integer petNo, Integer memNo, String petName, String petKind, Integer petGender, String petSpecies,
+	public Pet updatePet(Integer petNo, Integer memNo, String petName, String petKind, Integer petGender, String petSpecies,
 			String petIntro, Date petBday, byte[] petImg,Integer petStatus) {
 
 		Pet pet = new Pet();

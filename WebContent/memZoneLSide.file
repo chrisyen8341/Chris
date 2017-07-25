@@ -2,6 +2,8 @@
 				<%@ page import="com.pet.model.*"%>
 				<%@ page import="java.util.*"%>
                 <%@ page import="com.member.model.*"%>
+				
+				<!--在這裡面有取出 會員的所有寵物 存成list 只要是在會員專區的page 都有寵物list -->
 				<div id="menu">
 					<div class="panel list-group list-color">
 						<a href="<%=request.getContextPath()+"/memberInfo.jsp" %>" class="list-group-item">個人資訊</a> 
