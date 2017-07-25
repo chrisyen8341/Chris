@@ -11,10 +11,10 @@
 						List<Pet> list=memSvc.getPetsByMemNo(member.getMemNo()); 
 						pageContext.setAttribute("list",list);
 						%>
-						<c:if test="${list!=null}">
+						<c:if test="${not empty list}">
 						<a href="<%=request.getContextPath()+"/petInfo.jsp" %>" class="list-group-item">寵物資訊</a>
 						</c:if> 
-					    <c:if test="${list==null}">
+					    <c:if test="${empty list}">
 						<a href="<%=request.getContextPath()+"/petRegister.jsp" %>" class="list-group-item">註冊寵物</a>
 						</c:if> 
 						<a href="<%=request.getContextPath()+"/memPwdChange.jsp" %>" class="list-group-item">變更密碼</a> 

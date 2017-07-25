@@ -46,7 +46,7 @@
 			<div class="col-xs-12 col-sm-8 ">
 				<div class="row">
 
-					<h5 class="page-header text-right">目前位置:會員專區</h5>
+					<h5 class="page-header text-right">目前位置:會員專區</h5>    
 
 
 					<div class="row">
@@ -54,20 +54,22 @@
 						<div class="panel panel-info">
 							<div class="panel-heading">
 								<h3 class="panel-title">${member.memId}</h3>
+								<font>${list}</font>
 							</div>
 							<div class="panel-body">
 								<div class="row">
+									
+									
+									<c:forEach var="pet" items="${list}">
 									<div class="col-md-3 col-lg-3 " align="center">
 										<img alt="User Pic" id="petImg" src="PetImgReader" height="350px" width="250px" class="img-circle img-responsive">
 									</div>
+									
 									<div class=" col-md-9 col-lg-9 ">
-									
-									
-
-									<%@ include file="page1.file" %> 
-									<c:forEach var="pet" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 										<table class="table table-user-information">
+										
 											<tbody>
+											
 												<tr>
 													<td class="title">寵物姓名</td>
 													<td>${pet.petName}</td>
@@ -78,11 +80,7 @@
 												</tr>
 												<tr>
 													<td class="title">寵物性別</td>
-													<%
-														String petGender = String.valueOf(pet.getPetGender());
-														HashMap pGender = (HashMap) application.getAttribute("mGender");
-													%>
-													<td><%=pGender.get(petGender)%></td>
+													<td>${pet.petGender==0?"公":"母"}</td>
 												</tr>
 												<tr>
 													<td class="title">寵物品種</td>
@@ -97,19 +95,15 @@
 													<td class="title">寵物介紹</td>
 													<td>${pet.petIntro}</td>
 												</tr>
-											</c:forEach>
-
+											
 											</tbody>
 										</table>
 
 										<a href="petInfoUpdate.jsp" class="btn btn-primary">編輯寵物資訊</a>
 										<a href="petInfoUpdate.jsp" class="btn btn-primary">更換寵物</a>
-										
-										
-										
-										
 									</div>
 									
+									</c:forEach>
 									
 								</div>
 							</div>
@@ -134,7 +128,6 @@
 
 
 				<div class="text-center">
-					<%@ include file="page2.file" %>
 					<ul class="pagination">
 						<li><a href="#">&laquo;</a></li>
 						<li><a href="#">1</a></li>
