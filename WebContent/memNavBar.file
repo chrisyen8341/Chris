@@ -31,7 +31,8 @@
 						<li><a href="login.jsp">µn¤J</a></li>
 						</c:if>
 						<c:if test="${member!=null}">
-						<li><a href="login.jsp">µn¥X</a></li>
+						<li>
+						<a href="#" data-toggle="modal" data-target="#logout">µn¥X</a>
 						</c:if>
 					</ul>
 				</div>
@@ -39,4 +40,12 @@
 			<!-- /.navbar-collapse -->
 		</div>
 		<!-- /.container -->
+		
+		
+		
+
+		
+		
+		
+		
 	</nav>

@@ -9,8 +9,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-
-<filter>
+  <filter>
     <filter-name>loginFilter</filter-name>
     <filter-class>com.filters.LoginFilter</filter-class>
   </filter>
@@ -23,11 +22,9 @@
     <dispatcher>ERROR</dispatcher>
     <dispatcher>ASYNC</dispatcher>
   </filter-mapping>
-  
-    <servlet>
+  <servlet>
     <servlet-name>PutMap</servlet-name>
     <servlet-class>com.context.PutMap</servlet-class>
-   	<load-on-startup>10</load-on-startup>
-    </servlet>
- 
+    <load-on-startup>10</load-on-startup>
+  </servlet>
 </web-app>

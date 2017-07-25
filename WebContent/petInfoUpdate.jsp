@@ -159,75 +159,54 @@
 													</ul>
 												</font>
 											</c:if>
-																				<form action="petInfoUpdate.jsp" method="post">
-										<input type="hidden" name="petOrd" value=${s.index}> <input
-											type="submit" class="btn btn-danger" value="停用寵物">
-									</form>
+											<button type="button" class="btn btn-danger"
+												data-toggle="modal" data-target="#myModal">停用</button>
+											<!-- 											<form action="petInfoUpdate.jsp" method="post"> -->
+											<!-- 												<input type="hidden" name="petOrd" value=${s.index}> -->
+											<!-- 												<input type="submit" class="btn btn-danger" value="停用寵物"> -->
+											<!-- 											</form> -->
 										</div>
 									</form>
+									<!-- Modal -->
+									<div class="modal fade" id="myModal" tabindex="-1"
+										role="dialog" aria-labelledby="exampleModalLabel"
+										aria-hidden="true">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalLabel">確定修改</h5>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">請問您是否確認停用?</div>
+												<div class="modal-footer">
+													<span>
 
+														<form action="petInfoUpdate.jsp" method="post">
+															<input type="hidden" name="petOrd" value=${s.index}>
+															<button type="button" class="btn btn-secondary"
+																data-dismiss="modal">否</button>
+															<input type="submit" class="btn btn-primary" value="是">
+														</form>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 
 
 							</div>
-							<div class="panel-footer">
-								<a data-original-title="Broadcast Message" data-toggle="tooltip"
-									type="button" class="btn btn-sm btn-primary"><i
-									class="glyphicon glyphicon-envelope"></i></a> <span
-									class="pull-right"> <a href="edit.html"
-									data-original-title="Edit this user" data-toggle="tooltip"
-									type="button" class="btn btn-sm btn-warning"><i
-										class="glyphicon glyphicon-edit"></i></a> <a
-									data-original-title="Remove this user" data-toggle="tooltip"
-									type="button" class="btn btn-sm btn-danger"><i
-										class="glyphicon glyphicon-remove"></i></a>
-								</span>
-							</div>
+						
 
 						</div>
 					</div>
 				</div>
 
 
-
-				<div class="text-center">
-
-					<ul class="pagination">
-						<li><a href="#">&laquo;</a></li>
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li class="active"><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#">&raquo;</a></li>
-					</ul>
-					<br>
-					<ul class="pager">
-						<li><a href="#">前一頁</a></li>
-						<li><a href="#">下一頁</a></li>
-					</ul>
-
-				</div>
-
-				<div class="postion-left-group-b">
-					<footer>
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="col-sm-3">
-									<p>Copyright 寵物You&amp;Me 2017</p>
-								</div>
-								<div class="col-sm-3">
-									<p>關於我們</p>
-								</div>
-							</div>
-						</div>
-					</footer>
-				</div>
-				<a href="#">
-					<div id="fixedbutton-talk">
-						<button class="button btn-lg btn-primary active">交易聊天室</button>
-					</div>
-				</a>
+<%@ include file="memButtom.file" %>
 			</div>
 		</div>
 		<script src="https://code.jquery.com/jquery.js"></script>
