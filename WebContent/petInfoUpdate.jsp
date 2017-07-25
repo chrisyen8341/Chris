@@ -127,7 +127,7 @@
 													</tr>
 													<tr>
 														<td class="title">寵物性別</td>
-														<td>${pet.petGender}</td>
+														<td>${pet.petGender==o?'男':'女'}</td>
 													</tr>
 
 													<tr>

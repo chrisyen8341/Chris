@@ -81,10 +81,16 @@ public class petUpdate extends HttpServlet {
 				}
 				
 				Pet fPet = new Pet();
+				fPet.setPetNo(pet.getPetNo());
+				fPet.setMemNo(pet.getMemNo());
 				fPet.setPetName(petName);
+				fPet.setPetGender(pet.getPetGender());
+				fPet.setPetKind(pet.getPetKind());
 				fPet.setPetSpecies(petSpecies);
 				fPet.setPetBday(petBday);
 				fPet.setPetIntro(petIntro);
+				fPet.setPetImg(pet.getPetImg());
+				fPet.setPetStatus(pet.getPetStatus());
 				byte[] petImg = pet.getPetImg();
 				Collection<Part> parts = req.getParts();
 
@@ -101,7 +107,7 @@ public class petUpdate extends HttpServlet {
 				}
 
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher dispatcher = req.getRequestDispatcher("/petInfo.jsp");
+					RequestDispatcher dispatcher = req.getRequestDispatcher("/petInfoUpdate.jsp");
 					req.setAttribute("errorMsgs", errorMsgs);
 					req.setAttribute("pet", fPet);
 					dispatcher.forward(req, res);
