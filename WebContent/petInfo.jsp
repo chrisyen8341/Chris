@@ -36,6 +36,10 @@
 .pet {
 	margin-top: 20px;
 }
+
+.addPet {
+	margin-top: 20px;
+}
 </STYLE>
 </head>
 
@@ -45,7 +49,7 @@
 		<div class="row">
 
 			<div class="col-xs-12 col-sm-2 postion-left-group ">
-           <!--在這裡面有取出 會員的所有寵物 存成list -->
+				<!--在這裡面有取出 會員的所有寵物 存成list -->
 				<%@ include file="memZoneLSide.file"%>
 			</div>
 
@@ -110,17 +114,33 @@
 
 
 												<span>
-												<form action="petInfoUpdate.jsp" method="post">
-													<input type="hidden" name="petOrd" value=${s.index} >
-													<input type="submit" class="btn btn-primary" value="編輯寵物資訊">
-												</form>
+													<form action="petInfoUpdate.jsp" method="post">
+														<input type="hidden" name="petOrd" value=${s.index} >
+														<input type="submit" class="btn btn-primary"
+															value="編輯寵物資訊">
+													</form>
 
 
 												</span>
 											</div>
 										</div>
 									</c:forEach>
-
+									
+									<% 
+									int listSize=list.size();
+									pageContext.setAttribute("listSize", listSize);
+									%>
+									
+									<div class="col-md-3 col-md-push-3 col-lg-3 col-lg-push-3 addPet">
+											
+									<c:if test="${listSize<3}">
+									<form action="petRegister.jsp" method="post" enctype="multipart/form-data">
+										<input type="submit" class="btn btn-info" value="新增寵物">
+									</form>
+									</c:if >
+									
+									</div>
+									
 								</div>
 							</div>
 
@@ -129,7 +149,7 @@
 					</div>
 				</div>
 
-<%@ include file="memButtom.file" %>
+				<%@ include file="memButtom.file"%>
 			</div>
 		</div>
 		<script src="https://code.jquery.com/jquery.js"></script>

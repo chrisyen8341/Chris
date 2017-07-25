@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="BIG5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="">
 <head>
@@ -13,6 +14,22 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script>
 	$(function() {
+
+		//照片上傳預覽
+		$("#petImg").change(function() {
+			readURL(this);
+		});
+
+		function readURL(input) {
+
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$('#petPic').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
 
 		$("#autoAddPet").click(function() {
 			$("#petName").val("單身狗");
@@ -34,7 +51,7 @@
 
 			<div class="col-sm-6 col-sm-offset-3">
 
-				<form class="" action="Register" method="post"
+				<form class="" action="petUpdate" method="post"
 					enctype="multipart/form-data">
 
 
@@ -94,9 +111,20 @@
 
 					</div>
 
-
-					<input class="btn btn-primary btn-lg btn-block login-button"
+					<input type="hidden" name="action" value="petRegister"> <input
+						class="btn btn-primary btn-lg btn-block login-button"
 						type="submit" value="註冊">
+
+					<c:if test="${not empty errorMsgs}">
+						<font color="red">
+							<ul>
+								<c:forEach var="message" items="${errorMsgs}">
+									<li>${message}</li>
+								</c:forEach>
+							</ul>
+						</font>
+					</c:if>
+
 
 				</form>
 
