@@ -148,8 +148,15 @@
 												</tbody>
 
 											</table>
-											<input type="hidden" name="action" value="memUpdate">
+											<input type="hidden" name="action" value="petUpdate">
+											<input type="hidden" name="action" value="petUpdate">
 											<input type="submit" value="修改" class="btn btn-primary">
+											
+											<!-- 下方會停用會 呼叫modal-->
+											<button type="button" class="btn btn-danger"
+												data-toggle="modal" data-target="#myModal">停用</button>
+											
+											
 											<c:if test="${not empty errorMsgs}">
 												<font color="red">
 													<ul>
@@ -159,12 +166,7 @@
 													</ul>
 												</font>
 											</c:if>
-											<button type="button" class="btn btn-danger"
-												data-toggle="modal" data-target="#myModal">停用</button>
-											<!-- 											<form action="petInfoUpdate.jsp" method="post"> -->
-											<!-- 												<input type="hidden" name="petOrd" value=${s.index}> -->
-											<!-- 												<input type="submit" class="btn btn-danger" value="停用寵物"> -->
-											<!-- 											</form> -->
+											
 										</div>
 									</form>
 									<!-- Modal -->
@@ -199,14 +201,14 @@
 
 
 							</div>
-						
+
 
 						</div>
 					</div>
 				</div>
 
 
-<%@ include file="memButtom.file" %>
+				<%@ include file="memButtom.file"%>
 			</div>
 		</div>
 		<script src="https://code.jquery.com/jquery.js"></script>
