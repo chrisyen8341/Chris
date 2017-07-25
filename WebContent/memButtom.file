@@ -46,7 +46,7 @@
 				</div>
 
 				<div class="postion-left-group-b">
-					<footer>
+					<footer class="footer navbar-fixed-bottom">
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="col-sm-3">

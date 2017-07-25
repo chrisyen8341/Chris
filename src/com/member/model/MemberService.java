@@ -53,7 +53,7 @@ public class MemberService {
 			Integer memReported, Integer memStatus, Integer memRelation, String memSelfintro, Integer memFollowed,
 			Integer memPoint, Integer memSaleRank, Double memLongtitude, Double memLatitude, Timestamp memLocTime,
 			Integer memLocStatus,String petName, String petKind, Integer petGender, String petSpecies,
-			String petIntro, Date petBday, byte[] petImg) {
+			String petIntro, Date petBday, byte[] petImg,Integer petStatus) {
 		
 		Member member = new Member();
 		Pet pet=new Pet();
@@ -86,6 +86,7 @@ public class MemberService {
 		pet.setPetIntro(petIntro);
 		pet.setPetBday(petBday);
 		pet.setPetImg(petImg);
+		pet.setPetStatus(petStatus);
 		dao.addWithPet(member, pet);
 
 		return member ;

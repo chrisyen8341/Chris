@@ -122,8 +122,10 @@ public class Register extends HttpServlet {
 		String petKind=null;
 		Integer petGender=null;
 		byte[] petImg=null;
+		System.out.println("333333333333333");
 		
 		if(((String)req.getParameter("petOrNot")).equals("1")){
+			System.out.println("44444444444444444");
 			petName=req.getParameter("petName").trim();
 			if(petName==null||petName.isEmpty()){
 				errorMsgs.add("請輸入寵物姓名");
@@ -146,7 +148,7 @@ public class Register extends HttpServlet {
 				}	
 			}
 		}
-		
+		System.out.println("2222222222222");
 		
 		if (!errorMsgs.isEmpty()) {
 			RequestDispatcher failureView = req
@@ -155,7 +157,7 @@ public class Register extends HttpServlet {
 			failureView.forward(req, res);
 			return;//程式中斷
 		}
-	
+		System.out.println("1111111111111111");
 		
 		/***************************2.開始修改資料*****************************************/
 		MemberService memSvc=new MemberService();		
@@ -163,23 +165,26 @@ public class Register extends HttpServlet {
 		
 		//判斷是否有養寵物
 		if(((String)req.getParameter("petOrNot")).equals("0")){
+			System.out.println("77777777777777");	
 		memSvc.addMember(memId, memPwd, memName, memSname, memGender, memIdNo, memBday, memPhone, memAddress, 
 				memEmail, memImg, 0, 0, 2, "test", 0, 0, 0,  0.00,  0.00, new Timestamp((new java.util.Date()).getTime()), 0);}
 		else{
+			
 			memSvc.addMemberWithPet(memId, memPwd, memName, memSname, memGender, memIdNo, memBday, memPhone, memAddress, 
 					memEmail, memImg, 0, 0, 2, "test", 0, 
 					0, 0, 0.00, 0.00, new Timestamp((new java.util.Date()).getTime()), 0, 
-					petName, petKind, petGender, "test", "test", new Date(2010-05-02), petImg);
+					petName, petKind, petGender, "test", "test", new Date(2010-05-02), petImg,0);
 		}
-				
+		System.out.println("66666666666666");		
 
 		
 	
 		
 		/***************************3.修改完成,準備轉交(Send the Success view)*************/
 		Member member=memSvc.getOneMemberById(memId);
+		System.out.println(member==null);
 		session.setAttribute("member", member);
-		res.sendRedirect(req.getContextPath()+"/index.html");
+		res.sendRedirect(req.getContextPath()+"/index.jsp");
 	}
 	
 	
