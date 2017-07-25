@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="BIG5"%>
 <%@ page import="com.member.model.*"%>
+<%@ page import="com.pet.model.*"%>
 <%@ page import="java.util.HashMap"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+
 
 <html lang="">
 
@@ -57,13 +61,21 @@
 </head>
 
 <body>
-	<%@ include file="memNavBar.file" %>
+	<%@ include file="memNavBar.file"%>
+
 	<div class="container-fluid">
 		<div class="row">
 
 			<div class="col-xs-12 col-sm-2 postion-left-group ">
-				<%@ include file="memZoneLSide.file" %>
+				<%@ include file="memZoneLSide.file"%>
 			</div>
+
+			<%
+				Integer petOrd = Integer.parseInt(request.getParameter("petOrd"));
+				Pet pet = list.get(petOrd);
+				pageContext.setAttribute("pet", pet);
+			%>
+
 
 			<div class="col-xs-12 col-sm-8 ">
 				<div class="row">
@@ -78,13 +90,14 @@
 								<h3 class="panel-title">${member.memId}</h3>
 							</div>
 							<div class="panel-body">
-								<form method="post" action=Update enctype="multipart/form-data">
-									<div class="row">
+
+								<div class="row">
+									<form method="post" action=Update enctype="multipart/form-data">
 										<div class="col-md-3 col-lg-3 " align="center">
-											<img alt="User Pic" id="petPic" src="PetImgReader"
-												height="350px" width="250px"
-												class="img-circle img-responsive"> <input type="file"
-												name="petImg" id="petImg" placeholder="編輯相片" />
+											<img alt="User Pic" id="petPic"
+												src="PetImgReader?petNo=${pet.petNo}" height="350px"
+												width="250px" class="img-circle img-responsive"> <input
+												type="file" name="petImg" id="petImg" placeholder="編輯相片" />
 										</div>
 
 
@@ -106,17 +119,16 @@
 														<td><input type="radio" name="petGender"
 															${pet.petGender==0?'checked':''} value="0">公 <input
 															type="radio" name="petGender"
-															${pet.petGender==1?'checked':''} value="1">母 
-														</td>
+															${pet.petGender==1?'checked':''} value="1">母</td>
 													</tr>
-													
+
 													<tr>
 														<td class="title">寵物品種</td>
 														<td><input type="text" class="form-control"
-															name="petSpecies" id="petSpecies" value="${pet.petSpecies}"
-															placeholder="請輸入您的姓名" /></td>
+															name="petSpecies" id="petSpecies"
+															value="${pet.petSpecies}" placeholder="請輸入您的姓名" /></td>
 													</tr>
-													
+
 													<tr>
 														<td class="title">寵物生日</td>
 														<td><input type="date" name="petBday"
@@ -134,8 +146,9 @@
 
 
 												</tbody>
+
 											</table>
-											<input type="hidden" name="action" value="memUpdate"> 
+											<input type="hidden" name="action" value="memUpdate">
 											<input type="submit" value="修改" class="btn btn-primary">
 											<c:if test="${not empty errorMsgs}">
 												<font color="red">
@@ -146,9 +159,16 @@
 													</ul>
 												</font>
 											</c:if>
+																				<form action="petInfoUpdate.jsp" method="post">
+										<input type="hidden" name="petOrd" value=${s.index}> <input
+											type="submit" class="btn btn-danger" value="停用寵物">
+									</form>
 										</div>
-									</div>
-								</form>
+									</form>
+
+								</div>
+
+
 							</div>
 							<div class="panel-footer">
 								<a data-original-title="Broadcast Message" data-toggle="tooltip"

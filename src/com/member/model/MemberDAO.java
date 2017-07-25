@@ -37,7 +37,7 @@ public class MemberDAO implements MemberDAO_interface {
 			+ ",MEMIMG = ?, MEMREPORTED = ?, MEMSTATUS = ?, MEMRELATION = ?, MEMSELFINTRO = ?, MEMFOLLOWED = ?, MEMPOINT = ?, MEMSALERANK = ?, MEMLONGTITUDE = ?, MEMLATITUDE = ?, MEMLOCTIME = ?, MEMLOCSTATUS = ? WHERE MEMNO = ?";
 	private static final String DELETE_STMT = "DELETE FROM MEMBER WHERE MEMNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM MEMBER WHERE MEMNO = ?";
-	private static final String FIND_PETS_BY_MEMNO = "SELECT * FROM PET WHERE MEMNO = ? ORDER BY PETNO DESC";
+	private static final String FIND_PETS_BY_MEMNO = "SELECT * FROM PET WHERE MEMNO = ? AND PETSTATUS = 0 ORDER BY PETNO DESC";
 	private static final String GET_ALL = "SELECT * FROM MEMBER";
 	private static final String FIND_BY_ID = "SELECT * FROM MEMBER WHERE MEMID = ?";
 	private static final String GET_CURRSEQ = "SELECT MEMNO_SQ.CURRVAL FROM DUAL";

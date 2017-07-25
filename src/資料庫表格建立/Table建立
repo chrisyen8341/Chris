@@ -1,20 +1,27 @@
-drop table pet;
 Drop Table Albumimg;
 Drop Table Album;
 drop table ORDERLIST;
 drop table ord;
-drop table PRODUCT;
-drop table CHARGE;
-drop table WITHDRAW;
+Drop Table Product;
+drop table CHARGES;
+Drop Table Withdraw;
+drop table msg;
+Drop Table Dateitemrep;
+Drop Table Dateitemapp;
+DROP TABLE APPREPREC;
 drop table dateitem;
+drop table pet;
 DROP TABLE ACTDETIAL ;
 DROP TABLE ACTIMG ;
 DROP TABLE ACTIVITY ;
 DROP TABLE RESTIMG ;
-DROP TABLE RESTMEMBER ;
+Drop Table Restmember ;
 DROP TABLE REST ;
 DROP TABLE DIAMSG;
-DROP TABLE DIARY;
+Drop Table Diary;
+Drop Table Letter;
+Drop Table Lettertype;
+DROP TABLE SUBMEM;
 drop table member;
 
 
@@ -48,10 +55,17 @@ DROP SEQUENCE AD_SQ;
 DROP SEQUENCE FAQ_SQ;
 DROP SEQUENCE NEWS_SQ;
 DROP SEQUENCE SLIDE_SQ;
-DROP SEQUENCE USERQUESTION_SQ;
+Drop Sequence Userquestion_Sq;
+drop sequence msgno_SQ;
 drop sequence DATEITEMNO_SQ;
 DROP SEQUENCE DIAMSG_SEQ;
 DROP SEQUENCE DIARY_SEQ;
+DROP SEQUENCE DATEITEMAPP_SEQ;
+DROP SEQUENCE DATEITEMREP_SEQ;
+Drop Sequence Letter_Seq;
+DROP SEQUENCE LETTERTYPE_SEQ;
+
+
 
 CREATE TABLE Member 
 (memNo   NUMBER(10) Constraint MEMBER_MEMNO_Pk Primary Key,
@@ -113,6 +127,9 @@ INSERT INTO MEMBER VALUES (MEMNO_SQ.NEXTVAL,'qwpeqrpi','222222','陳水扁','小扁',
 
 INSERT INTO MEMBER VALUES (MEMNO_SQ.NEXTVAL,'lqwemmj','654321','馬英九','小馬',0,'U113595436',TO_DATE('1987-05-20','YYYY-MM-DD'),'095466245','台灣大學','KKBOX@HOT.com'
 ,EMPTY_BLOB(),12,1,0,'你好我叫小黃',99,1200,9,6.77,24.777,TO_DATE('20170710 06:15:20','YYYYMMDD HH24:MI:SS'),0);
+
+
+
 CREATE TABLE PET(
 petNo NUMBER(10) Constraint PET_PETNO_Pk Primary Key,
 memNo NUMBER(10) NOT NULL CONSTRAINT PET_MEMNO_FK REFERENCES MEMBER(MEMNO),
@@ -122,18 +139,20 @@ petGender NUMBER(2) NOT NULL,
 petSpecies VARCHAR2(100),
 petIntro VARCHAR2(1000),
 petBday DATE,
-petImg BLOB NOT NULL);
+petImg BLOB NOT NULL,
+petStatus Number(2) NOT NULL);
 
 
 Create Sequence PETNO_SQ Increment By 1 Start With 1001 Nocache Nocycle;
 
 
- INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5001,'小王狗','狗',0,'貴賓狗','寵物介紹測試',TO_DATE('2007-12-17','YYYY-MM-DD'),EMPTY_BLOB());
- INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5002,'小阿貓','貓',1,'貴賓貓','寵物介紹測試',TO_DATE('2008-12-10','YYYY-MM-DD'),EMPTY_BLOB());
- INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5003,'小王狗','狗',0,'臘腸狗','寵物介紹測試',TO_DATE('2012-03-12','YYYY-MM-DD'),EMPTY_BLOB());
- INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5004,'小郎貓','貓',0,'暴力貓','寵物介紹測試',TO_DATE('2003-08-09','YYYY-MM-DD'),EMPTY_BLOB());
- INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5005,'小天貓','貓',0,'美女貓','寵物介紹測試',TO_DATE('2001-09-08','YYYY-MM-DD'),EMPTY_BLOB());
-
+ INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5001,'小王狗','狗',0,'貴賓狗','寵物介紹測試',TO_DATE('2007-12-17','YYYY-MM-DD'),EMPTY_BLOB(),0);
+ INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5002,'小阿貓','貓',1,'貴賓貓','寵物介紹測試',TO_DATE('2008-12-10','YYYY-MM-DD'),EMPTY_BLOB(),0);
+ INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5003,'小王狗','狗',0,'臘腸狗','寵物介紹測試',TO_DATE('2012-03-12','YYYY-MM-DD'),EMPTY_BLOB(),0);
+ INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5004,'小郎貓','貓',0,'暴力貓','寵物介紹測試',TO_DATE('2003-08-09','YYYY-MM-DD'),EMPTY_BLOB(),0);
+ INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5005,'小天貓','貓',0,'美女貓','寵物介紹測試',TO_DATE('2001-09-08','YYYY-MM-DD'),EMPTY_BLOB(),0);
+ INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5001,'天兵一號','貓',0,'波斯','寵物介紹測試',TO_DATE('2001-09-08','YYYY-MM-DD'),EMPTY_BLOB(),0);
+ INSERT INTO PET VALUES (PETNO_SQ.NEXTVAL,5001,'天兵二號','貓',0,'膽固純貓','寵物介紹測試',TO_DATE('2001-09-08','YYYY-MM-DD'),EMPTY_BLOB(),0);
 
 
 CREATE TABLE EMP(
@@ -197,11 +216,11 @@ faqAnswer VARCHAR2(1000) Not Null);
 
 Create Sequence FAQ_SQ  Increment By 1 Start With 1 Nocache Nocycle;
 
-INSERT INTO FAQ (FaqNo,EmpNo,FaqCategory,FaqTItle,FaqAnswer) VALUES (1,6001,'寵物走失','我的寵物走失了怎麼辦','報警阿廢話');
-INSERT INTO FAQ (FaqNo,EmpNo,FaqCategory,FaqTItle,FaqAnswer) VALUES (2,6001,'寵物走失','我的寵物走失了怎麼辦','報警阿廢話');
-INSERT INTO FAQ (FaqNo,EmpNo,FaqCategory,FaqTItle,FaqAnswer) VALUES (3,6001,'寵物走失','我的寵物走失了怎麼辦','報警阿廢話');
-INSERT INTO FAQ (FaqNo,EmpNo,FaqCategory,FaqTItle,FaqAnswer) VALUES (4,6001,'寵物走失','我的寵物走失了怎麼辦','報警阿廢話');
-INSERT INTO FAQ (FaqNo,EmpNo,FaqCategory,FaqTItle,FaqAnswer) VALUES (5,6001,'寵物走失','我的寵物走失了怎麼辦','報警阿廢話');
+INSERT INTO FAQ (FaqNo,EmpNo,FaqCategory,FaqTItle,FaqAnswer) VALUES (FAQ_SQ.NEXTVAL,6001,'寵物走失','我的寵物走失了怎麼辦','報警阿廢話');
+INSERT INTO FAQ (FaqNo,EmpNo,FaqCategory,FaqTItle,FaqAnswer) VALUES (FAQ_SQ.NEXTVAL,6001,'寵物走失','我的寵物走失了怎麼辦','報警阿廢話');
+INSERT INTO FAQ (FaqNo,EmpNo,FaqCategory,FaqTItle,FaqAnswer) VALUES (FAQ_SQ.NEXTVAL,6001,'寵物走失','我的寵物走失了怎麼辦','報警阿廢話');
+INSERT INTO FAQ (FaqNo,EmpNo,FaqCategory,FaqTItle,FaqAnswer) VALUES (FAQ_SQ.NEXTVAL,6001,'寵物走失','我的寵物走失了怎麼辦','報警阿廢話');
+INSERT INTO FAQ (FaqNo,EmpNo,FaqCategory,FaqTItle,FaqAnswer) VALUES (FAQ_SQ.NEXTVAL,6001,'寵物走失','我的寵物走失了怎麼辦','報警阿廢話');
 
 
 CREATE TABLE USERQUESTION(
@@ -213,11 +232,11 @@ userQContent VARCHAR2(3000) Not Null);
 
 Create Sequence USERQUESTION_SQ  Increment By 1 Start With 1 Nocache Nocycle;
 
-INSERT INTO USERQUESTION (UserQNo,FaqNo,UserQCategory,UserQTItle,UserQContent) VALUES (1,1,'登入問題','我沒辦法登入阿阿阿','網站超爛沒辦法登入啦');
-INSERT INTO USERQUESTION (UserQNo,FaqNo,UserQCategory,UserQTItle,UserQContent) VALUES (2,2,'登入問題','我沒辦法登入阿阿阿','網站超爛沒辦法登入啦');
-INSERT INTO USERQUESTION (UserQNo,FaqNo,UserQCategory,UserQTItle,UserQContent) VALUES (3,3,'登入問題','我沒辦法登入阿阿阿','網站超爛沒辦法登入啦');
-INSERT INTO USERQUESTION (UserQNo,FaqNo,UserQCategory,UserQTItle,UserQContent) VALUES (4,4,'登入問題','我沒辦法登入阿阿阿','網站超爛沒辦法登入啦');
-INSERT INTO USERQUESTION (UserQNo,FaqNo,UserQCategory,UserQTItle,UserQContent) VALUES (5,5,'登入問題','我沒辦法登入阿阿阿','網站超爛沒辦法登入啦');
+INSERT INTO USERQUESTION (UserQNo,FaqNo,UserQCategory,UserQTItle,UserQContent) VALUES (USERQUESTION_SQ.NEXTVAL,1,'登入問題','我沒辦法登入阿阿阿','網站超爛沒辦法登入啦');
+INSERT INTO USERQUESTION (UserQNo,FaqNo,UserQCategory,UserQTItle,UserQContent) VALUES (USERQUESTION_SQ.NEXTVAL,2,'登入問題','我沒辦法登入阿阿阿','網站超爛沒辦法登入啦');
+INSERT INTO USERQUESTION (UserQNo,FaqNo,UserQCategory,UserQTItle,UserQContent) VALUES (USERQUESTION_SQ.NEXTVAL,3,'登入問題','我沒辦法登入阿阿阿','網站超爛沒辦法登入啦');
+INSERT INTO USERQUESTION (UserQNo,FaqNo,UserQCategory,UserQTItle,UserQContent) VALUES (USERQUESTION_SQ.NEXTVAL,4,'登入問題','我沒辦法登入阿阿阿','網站超爛沒辦法登入啦');
+INSERT INTO USERQUESTION (UserQNo,FaqNo,UserQCategory,UserQTItle,UserQContent) VALUES (USERQUESTION_SQ.NEXTVAL,5,'登入問題','我沒辦法登入阿阿阿','網站超爛沒辦法登入啦');
 
 
 
@@ -231,11 +250,11 @@ newsDate DATE Not Null);
 
 Create Sequence NEWS_SQ  Increment By 1 Start With 1 Nocache Nocycle;
 
-INSERT INTO NEWS (NewsNo,EmpNo,NewsTitle,NewsContent,NewsDate) VALUES (1,6001,'這是公告','公告內容在這',sysdate);
-INSERT INTO NEWS (NewsNo,EmpNo,NewsTitle,NewsContent,NewsDate) VALUES (2,6002,'這是公告','公告內容在這',sysdate);
-INSERT INTO NEWS (NewsNo,EmpNo,NewsTitle,NewsContent,NewsDate) VALUES (3,6002,'這是公告','公告內容在這',sysdate);
-INSERT INTO NEWS (NewsNo,EmpNo,NewsTitle,NewsContent,NewsDate) VALUES (4,6003,'這是公告','公告內容在這',sysdate);
-INSERT INTO NEWS (NewsNo,EmpNo,NewsTitle,NewsContent,NewsDate) VALUES (5,6003,'這是公告','公告內容在這',sysdate);
+INSERT INTO NEWS (NewsNo,EmpNo,NewsTitle,NewsContent,NewsDate) VALUES (NEWS_SQ.NEXTVAL,6001,'這是公告','公告內容在這',sysdate);
+INSERT INTO NEWS (NewsNo,EmpNo,NewsTitle,NewsContent,NewsDate) VALUES (NEWS_SQ.NEXTVAL,6002,'這是公告','公告內容在這',sysdate);
+INSERT INTO NEWS (NewsNo,EmpNo,NewsTitle,NewsContent,NewsDate) VALUES (NEWS_SQ.NEXTVAL,6002,'這是公告','公告內容在這',sysdate);
+INSERT INTO NEWS (NewsNo,EmpNo,NewsTitle,NewsContent,NewsDate) VALUES (NEWS_SQ.NEXTVAL,6003,'這是公告','公告內容在這',sysdate);
+INSERT INTO NEWS (NewsNo,EmpNo,NewsTitle,NewsContent,NewsDate) VALUES (NEWS_SQ.NEXTVAL,6003,'這是公告','公告內容在這',sysdate);
 
 
 CREATE TABLE SLIDE(
@@ -246,11 +265,11 @@ slideTitle VARCHAR2(50) Not Null);
 
 Create Sequence SLIDE_SQ  Increment By 1 Start With 1 Nocache Nocycle;
 
-INSERT INTO SLIDE (SlideNo,SlideImg,SlideCategory,SlideTitle) VALUES (1,EMPTY_BLOB(),'幻燈片類別','幻燈片抬頭');
-INSERT INTO SLIDE (SlideNo,SlideImg,SlideCategory,SlideTitle) VALUES (2,EMPTY_BLOB(),'幻燈片類別','幻燈片抬頭');
-INSERT INTO SLIDE (SlideNo,SlideImg,SlideCategory,SlideTitle) VALUES (3,EMPTY_BLOB(),'幻燈片類別','幻燈片抬頭');
-INSERT INTO SLIDE (SlideNo,SlideImg,SlideCategory,SlideTitle) VALUES (4,EMPTY_BLOB(),'幻燈片類別','幻燈片抬頭');
-INSERT INTO SLIDE (SlideNo,SlideImg,SlideCategory,SlideTitle) VALUES (5,EMPTY_BLOB(),'幻燈片類別','幻燈片抬頭');
+Insert Into Slide (Slideno,Slideimg,Slidecategory,Slidetitle) Values (Slide_Sq.Nextval,Empty_Blob(),'幻燈片類別','幻燈片抬頭');
+Insert Into Slide (Slideno,Slideimg,Slidecategory,Slidetitle) Values (Slide_Sq.Nextval,Empty_Blob(),'幻燈片類別','幻燈片抬頭');
+Insert Into Slide (Slideno,Slideimg,Slidecategory,Slidetitle) Values (Slide_Sq.Nextval,Empty_Blob(),'幻燈片類別','幻燈片抬頭');
+Insert Into Slide (Slideno,Slideimg,Slidecategory,Slidetitle) Values (Slide_Sq.Nextval,Empty_Blob(),'幻燈片類別','幻燈片抬頭');
+INSERT INTO SLIDE (SlideNo,SlideImg,SlideCategory,SlideTitle) VALUES (SLIDE_SQ.NEXTVAL,EMPTY_BLOB(),'幻燈片類別','幻燈片抬頭');
 
 CREATE TABLE AD(
 adNo NUMBER(10) CONSTRAINT ADNO_PK PRIMARY KEY,
@@ -262,11 +281,11 @@ adFee Number(10,2) Not Null);
 
 Create Sequence AD_SQ  Increment By 1 Start With 1 Nocache Nocycle;
 
-INSERT INTO AD (AdNo,AdContent,AdImg,AdOnline,AdOffline,AdFee) VALUES (1,'廣告內容在這裡',EMPTY_BLOB(),sysdate,sysdate,1000.00);
-INSERT INTO AD (AdNo,AdContent,AdImg,AdOnline,AdOffline,AdFee) VALUES (2,'廣告內容在這裡',EMPTY_BLOB(),sysdate,sysdate,1000.00);
-INSERT INTO AD (AdNo,AdContent,AdImg,AdOnline,AdOffline,AdFee) VALUES (3,'廣告內容在這裡',EMPTY_BLOB(),sysdate,sysdate,1000.00);
-INSERT INTO AD (AdNo,AdContent,AdImg,AdOnline,AdOffline,AdFee) VALUES (4,'廣告內容在這裡',EMPTY_BLOB(),sysdate,sysdate,1000.00);
-INSERT INTO AD (AdNo,AdContent,AdImg,AdOnline,AdOffline,AdFee) VALUES (5,'廣告內容在這裡',EMPTY_BLOB(),sysdate,sysdate,1000.00);
+INSERT INTO AD (AdNo,AdContent,AdImg,AdOnline,AdOffline,AdFee) VALUES (AD_SQ.NEXTVAL,'廣告內容在這裡',EMPTY_BLOB(),sysdate,sysdate,1000.00);
+INSERT INTO AD (AdNo,AdContent,AdImg,AdOnline,AdOffline,AdFee) VALUES (AD_SQ.NEXTVAL,'廣告內容在這裡',EMPTY_BLOB(),sysdate,sysdate,1000.00);
+INSERT INTO AD (AdNo,AdContent,AdImg,AdOnline,AdOffline,AdFee) VALUES (AD_SQ.NEXTVAL,'廣告內容在這裡',EMPTY_BLOB(),sysdate,sysdate,1000.00);
+INSERT INTO AD (AdNo,AdContent,AdImg,AdOnline,AdOffline,AdFee) VALUES (AD_SQ.NEXTVAL,'廣告內容在這裡',EMPTY_BLOB(),sysdate,sysdate,1000.00);
+INSERT INTO AD (AdNo,AdContent,AdImg,AdOnline,AdOffline,AdFee) VALUES (AD_SQ.NEXTVAL,'廣告內容在這裡',EMPTY_BLOB(),sysdate,sysdate,1000.00);
 
 
 
@@ -397,9 +416,9 @@ INSERT INTO WITHDRAW VALUES (WITHDRAWNO_SQ.NEXTVAL,5001,1000,TO_DATE('2017-07-10
 INSERT INTO WITHDRAW VALUES (WITHDRAWNO_SQ.NEXTVAL,5002,2000,TO_DATE('2017-09-10','YYYY-MM-DD'),2);
 INSERT INTO WITHDRAW VALUES (WITHDRAWNO_SQ.NEXTVAL,5003,3000,TO_DATE('2017-05-10','YYYY-MM-DD'),1);
 
-CREATE TABLE CHARGE 
+CREATE TABLE CHARGES 
 (chargeNo   NUMBER(10) Constraint CHARGE_CHARGENO_Pk Primary Key,
-memNo  NUMBER(10) ,
+Memno  Number(10) ,
 chargeNum NUMBER(10) NOT NULL,
 applyTime DATE NOT NULL,
 chargeStatus NUMBER(2) NOT NULL,
@@ -409,9 +428,9 @@ CONSTRAINT CHARGE_MEMNO_FK FOREIGN KEY (MEMNO) REFERENCES MEMBER (MEMNO)
 
 Create Sequence CHARGENO_SQ Increment By 1 Start With 3001 Nocache Nocycle;
 
-INSERT INTO CHARGE VALUES (CHARGENO_SQ.NEXTVAL,5001,1000,TO_DATE('2017-07-10','YYYY-MM-DD'),0,1);
-INSERT INTO CHARGE VALUES (CHARGENO_SQ.NEXTVAL,5002,5000,TO_DATE('2017-07-20','YYYY-MM-DD'),1,0);
-INSERT INTO CHARGE VALUES (CHARGENO_SQ.NEXTVAL,5003,11000,TO_DATE('2017-07-30','YYYY-MM-DD'),2,1);
+INSERT INTO CHARGES VALUES (CHARGENO_SQ.NEXTVAL,5001,1000,TO_DATE('2017-07-10','YYYY-MM-DD'),0,1);
+Insert Into Charges Values (Chargeno_Sq.Nextval,5002,5000,To_Date('2017-07-20','YYYY-MM-DD'),1,0);
+INSERT INTO CHARGES VALUES (CHARGENO_SQ.NEXTVAL,5003,11000,TO_DATE('2017-07-30','YYYY-MM-DD'),2,1);
 
 CREATE TABLE REST (
 RESTNO NUMBER(10) NOT NULL PRIMARY KEY,
@@ -570,7 +589,7 @@ INSERT INTO ACTDETIAL (ACTNO,MEMNO,MEMACTSTATUS) VALUES (8003,5003,0);
 
 CREATE TABLE DATEITEM
 (dateItemNo number(10) constraint dateitem_dateitemno_pk primary key,
-sellerno number(10) not null constraint dateitem_sellerno_fk references MEMBER(memno),
+sellerno number(10) not null constraint dateitem_sellerno_fk references member(memno),
 restlistno number(10) not null constraint dateitem_restlistno_fk references rest(restno),
 dateitemtitle varchar2(100) not null,
 dateitemimg blob,
@@ -588,32 +607,56 @@ buyerno number(10) constraint dateitem_buyerno_fk references member(memno),
 isqrcchecked varchar2(150),
 buyerrep number(10),
 sellerrep number(10),
-isinstantdate number(2) not null);
+isinstantdate number(2) not null,
+petno number(10) constraint dateitem_petno_fk references pet(petno));
 
 Create sequence dateitemno_sq increment by 1 start with 4001 nocache nocycle;
 
 
 INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5001,7001,
 	'陽光午後約會大好',EMPTY_BLOB(),'來進行一場午後的約會吧測試測試',TO_DATE('20170718 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170720 20:30:20','YYYYMMDD HH24:MI:SS'),'台北市',
-         2,0,1500,1,0,1600,5008,0,null,null,0);
+         2,0,1500,1,0,1600,5008,0,null,null,0,1001);
 
 INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5002,7002,
 	'肥宅救星大降臨',EMPTY_BLOB(),'測試中po文喔耶',TO_DATE('20170715 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170720 20:30:20','YYYYMMDD HH24:MI:SS'),'桃園市',
-         2,1,500,0,0,16,5006,null,null,null,0);
+         2,1,500,0,0,16,5006,null,null,null,0,1001);
 
 
 INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5003,7003,
 	'超陽光少女',EMPTY_BLOB(),'測試即時約會商品',TO_DATE('20170716 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170716 20:30:20','YYYYMMDD HH24:MI:SS'),'桃園市',
-         2,1,500,0,0,16,5007,null,null,null,1);
+         2,1,500,0,0,16,5007,null,null,null,1,1003);
 
 INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5002,7001,
 	'測試機器人第四筆',EMPTY_BLOB(),'AI約會',TO_DATE('20170718 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170720 20:30:20','YYYYMMDD HH24:MI:SS'),'高雄市',
-         2,0,1500,1,0,1600,5009,0,null,null,0);
+         2,0,1500,1,0,1600,5009,0,null,null,0,1002);
 
 
 INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5004,7004,
 	'測試機器人第5筆',EMPTY_BLOB(),'AI約會',TO_DATE('20170718 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170720 20:30:20','YYYYMMDD HH24:MI:SS'),'台中市',
-         2,0,3500,1,0,1600,5010,1,null,null,0);
+         2,0,3500,1,0,1600,5010,1,null,null,0,1001);
+
+
+CREATE TABLE msg
+(msgno number(10) constraint msg_msgno_pk primary key,
+sendno number(10) not null constraint msg_sendno_fk references member(memno),
+recno number(10) not null constraint msg_recno_fk references member(memno),
+dateitemNo number(10) constraint msg_dateitemno_fk references dateitem(dateitemno),
+msgcontent  varchar2(300) not null,
+Msgtime Date Not Null,
+msgStatus number(2));
+
+Create sequence msgno_sq increment by 1 start with 10001 nocache nocycle;
+
+INSERT INTO msg values (msgno_SQ.NEXTVAL,5003,5007,4003,
+	'你好安安很高興認識你',TO_DATE('20170721 18:30:20','YYYYMMDD HH24:MI:SS'),0);
+INSERT INTO msg values (msgno_SQ.NEXTVAL,5007,5003,4003,
+	'我也是喔非常榮幸',TO_DATE('20170721 18:30:25','YYYYMMDD HH24:MI:SS'),0);
+INSERT INTO msg values (msgno_SQ.NEXTVAL,5003,5007,4003,
+	'我家的狗狗有點吵喔請多包涵',TO_DATE('20170721 18:30:30','YYYYMMDD HH24:MI:SS'),0);
+INSERT INTO msg values (msgno_SQ.NEXTVAL,5007,5003,4003,
+	'可以的沒問題穩穩的',TO_DATE('20170721 18:30:50','YYYYMMDD HH24:MI:SS'),0);
+Insert Into Msg Values (Msgno_Sq.Nextval,5007,5003,4003,
+	'非常感謝你真是個好人',TO_DATE('20170721 18:31:25','YYYYMMDD HH24:MI:SS'),0);
 
 
 
@@ -627,7 +670,7 @@ CREATE TABLE DIARY (
  DIAMODTIME             TIMESTAMP,
  DIASTATE				NUMBER(1) NOT NULL );
  
- CREATE SEQUENCE DIARY_seq
+ CREATE SEQUENCE DIARY_SEQ
 INCREMENT BY 1
 START WITH 10001
 NOMAXVALUE
@@ -661,6 +704,145 @@ INSERT INTO DIAMSG VALUES (DIAMSG_SEQ.NEXTVAL,10002,5002,'好爽喔',systimestamp,0
 INSERT INTO DIAMSG VALUES (DIAMSG_SEQ.NEXTVAL,10003,5002,'好爽喔',systimestamp,0);
 INSERT INTO DIAMSG VALUES (DIAMSG_SEQ.NEXTVAL,10005,5004,'好爽喔',systimestamp,0);
 INSERT INTO DIAMSG VALUES (DIAMSG_SEQ.NEXTVAL,10004,5005,'好爽喔',systimestamp,0);
+
+
+CREATE TABLE LETTERTYPE (
+ LETTERTYPENO              		NUMBER(8) ,
+ LETTERTYPENAME                	VARCHAR2(100) NOT NULL,
+ LETTERTYPETEXT                	CLOB NOT NULL,
+ CONSTRAINT lettertype_pk PRIMARY KEY(LETTERTYPENO) );
+ 
+CREATE SEQUENCE LETTERTYPE_SEQ
+INCREMENT BY 1
+START WITH 30001
+NOMAXVALUE
+Nocycle
+NOCACHE;
+ 
+ 
+ INSERT INTO LETTERTYPE VALUES (LETTERTYPE_SEQ.NEXTVAL, '約會成功', '恭喜你約會已經成功了');
+ INSERT INTO LETTERTYPE VALUES (LETTERTYPE_SEQ.NEXTVAL, '約會失敗', '恭喜你約會已經失敗了');
+ INSERT INTO LETTERTYPE VALUES (LETTERTYPE_SEQ.NEXTVAL, '被申訴', '恭喜你被申訴了');
+ Insert Into Lettertype Values (Lettertype_Seq.Nextval, '申訴', '恭喜你申訴已經成功了');
+ INSERT INTO LETTERTYPE VALUES (LETTERTYPE_SEQ.NEXTVAL, '檢舉', '恭喜你檢舉已經成功了');
+
+
+
+
+CREATE TABLE LETTER (
+ LETTERNO              			NUMBER(8) ,
+ LETTERTYPENO                	NUMBER(8) NOT NULL,
+ MEMNO                			NUMBER(10) NOT NULL,
+ LETTERTIME						TIMESTAMP NOT NULL,
+ LETTERSTATE					NUMBER(2) NOT NULL,
+ LETTERTAG						NUMBER(2) NOT NULL,
+ LETTERTEXT						CLOB,
+ CONSTRAINT letter_pk PRIMARY KEY(LETTERNO),
+ CONSTRAINT letter_lettertypeno_fk FOREIGN KEY(LETTERTYPENO) REFERENCES LETTERTYPE(LETTERTYPENO),
+ CONSTRAINT letter_memno_fk FOREIGN KEY(MEMNO) REFERENCES MEMBER(MEMNO)
+ );
+ 
+ CREATE SEQUENCE LETTER_SEQ
+INCREMENT BY 1
+START WITH 40001
+NOMAXVALUE
+Nocycle
+NOCACHE;
+ 
+ INSERT INTO LETTER VALUES (LETTER_SEQ.NEXTVAL, 30001,5001,systimestamp,0,1, '恭喜你約會');
+ INSERT INTO LETTER VALUES (LETTER_SEQ.NEXTVAL, 30002,5002,systimestamp,1,0, '恭喜你約會失敗');
+ INSERT INTO LETTER VALUES (LETTER_SEQ.NEXTVAL, 30003,5004,systimestamp,0,1, '恭喜你被申訴');
+ Insert Into Letter Values (Letter_Seq.Nextval, 30004,5003,Systimestamp,1,0, '恭喜你申訴成功了');
+ INSERT INTO LETTER VALUES (LETTER_SEQ.NEXTVAL, 30005,5005,systimestamp,0,1, '恭喜你被檢舉已經成功了');
+ 
+ 
+
+
+Create Table Dateitemapp (
+ APPNO               	NUMBER(10) CONSTRAINT DATEITEMAPP_APPNO_PK PRIMARY KEY,
+ Memno                	Number(10) Not Null ,
+ DATEITEMNO             NUMBER(10) NOT NULL ,
+ APPTITLE               VARCHAR2(100) NOT NULL,
+ APPTEXT           		CLOB NOT NULL,
+ APPIMG                 BLOB,
+ APPDATE             	DATE NOT NULL,
+ APPSTATE				NUMBER(2) NOT NULL ,
+ constraint dateitemapp_memno_fk foreign key(memno) references member(memno),
+ constraint dateitemapp_dateitemno_fk foreign key(dateitemno) references dateitem(dateitemno)
+ );
+ 
+  CREATE SEQUENCE DATEITEMAPP_seq
+INCREMENT BY 1
+START WITH 60001
+NOMAXVALUE
+Nocycle
+NOCACHE;
+ 
+ INSERT INTO DATEITEMAPP VALUES (DATEITEMAPP_SEQ.NEXTVAL,5001,4001,'狗','看起來好爽喔',null,TO_DATE('2011-02-25','YYYY-MM-DD'),0);
+ INSERT INTO DATEITEMAPP VALUES (DATEITEMAPP_SEQ.NEXTVAL,5002,4002,'狗','看起來好',null,TO_DATE('2012-02-25','YYYY-MM-DD'),0);
+ INSERT INTO DATEITEMAPP VALUES (DATEITEMAPP_SEQ.NEXTVAL,5003,4003,'貓','起來',null,TO_DATE('2014-02-25','YYYY-MM-DD'),0);
+ Insert Into Dateitemapp Values (Dateitemapp_Seq.Nextval,5004,4004,'哈','喔',Null,To_Date('2013-02-25','YYYY-MM-DD'),0);
+ INSERT INTO DATEITEMAPP VALUES (DATEITEMAPP_SEQ.NEXTVAL,5005,4005,'狗','好爽喔',null,TO_DATE('2017-02-25','YYYY-MM-DD'),0);
+
+
+
+
+CREATE TABLE DATEITEMREP (
+ REPNO               	NUMBER(10) CONSTRAINT dateitemrep_repno_PK PRIMARY KEY,
+ Memno                	Number(10) Not Null ,
+ DATEITEMNO				NUMBER(10) NOT NULL,
+ REPTEXT           		VARCHAR2(1000) NOT NULL,
+ REPDATE             	DATE NOT NULL,
+ REPSTATE				NUMBER(2) NOT NULL,
+ constraint dateitemrep_memno_fk foreign key(memno) references member(memno),
+ constraint dateitemrep_dateitemno_fk foreign key(dateitemno) references dateitem(dateitemno) 
+ );
+ 
+ CREATE SEQUENCE DATEITEMREP_seq
+INCREMENT BY 1
+START WITH 50001
+NOMAXVALUE
+Nocycle
+NOCACHE;
+ 
+
+ INSERT INTO DATEITEMREP VALUES (DATEITEMREP_SEQ.NEXTVAL,5001,4001,'照片裸露',systimestamp,0);
+ INSERT INTO DATEITEMREP VALUES (DATEITEMREP_SEQ.NEXTVAL,5002,4002,'太帥了',TO_DATE('2012-02-25','YYYY-MM-DD'),0);
+ INSERT INTO DATEITEMREP VALUES (DATEITEMREP_SEQ.NEXTVAL,5003,4003,'文字不夠裸露',systimestamp,0);
+ Insert Into Dateitemrep Values (Dateitemrep_Seq.Nextval,5004,4004,'只是隨便檢舉',Systimestamp,0);
+ INSERT INTO DATEITEMREP VALUES (DATEITEMREP_SEQ.NEXTVAL,5005,4005,'好爽喔',systimestamp,0);
+
+CREATE TABLE SUBMEM(
+ ACTSUBMEMNO              	NUMBER(10) ,
+ BESUBMEMNO                	NUMBER(10) ,
+ SUBSTATE                	NUMBER(1) NOT NULL,
+ Constraint Submem_Pk Primary Key(Actsubmemno,Besubmemno),
+Constraint Submem_Besub_Fk Foreign Key(Besubmemno) References MEMBER(MEMNO), 
+Constraint SUBMEM_ACTSUB_Fk Foreign Key(ACTSUBMEMNO) References MEMBER(MEMNO));
+
+
+ INSERT INTO SUBMEM VALUES (5001, 5002, 0);
+ INSERT INTO SUBMEM VALUES (5001, 5003, 0);
+ INSERT INTO SUBMEM VALUES (5001, 5004, 0);
+ INSERT INTO SUBMEM VALUES (5002, 5001, 0);
+ INSERT INTO SUBMEM VALUES (5002, 5005, 0);
+ Insert Into Submem Values (5004, 5003, 0);
+ INSERT INTO SUBMEM VALUES (5004, 5002, 0);
+ 
+ 
+ Create Table Appreprec (
+ MEMNO              	NUMBER(10) ,
+ RECDATE                DATE ,
+ CONSTRAINT appreprec_pk PRIMARY KEY(memno,recdate),
+ CONSTRAINT appreprec_fk FOREIGN KEY(memno) REFERENCES MEMBER(MEMNO) );
+ 
+ INSERT INTO APPREPREC VALUES (5001, TO_DATE('2015-04-23','YYYY-MM-DD'));
+ INSERT INTO APPREPREC VALUES (5001, TO_DATE('2016-07-23','YYYY-MM-DD'));
+ INSERT INTO APPREPREC VALUES (5001, TO_DATE('2017-09-28','YYYY-MM-DD'));
+ INSERT INTO APPREPREC VALUES (5002, TO_DATE('2012-04-30','YYYY-MM-DD'));
+ Insert Into Appreprec Values (5002, To_Date('2011-08-25','YYYY-MM-DD'));
+
+
 
 commit;
 
