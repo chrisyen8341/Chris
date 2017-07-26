@@ -149,4 +149,8 @@ public class MemberService {
 		return dao.findPetsByMemNo(memno);
 	}
 	
+	public List<Member> getMembersByIdName(String search){
+		return dao.findByIdAndName(search);
+	}
+	
 }

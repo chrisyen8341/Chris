@@ -199,6 +199,38 @@ public class MemberTest {
 //		
 
 		
+		
+		//查詢全部
+		List<Member> memberList=dao.findByIdAndName("顏佑軒");
+		for(Member member4:memberList){
+			System.out.println(member4.getMemNo()+",");
+			System.out.println(member4.getMemId()+",");
+			System.out.println(member4.getMemPwd()+",");
+			System.out.println(member4.getMemName()+",");
+			System.out.println(member4.getMemSname()+",");
+			System.out.println(member4.getMemGender()+",");
+			System.out.println(member4.getMemIdNo()+",");
+			System.out.println(member4.getMemBday()+",");
+			System.out.println(member4.getMemPhone()+",");
+			System.out.println(member4.getMemAddress()+",");
+			System.out.println(member4.getMemEmail()+",");
+			System.out.println(member4.getMemImg()+",");
+			System.out.println(member4.getMemReported()+",");
+			System.out.println(member4.getMemStatus()+",");
+			System.out.println(member4.getMemRelation()+",");
+			System.out.println(member4.getMemSelfintro()+",");
+			System.out.println(member4.getMemFollowed()+",");
+			System.out.println(member4.getMemPoint()+",");
+			System.out.println(member4.getMemSaleRank()+",");
+			System.out.println(member4.getMemLongtitude()+",");
+			System.out.println(member4.getMemLatitude()+",");
+			System.out.println(member4.getMemLocTime()+"。");
+			System.out.println("================================");
+		}
+		System.out.println("執行完畢");
+		
+		
+		
 	}
 	
 	public static byte[] getPictureByteArray(File file) throws IOException {

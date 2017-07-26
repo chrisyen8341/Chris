@@ -13,6 +13,7 @@ public interface MemberDAO_interface {
 	Member findByPk(Integer memno);
 	List<Pet> findPetsByMemNo(Integer memno);
 	List<Member> getAll();
+	List<Member> findByIdAndName(String search);
 	Member findById(String memId);
 	
 }
