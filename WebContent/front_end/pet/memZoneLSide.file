@@ -1,0 +1,25 @@
+				<%@ page contentType="text/html; charset=UTF-8" pageEncoding="BIG5"%>
+				<%@ page import="com.pet.model.*"%>
+				<%@ page import="java.util.*"%>
+                <%@ page import="com.member.model.*"%>
+				
+				<!--在這裡面有取出 會員的所有寵物 存成list 只要是在會員專區的page 都有寵物list -->
+				<div id="menu">
+					<div class="panel list-group list-color">
+						<a href="<%=request.getContextPath()+"/front_end/member/memberInfo.jsp" %>" class="list-group-item">個人資訊</a> 
+						<% 
+						MemberService memSvc=new MemberService();
+						Member member=(Member)session.getAttribute("member"); 
+						List<Pet> list=memSvc.getPetsByMemNo(member.getMemNo()); 
+						pageContext.setAttribute("list",list);
+						%>
+						<c:if test="${not empty list}">
+						<a href="<%=request.getContextPath()+"/front_end/pet/petInfo.jsp" %>" class="list-group-item">寵物資訊</a>
+						</c:if> 
+					    <c:if test="${empty list}">
+						<a href="<%=request.getContextPath()+"/front_end/pet/petRegister.jsp" %>" class="list-group-item">註冊寵物</a>
+						</c:if> 
+						<a href="<%=request.getContextPath()+"/front_end/member/memPwdChange.jsp" %>" class="list-group-item">變更密碼</a> 
+						<a href="#" class="list-group-item">相簿管理</a>
+					</div>
+				</div>

@@ -30,7 +30,7 @@
 
 <body>
 	<!-- Navigation -->
-	<%@ include file="memNavBar.file"%>
+	<%@ include file="indexNavBar.file"%>
 	<!-- Header Carousel -->
 	<header id="myCarousel" class="carousel slide">
 		<!-- Indicators -->

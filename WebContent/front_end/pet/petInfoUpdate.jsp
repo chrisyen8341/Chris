@@ -11,22 +11,8 @@
 <html lang="">
 
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Title Page</title>
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/nav.css" rel="stylesheet">
-<link href="css/colorplan.css" rel="stylesheet">
-<link href="css/frontend.css" rel="stylesheet" type="text/css">
-<!-- Custom CSS -->
-<link href="css/modern-business.css" rel="stylesheet">
-<!-- Custom Fonts -->
-<link href="font-awesome/css/font-awesome.css" rel="stylesheet"
-	type="text/css">
-<link href="css/date.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<%@ include file="memHead.file"%>
+<title>寵物You&amp;Me</title>
 <script>
 	//照片上傳預覽
 	$(function() {
@@ -49,15 +35,13 @@
 
 	});
 </script>
+
 <STYLE>
 .title {
 	width: 120px; /* 設定 H1 的樣式*/
 }
 </STYLE>
-<!--[if lt IE 9]>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-            <![endif]-->
+
 </head>
 
 <body>
@@ -103,10 +87,10 @@
 							<div class="panel-body">
 
 								<div class="row">
-									<form method="post" action="petUpdate" enctype="multipart/form-data">
+									<form method="post" action="<%=request.getContextPath() %>/petUpdate" enctype="multipart/form-data">
 										<div class="col-md-3 col-lg-3 " align="center">
 											<img alt="User Pic" id="petPic"
-												src="PetImgReader?petNo=${pet.petNo}" height="350px"
+												src="<%=request.getContextPath() %>/PetImgReader?petNo=${pet.petNo}" height="350px"
 												width="250px" class="img-circle img-responsive"> <input
 												type="file" name="petImg" id="petImg" placeholder="編輯相片" />
 										</div>
@@ -194,7 +178,7 @@
 												<div class="modal-footer">
 													<span>
 
-														<form action="petUpdate" method="post">
+														<form action="<%=request.getContextPath() %>/petUpdate" method="post">
 															<input type="hidden" name="action" value="petDisable">
 															<input type="hidden" name="petNo" value=${pet.petNo}>
 															<button type="button" class="btn btn-secondary"

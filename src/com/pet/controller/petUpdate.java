@@ -109,7 +109,7 @@ public class petUpdate extends HttpServlet {
 				}
 
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher dispatcher = req.getRequestDispatcher("/petInfoUpdate.jsp");
+					RequestDispatcher dispatcher = req.getRequestDispatcher("front_end/pet/petInfoUpdate.jsp");
 					req.setAttribute("errorMsgs", errorMsgs);
 					req.setAttribute("pet", fPet);
 					dispatcher.forward(req, res);
@@ -127,7 +127,7 @@ public class petUpdate extends HttpServlet {
 				 * 3.修改完成,準備轉交(Send the Success view)
 				 *************/
 				//在取一次 不在上面petSvc取是因為上面的Pet 會少PETNO
-				res.sendRedirect(req.getContextPath() + "/petInfo.jsp");
+				res.sendRedirect(req.getContextPath() + "/front_end/pet/petInfo.jsp");
 			} catch (Exception e) {
 				System.out.println("error");
 			}
@@ -224,7 +224,7 @@ public class petUpdate extends HttpServlet {
 			}
 			
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/petRegister.jsp");
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front_end/pet/petRegister.jsp");
 				req.setAttribute("errorMsgs", errorMsgs);
 				req.setAttribute("pet", fPet);
 				dispatcher.forward(req, res);
@@ -236,7 +236,7 @@ public class petUpdate extends HttpServlet {
 					, "請輸入寵物介紹",java.sql.Date.valueOf("2000-01-01"), petImg, 0);
 			
 			/**************************** 3.修改完成,準備轉交(Send the Success view)*************/
-			res.sendRedirect(req.getContextPath()+"/petInfo.jsp");
+			res.sendRedirect(req.getContextPath()+"/front_end/pet/petInfo.jsp");
 			
 			
 		}

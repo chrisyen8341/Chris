@@ -26,9 +26,9 @@
 					<ul class="nav navbar-nav">
 						<li><a href="#">購物車</a></li>
 						<li><a href="#">站內信</a></li>
-						<li><a href="memberInfo.jsp">會員專區</a></li>
+						<li><a href="<%=request.getContextPath() %>/front_end/member/memberInfo.jsp">會員專區</a></li>
 						<c:if test="${member==null}">
-						<li><a href="login.jsp">登入</a></li>
+						<li><a href="<%=request.getContextPath() %>/front_end/member/login.jsp">登入</a></li>
 						</c:if>
 						<c:if test="${member!=null}">
 						<li>

@@ -14,7 +14,7 @@
 					<div class="modal-footer">
 						<span>
 
-							<form action="Logout" method="post">
+							<form action="<%=request.getContextPath() %>/Update" method="post">
 								<input type="hidden" name="action" value="logout">
 								<button type="button" class="btn btn-secondary"
 									data-dismiss="modal">§_</button>

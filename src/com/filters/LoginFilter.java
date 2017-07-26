@@ -33,7 +33,7 @@ public class LoginFilter implements Filter{
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		
+		System.out.print("2222222222222");
 		HttpServletRequest req=(HttpServletRequest)request;
 		HttpServletResponse res=(HttpServletResponse)response;
 		
@@ -41,7 +41,7 @@ public class LoginFilter implements Filter{
 		Member member=(Member)session.getAttribute("member");
 		if(member==null){
 			session.setAttribute("location", req.getRequestURI());
-			res.sendRedirect(req.getContextPath()+"/login.jsp");
+			res.sendRedirect(req.getContextPath()+"/front_end/member/login.jsp");
 		}
 		else{
 			chain.doFilter(request, response);

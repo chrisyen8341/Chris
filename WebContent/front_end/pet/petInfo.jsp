@@ -8,26 +8,7 @@
 <html lang="">
 
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Title Page</title>
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/nav.css" rel="stylesheet">
-<link href="css/colorplan.css" rel="stylesheet">
-<link href="css/frontend.css" rel="stylesheet" type="text/css">
-<!-- Custom CSS -->
-<link href="css/modern-business.css" rel="stylesheet">
-<!-- Custom Fonts -->
-<link href="font-awesome/css/font-awesome.css" rel="stylesheet"
-	type="text/css">
-<link href="css/date.css" rel="stylesheet">
-<!--[if lt IE 9]>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-            <![endif]-->
-</script>
+<%@ include file="memHead.file"%>
 <STYLE>
 .title {
 	width: 120px; /* 設定 H1 的樣式*/
@@ -74,7 +55,7 @@
 										<div class="pet">
 											<div class="col-md-3 col-lg-3 " align="center">
 												<img alt="User Pic" id="petImg"
-													src="PetImgReader?petNo=${pet.petNo}" height="350px"
+													src="<%=request.getContextPath() %>/PetImgReader?petNo=${pet.petNo}" height="350px"
 													width="250px" class="img-circle img-responsive">
 											</div>
 

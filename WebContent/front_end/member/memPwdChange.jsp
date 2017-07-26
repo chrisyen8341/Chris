@@ -7,22 +7,10 @@
 <html lang="">
 
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<%@ include file="memHead.file"%>
 <title>Title Page</title>
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/nav.css" rel="stylesheet">
-<link href="css/colorplan.css" rel="stylesheet">
-<link href="css/frontend.css" rel="stylesheet" type="text/css">
-<!-- Custom CSS -->
-<link href="css/modern-business.css" rel="stylesheet">
-<!-- Custom Fonts -->
-<link href="font-awesome/css/font-awesome.css" rel="stylesheet"
-	type="text/css">
-<link href="css/date.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+
 <script>
 
 $(function(){
@@ -52,18 +40,15 @@ $(function(){
 	
 	
 });
-
-
 </script>
+
+
 <STYLE>
 .title {
 	width: 150px; /* 設定 H1 的樣式*/
 }
 </STYLE>
-<!--[if lt IE 9]>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-            <![endif]-->
+
 </head>
 
 <body>
@@ -91,7 +76,7 @@ $(function(){
 								<form method="post" action=Update>
 									<div class="row">
 										<div class="col-md-3 col-lg-3 " align="center">
-											<img alt="User Pic" id="memPic" src="DBGifReader"
+											<img alt="User Pic" id="memPic" src="<%=request.getContextPath() %>/DBGifReader"
 												height="350px" width="250px"
 												class="img-circle img-responsive"> 
 										</div>

@@ -125,7 +125,7 @@ public class Update extends HttpServlet {
 				}
 
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher dispatcher = req.getRequestDispatcher("/memberInfoUpdate.jsp");
+					RequestDispatcher dispatcher = req.getRequestDispatcher("/front_end/member/memberInfoUpdate.jsp");
 					req.setAttribute("errorMsgs", errorMsgs);
 					req.setAttribute("member", memberU);
 					dispatcher.forward(req, res);
@@ -147,7 +147,7 @@ public class Update extends HttpServlet {
 				session.removeAttribute("member");
 				Member newMember = memSvc.getOneMember(memNo);
 				session.setAttribute("member", newMember);
-				res.sendRedirect(req.getContextPath() + "/memberInfo.jsp");
+				res.sendRedirect(req.getContextPath() + "/front_end/member/memberInfo.jsp");
 			} catch (Exception e) {
 				System.out.println("error");
 			}
@@ -204,13 +204,47 @@ public class Update extends HttpServlet {
 		
 		
 		
+		if ("login".equals(action)) {
+			
+
+			// §PÂ_¬O§_¬°ªÅ­È
+			String memId = req.getParameter("memId");
+			String memPwd = req.getParameter("memPwd");
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			if (allowUser(memId, memPwd) == null) {
+				Member errMember = new Member();
+				errMember.setMemId(memId);
+				errMember.setMemPwd(memPwd);
+
+				errorMsgs.add("±b¸¹±K½X¿ù»~");
+				req.setAttribute("member", errMember);
+				RequestDispatcher sendBackView = req.getRequestDispatcher("/front_end/login.jsp");
+				sendBackView.forward(req, res);
+			} else {
+				Member memberl=allowUser(memId, memPwd);
+				session.setAttribute("member", memberl);
+				String location = (String) session.getAttribute("location");
+				if (location != null) {
+					session.removeAttribute("location");
+					res.sendRedirect(location);
+					return;
+				}
+				res.sendRedirect(req.getContextPath() + "/front_end/index.jsp");
+			}
+			
+		}
 		
 		
-		
-		
-		
-		
-		
+		if ("logout".equals(action)) {	
+			
+			session.removeAttribute("member");
+			res.sendRedirect(req.getContextPath()+"/index.jsp");
+
+		}
+
 		
 	}
 
@@ -235,5 +269,20 @@ public class Update extends HttpServlet {
 		}
 		return filename;
 	}
+	
+	
+	protected Member allowUser(String memId, String memPwd) {
+		MemberService memSvc = new MemberService();
+		Member member = memSvc.getOneMemberById(memId);
+
+		if (member == null) {
+			return null;
+		} else if (!member.getMemPwd().equals(memPwd)) {
+			return null;
+		} else {
+			return member;
+		}
+	}
+	
 
 }
