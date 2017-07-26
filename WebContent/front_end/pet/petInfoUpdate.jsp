@@ -161,35 +161,7 @@
 											
 										</div>
 									</form>
-									<!-- Modal -->
-									<div class="modal fade" id="myModal" tabindex="-1"
-										role="dialog" aria-labelledby="exampleModalLabel"
-										aria-hidden="true">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h5 class="modal-title" id="exampleModalLabel">確定修改</h5>
-													<button type="button" class="close" data-dismiss="modal"
-														aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button>
-												</div>
-												<div class="modal-body">請問您是否確認停用?</div>
-												<div class="modal-footer">
-													<span>
-
-														<form action="<%=request.getContextPath() %>/petUpdate" method="post">
-															<input type="hidden" name="action" value="petDisable">
-															<input type="hidden" name="petNo" value=${pet.petNo}>
-															<button type="button" class="btn btn-secondary"
-																data-dismiss="modal">否</button>
-															<input type="submit" class="btn btn-primary" value="是">
-														</form>
-													</span>
-												</div>
-											</div>
-										</div>
-									</div>
+									
 								</div>
 
 

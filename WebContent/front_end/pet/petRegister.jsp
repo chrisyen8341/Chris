@@ -146,7 +146,7 @@
 					<div class="modal-footer">
 						<span>
 
-							<form action="Logout" method="post">
+							<form action="<%=request.getContextPath() %>/Update" method="post">
 								<input type="hidden" name="action" value="logout">
 								<button type="button" class="btn btn-secondary"
 									data-dismiss="modal">§_</button>
@@ -175,9 +175,9 @@
 	
 	<!-- /.container -->
 	<!-- jQuery -->
-	<script src="js/jquery.js"></script>
+	<script src="https://code.jquery.com/jquery.js"></script>
 	<!-- Bootstrap Core JavaScript -->
-	<script src="js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!-- Script to Activate the Carousel -->
 
 </body>

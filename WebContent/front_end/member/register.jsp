@@ -23,7 +23,7 @@
 
 					<div class="col-sm-6 col-sm-offset-3">
 
-						<form class="" action="Register" method="post" enctype="multipart/form-data">
+						<form class="" action="<%=request.getContextPath() %>/Update" method="post" enctype="multipart/form-data">
 
 							<div class="row">
 
@@ -205,7 +205,7 @@
 
 							</div>
 
-
+							<input type="hidden" name="action" value="register">
 							<input class="btn btn-primary btn-lg btn-block login-button" type="submit" value="µù¥U">
 
 						</form>

@@ -185,8 +185,8 @@
 					<div class="modal-footer">
 						<span>
 
-							<form action="petInfoUpdate.jsp" method="post">
-								<input type="hidden" name="petOrd" value=${s.index}>
+							<form action="<%=request.getContextPath() %>/Update" method="post">
+								<input type="hidden" name="action" value="logout">
 								<button type="button" class="btn btn-secondary"
 									data-dismiss="modal">§_</button>
 								<input type="submit" class="btn btn-primary" value="¬O">
