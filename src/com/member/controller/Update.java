@@ -176,7 +176,7 @@ public class Update extends HttpServlet {
 			falsePwd.put("memNewPwd", memNewPwd);
 			
 			if(!errorMsgs.isEmpty()){
-				RequestDispatcher dispatcher=req.getRequestDispatcher("memPwdChange.jsp");
+				RequestDispatcher dispatcher=req.getRequestDispatcher("/front_end/member/memPwdChange.jsp");
 				req.setAttribute("falsePwd", falsePwd);
 				req.setAttribute("errorMsgs", errorMsgs);
 				dispatcher.forward(req, res);
@@ -195,7 +195,7 @@ public class Update extends HttpServlet {
 			session.removeAttribute("member");
 			Member newMember = memSvc.getOneMember(memNo);
 			session.setAttribute("member", newMember);
-			RequestDispatcher dispatcher=req.getRequestDispatcher("memPwdChange.jsp");
+			RequestDispatcher dispatcher=req.getRequestDispatcher("/front_end/member/memPwdChange.jsp");
 			req.setAttribute("success", "±K½X­×§ï¦¨¥\");
 			dispatcher.forward(req, res);
 

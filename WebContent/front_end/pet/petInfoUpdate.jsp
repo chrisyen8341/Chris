@@ -146,7 +146,7 @@
 											
 											<!-- 下方會停用會 呼叫modal-->
 											<button type="button" class="btn btn-danger"
-												data-toggle="modal" data-target="#myModal">停用</button>
+												data-toggle="modal" data-target="#disable">停用</button>
 											
 											
 											<c:if test="${not empty errorMsgs}">
@@ -172,7 +172,35 @@
 					</div>
 				</div>
 
+		<!-- Disable MODAL -->
+		<div class="modal fade" id="disable" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3 class="modal-title" id="exampleModalLabel">是否確定停用?</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-footer">
+						<span>
 
+							<form action="<%=request.getContextPath() %>/petUpdate" method="post">
+								<input type="hidden" name="action" value="petDisable">
+								<input type="hidden" name="petNo" value="${pet.petNo}">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">否</button>
+								<input type="submit" class="btn btn-primary" value="是">
+							</form>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
 				<%@ include file="memButtom.file"%>
 			</div>
 		</div>

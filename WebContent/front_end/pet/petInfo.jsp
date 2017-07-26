@@ -45,7 +45,6 @@
 						<div class="panel panel-info">
 							<div class="panel-heading">
 								<h3 class="panel-title">${member.memId}</h3>
-								<font color="red">${list}</font>
 							</div>
 							<div class="panel-body">
 								<div class="row">

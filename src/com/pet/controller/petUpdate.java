@@ -149,7 +149,7 @@ public class petUpdate extends HttpServlet {
 					pet.getPetSpecies(), pet.getPetIntro(), pet.getPetBday(),pet.getPetImg(), 1);
 			
 			/**************************** 3.修改完成,準備轉交(Send the Success view)*************/
-			res.sendRedirect(req.getContextPath()+"/petInfo.jsp");
+			res.sendRedirect(req.getContextPath()+"/front_end/pet/petInfo.jsp");
 			
 			
 		}
