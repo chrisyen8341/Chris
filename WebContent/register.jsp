@@ -239,7 +239,7 @@
 
 
 		<!-- Footer -->
-		<footer class="footer navbar-fixed-bottom">
+		<footer>
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="col-sm-3">

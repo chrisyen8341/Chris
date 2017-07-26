@@ -54,7 +54,7 @@ Member member=(Member)request.getAttribute("member");
 					<div class="form-group">
 						<label for="memId" class="cols-sm-2 control-label">±b¸¹</label><span
 							id="memIdShow"> <c:if test="${not empty errorMsgs}">
-									&nbsp;&nbsp;±b¸¹±K½X¿ù»~
+									<font color="red">&nbsp;&nbsp;±b¸¹±K½X¿ù»~</font>
 							</c:if>
 
 						</span>
