@@ -20,10 +20,10 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 	private static final String PASSWORD = "123456";
 	
 	
-	private static final String INSERT_STMT = "INSERT INTO EMP(EMPNO,EMPNAME,EMPJOB,EMPID,EMPPWD,EMPSTATUS)"
-			+ " VALUES(EMPNO_SQ.NEXTVAL,?,?,?,?,?)";
+	private static final String INSERT_STMT = "INSERT INTO EMP(EMPNO,EMPNAME,EMPJOB,EMPID,EMPPWD,EMPSTATUS,EMPHIREDATE,EMPEMAIL)"
+			+ " VALUES(EMPNO_SQ.NEXTVAL,?,?,?,?,?,?,?)";
 	private static final String UPDATE_STMT = "UPDATE EMP SET EMPNO = ?, EMPNAME = ?, EMPJOB = ?, "
-			+ "EMPID = ?, EMPPWD = ?,EMPSTATUS = ? WHERE EMPNO =¡@?";
+			+ "EMPID = ?, EMPPWD = ?,EMPSTATUS = ?,EMPHIREDATE = ?,EMPEMAIL= ? WHERE EMPNO =¡@?";
 	private static final String DELETE_STMT = "DELETE FROM EMP WHERE EMPNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM EMP WHERE EMPNO = ?";
 	private static final String GET_ALL = "SELECT * FROM EMP";
@@ -43,6 +43,8 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 			pstmt.setString(3, emp.getEmpId());
 			pstmt.setString(4,emp.getEmpPwd());
 			pstmt.setInt(5, emp.getEmpStatus());
+			pstmt.setDate(6, emp.getEmpHireDate());
+			pstmt.setString(7, emp.getEmpEmail());
 			pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException e) {
@@ -85,7 +87,9 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 			pstmt.setString(4, emp.getEmpId());
 			pstmt.setString(5, emp.getEmpPwd());
 			pstmt.setInt(6, emp.getEmpStatus());
-			pstmt.setInt(7, emp.getEmpNo());
+			pstmt.setDate(7, emp.getEmpHireDate());
+			pstmt.setString(8, emp.getEmpEmail());
+			pstmt.setInt(9, emp.getEmpNo());
 			pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException e) {
@@ -173,6 +177,8 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 				emp.setEmpId(rs.getString("empId"));
 				emp.setEmpPwd(rs.getString("empPwd"));
 				emp.setEmpStatus(rs.getInt("empStatus"));
+				emp.setEmpHireDate(rs.getDate("empHireDate"));
+				emp.setEmpEmail(rs.getString("empEmail"));
 			}
 			
 		} catch (ClassNotFoundException e) {
@@ -227,6 +233,8 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 				emp.setEmpId(rs.getString("empId"));
 				emp.setEmpPwd(rs.getString("empPwd"));
 				emp.setEmpStatus(rs.getInt("empStatus"));
+				emp.setEmpHireDate(rs.getDate("empHireDate"));
+				emp.setEmpEmail(rs.getString("empEmail"));
 				empList.add(emp);		
 			}
 			

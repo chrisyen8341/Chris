@@ -1,0 +1,12 @@
+body {
+background-image:url('../images/bg.png');
+}
+
+.frontend{
+background-image:url('../images/bg.png');	
+}
+
+.list-color{
+	background-color:#505e51;
+	color:white;
+}

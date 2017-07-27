@@ -1,6 +1,7 @@
 package com.emp.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 public class Emp implements Serializable{
 
@@ -10,10 +11,12 @@ public class Emp implements Serializable{
 	private String empId;	
 	private String empPwd;
 	private Integer empStatus;
+	private Date empHireDate;
+	private String empEmail;
 
 	public Emp(){}
 
-	public Emp(Integer empNo, String empName, String empJob, String empId, String empPwd, Integer empStatus) {
+	public Emp(Integer empNo, String empName, String empJob, String empId, String empPwd, Integer empStatus,Date empHireDate,String empEmail) {
 		super();
 		this.empNo = empNo;
 		this.empName = empName;
@@ -21,6 +24,8 @@ public class Emp implements Serializable{
 		this.empId = empId;
 		this.empPwd = empPwd;
 		this.empStatus=empStatus;
+		this.empHireDate=empHireDate;
+		this.empEmail=empEmail;
 	}
 
 	public Integer getEmpNo() {
@@ -70,6 +75,22 @@ public class Emp implements Serializable{
 	public void setEmpStatus(Integer empStatus) {
 		this.empStatus = empStatus;
 	}
-	
 
+	public Date getEmpHireDate() {
+		return empHireDate;
+	}
+
+	public void setEmpHireDate(Date empHireDate) {
+		this.empHireDate = empHireDate;
+	}
+
+	public String getEmpEmail() {
+		return empEmail;
+	}
+
+	public void setEmpEmail(String empEmail) {
+		this.empEmail = empEmail;
+	}
+	
+	
 }
