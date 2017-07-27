@@ -12,8 +12,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.emp.model.Emp;
+import com.emp.model.EmpService;
 import com.member.model.Member;
 
 
@@ -29,7 +32,7 @@ public class EmpRegister extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
+		req.setCharacterEncoding("UTF-8");
 		
 		List<String> errorMsgs = new LinkedList<String>();
 		
@@ -73,29 +76,57 @@ public class EmpRegister extends HttpServlet {
 				errorMsgs.add("請輸入正確的Email信箱");
 			}
 
-			
+			System.out.println("qweqwe");
 			String[] empAuthb=req.getParameterValues("empAuth");
-			List<Integer> empAuth=new ArrayList<Integer>( );
+			List<Integer> empAuthNos=new ArrayList<Integer>( );
 			for(String eAuth:empAuthb){
-				empAuth.add(Integer.parseInt(eAuth));
+				empAuthNos.add(Integer.parseInt(eAuth));
+				System.out.println(eAuth);
 			}
 
 
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/front_end/member/memberInfoUpdate.jsp");
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/back_end/emp/empRegister.jsp");
 				req.setAttribute("errorMsgs", errorMsgs);
-				req.setAttribute("member", "");
+				req.setAttribute("emp", "emp");
 				dispatcher.forward(req, res);
 				return;
 			}
 
 			/*************************** 2.開始修改資料 *****************************************/
+			 
+			
+			/********************** 密碼處理**************************/
+			//亂數產生亂碼
+			Integer pwd=(int) ((Math.random()*10)*10000000+(Math.random()*1000000));
+			
+			//Email寄發 代修改
+			System.out.println(pwd);
+			
+			//加密存入db 代修改 
+			String  empPwd =String.valueOf((int)((pwd*3)+67));
+			
+			Emp emp=new Emp();
+			emp.setEmpName(empName);
+			emp.setEmpId(empId);
+			emp.setEmpJob(empJob);
+			emp.setEmpPwd(empPwd);
+			emp.setEmpHireDate(empHireDate);
+			emp.setEmpEmail(empEmail);
+			EmpService empSvc=new EmpService();
+			empSvc.addEmpWithAuth(empName, empJob, empId, empPwd, 0, empHireDate, empEmail,empAuthNos );
+			
 			
 
-			/***************************
-			 * 3.修改完成,準備轉交(Send the Success view)
-			 *************/
-
+			/**************************** 3.修改完成,準備轉交(Send the Success view)*************/
+			Emp nemp=empSvc.getEmpById(empId);
+			HttpSession session=req.getSession();
+			session.setAttribute("emp", nemp);
+			session.setAttribute("auth", empAuthNos);
+			res.sendRedirect(req.getContextPath()+"/back_end/index_backend.jsp");
+			
+			
+		
 		} catch (Exception e) {
 			System.out.println("error");
 		}

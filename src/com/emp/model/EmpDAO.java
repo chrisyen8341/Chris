@@ -32,11 +32,12 @@ public class EmpDAO implements EmpDAO_interface{
 	private int currSeq;
 	
 	private static final String INSERT_STMT = "INSERT INTO EMP(EMPNO,EMPNAME,EMPJOB,EMPID,EMPPWD,EMPSTATUS,EMPHIREDATE,EMPEMAIL)"
-			+ " VALUES(EMPNO_SQ.NEXTVAL,?,?,?,?,?)";
+			+ " VALUES(EMPNO_SQ.NEXTVAL,?,?,?,?,?,?,?)";
 	private static final String UPDATE_STMT = "UPDATE EMP SET EMPNO = ?, EMPNAME = ?, EMPJOB = ?, "
 			+ "EMPID = ?, EMPPWD = ?,EMPSTATUS = ?,EMPHIREDATE = ?,EMPEMAIL= ? WHERE EMPNO =　?";
 	private static final String DELETE_STMT = "DELETE FROM EMP WHERE EMPNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM EMP WHERE EMPNO = ?";
+	private static final String FIND_BY_ID = "SELECT * FROM EMP WHERE EMPID = ?";
 	private static final String GET_ALL = "SELECT * FROM EMP";
 
 	
@@ -114,6 +115,7 @@ public class EmpDAO implements EmpDAO_interface{
 			} else {
 				System.out.println("未取得自增主鍵值");
 			}
+			System.out.println("2222222222222");
 			rs.close();
 			// 再同時新增員工
 			EmpAuthJDBCDAO dao = new EmpAuthJDBCDAO();
@@ -121,7 +123,7 @@ public class EmpDAO implements EmpDAO_interface{
 				EmpAuth empAuth=new EmpAuth(empNo,authN);
 				dao.add2(empAuth,con);
 			}
-			
+			System.out.println("555555555555");
 			// 2●設定於 pstm.executeUpdate()之後
 			con.commit();
 			con.setAutoCommit(true);
@@ -348,6 +350,61 @@ public class EmpDAO implements EmpDAO_interface{
 			}
 		}
 		return empList;
+	}
+
+	@Override
+	public Emp findById(String empId) {
+		PreparedStatement pstmt=null;
+		Connection con=null;
+		ResultSet rs=null;
+		Emp emp=null;
+		
+		try {
+
+			con=ds.getConnection();
+			pstmt=con.prepareStatement(FIND_BY_ID);
+			pstmt.setString(1, empId);
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				emp=new Emp();
+				emp.setEmpNo(rs.getInt("empNo"));
+				emp.setEmpName(rs.getString("empName"));
+				emp.setEmpJob(rs.getString("empJob"));
+				emp.setEmpId(rs.getString("empId"));
+				emp.setEmpPwd(rs.getString("empPwd"));
+				emp.setEmpStatus(rs.getInt("empStatus"));
+				emp.setEmpHireDate(rs.getDate("empHireDate"));
+				emp.setEmpEmail(rs.getString("empEmail"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return emp;
 	}
 
 

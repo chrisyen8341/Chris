@@ -82,7 +82,16 @@ public class EmpTest {
 //		}
 		
 		
-
+		//¬d¸ß ¥HID
+		Emp emp3=dao.findById("CHOUFAN");
+		System.out.println(emp3.getEmpNo());
+		System.out.println(emp3.getEmpName());
+		System.out.println(emp3.getEmpJob());
+		System.out.println(emp3.getEmpPwd());
+		System.out.println(emp3.getEmpId());
+		System.out.println(emp3.getEmpStatus());
+		System.out.println(emp3.getEmpEmail());
+		System.out.println(emp3.getEmpHireDate());
 		
 		
 		

@@ -30,6 +30,7 @@ public class EmpAuthDAO implements EmpAuthDAO_interface {
 	private static final String UPDATE_STMT = "UPDATE EMPAUTH SET EMPNO = ?, AUTHNO = ? WHERE EMPNO = ? AND AUTHNO =¡@?";
 	private static final String DELETE_STMT = "DELETE FROM EMPAUTH WHERE EMPNO = ? AND AUTHNO =¡@?";
 	private static final String FIND_BY_PK = "SELECT * FROM EMPAUTH WHERE EMPNO = ? AND AUTHNO =¡@?";
+	private static final String FIND_BY_EMPNO = "SELECT * FROM EMPAUTH WHERE EMPNO = ?";
 	private static final String GET_ALL = "SELECT * FROM EMPAUTH";
 
 	@Override
@@ -232,6 +233,55 @@ public class EmpAuthDAO implements EmpAuthDAO_interface {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return empAuthList;
+	}
+
+	@Override
+	public List<EmpAuth> findByEmpNo(int empNo) {
+		List<EmpAuth> empAuthList = new ArrayList<>();
+		PreparedStatement pstmt=null;
+		Connection con=null;
+		ResultSet rs=null;
+		
+		try {
+			con=ds.getConnection();
+			pstmt=con.prepareStatement(FIND_BY_EMPNO);
+			pstmt.setInt(1, empNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				EmpAuth empAuth=new EmpAuth();
+				empAuth.setEmpNO(rs.getInt("empNo"));
+				empAuth.setAuthNo(rs.getInt("authNo"));
+				empAuthList.add(empAuth);		
+			}
+			
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
 			if (rs != null) {
 				try {
 					rs.close();

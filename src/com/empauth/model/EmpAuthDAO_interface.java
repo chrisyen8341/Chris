@@ -11,4 +11,5 @@ public interface EmpAuthDAO_interface {
 	void delete(int empNo,int authNo);
 	EmpAuth findByPk(int empNo,int authNo);
 	List<EmpAuth> getAll();
+	List<EmpAuth> findByEmpNo(int empNo);
 }

@@ -44,6 +44,14 @@ public class EmpAuthTest {
 //		System.out.println("=================================");
 //		}
 		
+		//¬d¸ß empno
+//		List<EmpAuth> empAuthList=dao.findByEmpNo(6013);
+//		for(EmpAuth eAuth4:empAuthList){
+//		System.out.println(eAuth4.getEmpNo());
+//		System.out.println(eAuth4.getAuthNo());
+//		System.out.println("=================================");
+//		}
+		
 		
 	}
 

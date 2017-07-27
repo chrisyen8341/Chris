@@ -5,6 +5,8 @@
 <html lang="">
 <%
 	Emp emp = (Emp) request.getAttribute("emp");
+	pageContext.setAttribute("emp", emp);
+
 %>
 <head>
 <meta charset="utf-8">
@@ -62,7 +64,7 @@
 				<div
 					class="panel panel-default col-sm-offset-3 col-sm-6 text-center">
 
-					<form action="" method="post">
+					<form action="<%=request.getContextPath() %>/back_end/emp/EmpRegister.do" method="post">
 
 						<div class="form-group pwd">
 							<label for="empName" class="cols-sm-2 control-label">姓名</label><span
@@ -80,13 +82,13 @@
 
 
 						<div class="form-group pwd">
-							<label for="empName" class="cols-sm-2 control-label">帳號</label><span
-								id="memIdShow"></span>
+							<label for="empId" class="cols-sm-2 control-label">帳號</label><span
+								id="empIdShow"></span>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-user fa"
 										aria-hidden="true"></i></span> <input type="text"
-										class="form-control" name="empId" id="memId"
+										class="form-control" name="empId" id="empId"
 										value="<%=(emp == null) ? "" : emp.getEmpId()%>"
 										placeholder="請輸入帳號" required />
 								</div>
@@ -138,14 +140,14 @@
 
 						<div class="form-group pull-left">
 						<label for="empEmail" class="cols-sm-2 control-label">員工權現</label><br>
-							<label class="checkbox-inline"><input type="checkbox"
+							<label class="checkbox-inline"><input type="checkbox" name="empAuth"
 								value="4001">商城商品上架審核</label> <label class="checkbox-inline"><input
-								type="checkbox" value="4002">約會商品上架審核</label> <label
+								type="checkbox" name="empAuth" value="4002">約會商品上架審核</label> <label
 								class="checkbox-inline"><input type="checkbox"
 								value="4003">活動發起審核</label> <label class="checkbox-inline"><input
-								type="checkbox" value="4004">約會商品申訴檢舉審核</label>
+								type="checkbox" name="empAuth" value="4004">約會商品申訴檢舉審核</label>
 								<label class="checkbox-inline"><input
-								type="checkbox" value="4005">新增員工權現</label>
+								type="checkbox" name="empAuth" value="4005">新增員工權現</label>
 						</div>
 
 
@@ -154,7 +156,15 @@
 							type="submit" value="註冊">
 
 
-
+									<c:if test="${not empty errorMsgs}">
+												<font color="red">
+													<ul>
+														<c:forEach var="message" items="${errorMsgs}">
+															<li>${message}</li>
+														</c:forEach>
+													</ul>
+												</font>
+											</c:if>
 
 
 

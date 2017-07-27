@@ -10,6 +10,7 @@ public interface EmpDAO_interface {
 	void update(Emp emp);
 	void delete(int empNo);
 	Emp findByPk(int empNo);
+	Emp findById(String empId);
 	List<Emp> getAll();
 	
 }

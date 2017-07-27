@@ -44,4 +44,9 @@ private EmpAuthDAO_interface dao;
 	public List<EmpAuth> getAll() {
 		return dao.getAll();
 	}
+	
+	public List<EmpAuth> findByEmpNo(Integer empNo) {
+		return dao.findByEmpNo(empNo);
+	}
+	
 }

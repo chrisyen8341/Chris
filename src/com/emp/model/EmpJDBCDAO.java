@@ -30,6 +30,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 			+ "EMPID = ?, EMPPWD = ?,EMPSTATUS = ?,EMPHIREDATE = ?,EMPEMAIL= ? WHERE EMPNO =¡@?";
 	private static final String DELETE_STMT = "DELETE FROM EMP WHERE EMPNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM EMP WHERE EMPNO = ?";
+	private static final String FIND_BY_ID = "SELECT * FROM EMP WHERE EMPID = ?";
 	private static final String GET_ALL = "SELECT * FROM EMP";
 	
 	
@@ -360,6 +361,64 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 			}
 		}
 		return empList;
+	}
+
+
+	@Override
+	public Emp findById(String empId) {
+		PreparedStatement pstmt=null;
+		Connection con=null;
+		ResultSet rs=null;
+		Emp emp=null;
+		
+		try {
+			Class.forName(DRIVER);
+			con=DriverManager.getConnection(URL,USER,PASSWORD);
+			pstmt=con.prepareStatement(FIND_BY_ID);
+			pstmt.setString(1, empId);
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				emp=new Emp();
+				emp.setEmpNo(rs.getInt("empNo"));
+				emp.setEmpName(rs.getString("empName"));
+				emp.setEmpJob(rs.getString("empJob"));
+				emp.setEmpId(rs.getString("empId"));
+				emp.setEmpPwd(rs.getString("empPwd"));
+				emp.setEmpStatus(rs.getInt("empStatus"));
+				emp.setEmpHireDate(rs.getDate("empHireDate"));
+				emp.setEmpEmail(rs.getString("empEmail"));
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return emp;
 	}
 
 
