@@ -24,6 +24,8 @@ import javax.servlet.http.Part;
 
 import com.member.model.Member;
 import com.member.model.MemberService;
+import com.pet.model.Pet;
+import com.pet.model.PetService;
 
 @WebServlet("/Update")
 @MultipartConfig
@@ -393,9 +395,36 @@ public class Update extends HttpServlet {
 		
 		//會員查詢
 		if ("search".equals(action)) {	
+			List<String> errorMsgs = new LinkedList<String>();
+			
+			/***************************** 1.接收請求參數 - 輸入格式的錯誤處理**********************/
+			String search=req.getParameter("search");
+			if (search == null || search.trim().isEmpty()) {
+				errorMsgs.add("請填寫搜尋內容");
+			}
+			
+			String type=req.getParameter("type");
+			
+			String loc=req.getParameter("loc");
+
+					
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher(loc);
+				req.setAttribute("errorMsgs", errorMsgs);
+				failureView.forward(req, res);
+				return;//程式中斷
+			}
 			
 			
 			
+			/***************************2.修改完成,準備轉交(Send the Success view)*************/
+			RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/viewOtherMem.jsp");
+
+			req.setAttribute("type", type);
+
+			req.setAttribute("search", search);
+
+			failureView.forward(req, res);
 			
 		}
 		

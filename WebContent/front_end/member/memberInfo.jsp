@@ -10,22 +10,11 @@
 
 <%@ include file="memHead.file"%>
 <style>
-body {
-	margin-top: 20px;
-}
+
+ 
+
 </style>
 
-<script>
-	$(document).ready(function(e) {
-		$('.search-panel .dropdown-menu').find('a').click(function(e) {
-			e.preventDefault();
-			var param = $(this).attr("href").replace("#", "");
-			var concept = $(this).text();
-			$('.search-panel span#search_concept').text(concept);
-			$('.input-group #search_param').val(param);
-		});
-	});
-</script>
 
 </head>
 
@@ -42,52 +31,53 @@ body {
 				<div class="row">
 
 
-
+					<div class="row">
+					<div class="col-xs-12 col-sm-4 ">
 					<h5 class="page-header">
 
+										
+						<form id="custom-search-form" action="<%=request.getContextPath() %>/Update" method="post" class="form-search form-horizontal pull-left">
+							<!-- 							<div class="input-append span12"> -->
+							<!-- 								<input type="hidden" name="action" value="search"> -->
+							<%-- 								<input type="hidden" name="loc" value="<%=request.getRequestURI() %>"> --%>
+							<!-- 								<input type="text" name="search" class="search-query mac-style" -->
+							<!-- 									placeholder="搜尋會員或寵物"> -->
+							<!-- 								<button type="submit" class="btn"> -->
+							<!-- 									<i class="glyphicon glyphicon-search"></i> -->
+							<!-- 								</button> -->
+							<!-- 							</div> -->
 
-						<%-- 						<form id="custom-search-form" action="<%=request.getContextPath() %>/Update" method="post" class="form-search form-horizontal pull-left"> --%>
-						<!-- 							<div class="input-append span12"> -->
-						<!-- 								<input type="hidden" name="action" value="search"> -->
-						<!-- 								<input type="text" class="search-query mac-style" placeholder="搜尋會員或寵物" value="search" > -->
-						<!-- 								<button type="submit" class="btn"> -->
-						<!-- 									<i class="icon-search"></i> -->
-						<!-- 								</button> -->
-						<!-- 							</div> -->
-						<!-- 						</form> -->
-						<div class="row">
-							<div class="col-xs-12 col-sm-4 ">
-								<form id="custom-search-form" action="<%=request.getContextPath()%>/Update" method="post">
-									<div class="input-group">
-										<div class="input-group-btn search-panel">
-											<button type="button" class="btn btn-default dropdown-toggle"
-												data-toggle="dropdown">
-												<span id="search_concept">Filter by</span> <span
-													class="caret"></span>
-											</button>
-											<ul class="dropdown-menu" role="menu">
-												<li><a href="#contains">Contains</a></li>
-												<li><a href="#its_equal">It's equal</a></li>
-												<li><a href="#greather_than">Greather than ></a></li>
-												<li><a href="#less_than">Less than < </a></li>
-												<li class="divider"></li>
-												<li><a href="#all">Anything</a></li>
-											</ul>
-										</div>
-										<input type="hidden" name="search_param" value="all"
-											id="search_param"> <input type="text"
-											class="form-control" name="x" placeholder="Search term...">
-										<span class="input-group-btn">
-											<button class="btn btn-default" type="button">
-												<span class="glyphicon glyphicon-search"></span>
-											</button>
-										</span>
-									</div>
-								</form>
+
+							<div class="input-group">
+								<div class="input-group-btn search-panel">
+									<button type="button" class="btn btn-default dropdown-toggle"
+										data-toggle="dropdown">
+										<span id="search_concept">Filter by</span> <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="#contains">會員</a></li>
+										<li><a href="#its_equal">寵物</a></li>
+										<li class="divider"></li>
+										<li><a href="#all">Anything</a></li>
+									</ul>
+								</div>
+								<input type="hidden" name="search_param" value="all"
+									id="search_param"> <input type="text"
+									class="form-control" name="x" placeholder="Search term...">
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button">
+										<span class="glyphicon glyphicon-search"></span>
+									</button>
+								</span>
 							</div>
-						</div>
-					</h5>
+							
+							
+						</form>
 
+
+					</h5>
+</div>
+</div>
 
 					<div class="row">
 
@@ -182,17 +172,17 @@ body {
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-				<script>
-		$(document).ready(function(e){
-    $('.search-panel .dropdown-menu').find('a').click(function(e) {
-		e.preventDefault();
-		var param = $(this).attr("href").replace("#","");
-		var concept = $(this).text();
-		$('.search-panel span#search_concept').text(concept);
-		$('.input-group #search_param').val(param);
-	});
-});
-	</script>
+			<script>
+			$(document).ready(function(e){
+			    $('.search-panel .dropdown-menu').find('a').click(function(e) {
+					e.preventDefault();
+					var param = $(this).attr("href").replace("#","");
+					var concept = $(this).text();
+					$('.search-panel span#search_concept').text(concept);
+					$('.input-group #search_param').val(param);
+				});
+			});
+			</script>
 </body>
 
 </html>

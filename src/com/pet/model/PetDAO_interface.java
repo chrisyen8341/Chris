@@ -3,6 +3,8 @@ package com.pet.model;
 import java.sql.Connection;
 import java.util.List;
 
+import com.member.model.Member;
+
 
 
 
@@ -14,4 +16,5 @@ public interface PetDAO_interface {
 	void delete(int petNo);
 	Pet findByPk(int petNo);
 	List<Pet> getAll();
+	List<Pet> findByPetName(String search);
 }

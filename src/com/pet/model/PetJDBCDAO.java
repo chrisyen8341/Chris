@@ -24,6 +24,7 @@ public class PetJDBCDAO implements PetDAO_interface {
 			+ "PETKIND = ?, PETGENDER = ?, PETSPECIES = ?, PETINTRO = ?, PETBDAY = ?, PETIMG = ?, PETSTATUS = ? WHERE PETNO =¡@?";
 	private static final String DELETE_STMT = "DELETE FROM PET WHERE PETNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM PET WHERE PETNO = ?";
+	private static final String FIND_BY_NAME = "SELECT * FROM PET WHERE UPPER(PETNAME) LIKE UPPER(?)";
 	private static final String GET_ALL = "SELECT * FROM PET";
 	
 	
@@ -265,6 +266,66 @@ public class PetJDBCDAO implements PetDAO_interface {
 			Class.forName(DRIVER);
 			con=DriverManager.getConnection(URL,USER,PASSWORD);
 			pstmt=con.prepareStatement(GET_ALL);
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				Pet pet=new Pet();
+				pet.setPetNo(rs.getInt("petNo"));
+				pet.setMemNo(rs.getInt("memNo"));
+				pet.setPetName(rs.getString("petName"));
+				pet.setPetKind(rs.getString("petKind"));
+				pet.setPetGender(rs.getInt("petGender"));
+				pet.setPetSpecies(rs.getString("petSpecies"));
+				pet.setPetIntro(rs.getString("petIntro"));
+				pet.setPetBday(rs.getDate("petBday"));
+				pet.setPetImg(rs.getBytes("petImg"));
+				pet.setPetStatus(rs.getInt("petStatus"));
+				petList.add(pet);		
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return petList;
+	}
+
+	@Override
+	public List<Pet> findByPetName(String search) {
+		List<Pet> petList = new ArrayList<>();
+		PreparedStatement pstmt=null;
+		Connection con=null;
+		ResultSet rs=null;
+		
+		try {
+			Class.forName(DRIVER);
+			con=DriverManager.getConnection(URL,USER,PASSWORD);
+			pstmt=con.prepareStatement(FIND_BY_NAME);
+			pstmt.setString(1, "%"+search+"%");
 			rs=pstmt.executeQuery();
 			while(rs.next()){
 				Pet pet=new Pet();

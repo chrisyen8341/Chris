@@ -72,6 +72,23 @@ public class PetTest {
 //		}
 		
 		
+		//·j´M
+		List<Pet> petList=dao.findByPetName("¤Ñ§L");
+		for(Pet pet:petList){
+			System.out.println(pet.getPetNo());
+			System.out.println(pet.getMemNo());
+			System.out.println(pet.getPetName());
+			System.out.println(pet.getPetKind());
+			System.out.println(pet.getPetGender());
+			System.out.println(pet.getPetSpecies());
+			System.out.println(pet.getPetIntro());
+			System.out.println(pet.getPetBday());
+			System.out.println(pet.getPetImg());
+			System.out.println(pet.getPetStatus());
+			System.out.println("===================");
+		}
+		System.out.println("°õ¦æ§¹²¦");
+		
 		
 	}
 

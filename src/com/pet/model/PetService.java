@@ -3,6 +3,8 @@ package com.pet.model;
 import java.sql.Date;
 import java.util.List;
 
+import com.member.model.Member;
+
 
 
 public class PetService {
@@ -61,4 +63,9 @@ public class PetService {
 	public List<Pet> getAll() {
 		return dao.getAll();
 	}
+	
+	public List<Pet> getPetsByName(String search){
+		return dao.findByPetName(search);
+	}
+	
 }
