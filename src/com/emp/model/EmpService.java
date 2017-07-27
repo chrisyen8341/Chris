@@ -26,6 +26,25 @@ public class EmpService {
 		return emp ;
 	}
 
+	public Emp addEmpWithAuth(String empName, String empJob, String empId, String empPwd, Integer empStatus,List<Integer> authNos) {
+
+		Emp emp = new Emp();
+		emp.setEmpName(empName);
+		emp.setEmpJob(empJob);
+		emp.setEmpId(empId);
+		emp.setEmpPwd(empPwd);
+		emp.setEmpStatus(0);
+		dao.addWithAuth(emp, authNos);
+
+		return emp ;
+	}
+	
+	
+	
+	
+	
+	
+	
 	public Emp updateEmp(Integer empNo, String empName, String empJob, String empId, String empPwd, Integer empStatus) {
 
 		Emp emp = new Emp();

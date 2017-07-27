@@ -1,6 +1,7 @@
 package com.emp.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +17,7 @@ import javax.servlet.http.Part;
 import com.member.model.Member;
 
 
-@WebServlet("back_end/emp/EmpRegister")
+@WebServlet("/back_end/emp/EmpRegister.do")
 public class EmpRegister extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -46,32 +47,38 @@ public class EmpRegister extends HttpServlet {
 				errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 			}
 
+			
 			String empId = req.getParameter("empId");
 			if (empId == null || empId.trim().isEmpty()) {
 				errorMsgs.add("請填寫帳號");
 			}
-			String ename = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-			if (!empName.trim().matches(enameReg)) {
-				errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+			String empIdReg = "^[(a-zA-Z0-9_)]{2,10}$";
+			if (!empId.trim().matches(empIdReg)) {
+				errorMsgs.add("員工帳號: 只能是英文字母、數字和_ , 且長度必需在2到10之間");
 			}
 			
 			
+			String empJob=req.getParameter("empJob");
+			
 
-			java.sql.Date memBday = null;
+			java.sql.Date empHireDate = null;
 			try {
-				memBday = java.sql.Date.valueOf(req.getParameter("memBday"));
+				empHireDate = java.sql.Date.valueOf(req.getParameter("empHireDate"));
 			} catch (IllegalArgumentException e) {
 				errorMsgs.add("日期格式錯誤");
 			}
 			
-			String memPhone = req.getParameter("memPhone");
-			if (!(memPhone.matches("[09]{2}[0-9]{2}-[0-9]{6}") || memPhone.matches("[09]{2}[0-9]{8}"))) {
-				errorMsgs.add("手機格式錯誤");
+			String empEmail = req.getParameter("empEmail");
+			if (!empEmail.matches("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$")) {
+				errorMsgs.add("請輸入正確的Email信箱");
 			}
 
-
-
-
+			
+			String[] empAuthb=req.getParameterValues("empAuth");
+			List<Integer> empAuth=new ArrayList<Integer>( );
+			for(String eAuth:empAuthb){
+				empAuth.add(Integer.parseInt(eAuth));
+			}
 
 
 			if (!errorMsgs.isEmpty()) {

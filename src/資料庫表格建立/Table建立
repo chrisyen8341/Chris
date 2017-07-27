@@ -235,7 +235,7 @@ Insert Into Auth Values(AuthNo_Sq.Nextval,'活動發起審核');
 Insert Into Auth Values(AuthNo_Sq.Nextval,'餐廳會員註冊審核');
 Insert Into Auth Values(AuthNo_Sq.Nextval,'約會商品檢舉審核');
 insert into auth values(AuthNo_sq.nextval,'約會商品申訴審核');
-
+insert into auth values(AuthNo_sq.nextval,'新增員工權現');
 
 Create Table Empauth(
 Empno Number(10),

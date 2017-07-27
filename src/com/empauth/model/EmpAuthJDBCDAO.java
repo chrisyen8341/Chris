@@ -64,6 +64,32 @@ public class EmpAuthJDBCDAO implements EmpAuthDAO_interface {
 	}
 
 	@Override
+	public void add2(EmpAuth empAuth, Connection con) {
+		PreparedStatement pstmt=null;
+		
+		try {
+			pstmt=con.prepareStatement(INSERT_STMT);
+			pstmt.setInt(1,empAuth.getEmpNo());
+			pstmt.setInt(2, empAuth.getAuthNo());
+			pstmt.executeUpdate();
+
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+	
+	@Override
 	public void update(EmpAuth empAuth) {
 		PreparedStatement pstmt=null;
 		Connection con=null;
@@ -242,5 +268,11 @@ public class EmpAuthJDBCDAO implements EmpAuthDAO_interface {
 		}
 		return empAuthList;
 	}
+
+
+
+
+
+
 
 }

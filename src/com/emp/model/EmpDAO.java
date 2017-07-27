@@ -1,6 +1,7 @@
 package com.emp.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +12,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.empauth.model.EmpAuth;
+import com.empauth.model.EmpAuthJDBCDAO;
 
 public class EmpDAO implements EmpDAO_interface{
 
@@ -76,6 +80,90 @@ public class EmpDAO implements EmpDAO_interface{
 		
 	}
 
+	@Override
+	public void addWithAuth(Emp emp, List<Integer> authNo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			
+			// 1●設定於 pstm.executeUpdate()之前
+    		con.setAutoCommit(false);
+			
+    		// 先新增會原
+			String cols[] = {"EMPNO"};
+			pstmt = con.prepareStatement(INSERT_STMT , cols);			
+			pstmt.setString(1, emp.getEmpName());
+			pstmt.setString(2, emp.getEmpJob());
+			pstmt.setString(3, emp.getEmpId());
+			pstmt.setString(4,emp.getEmpPwd());
+			pstmt.setInt(5, emp.getEmpStatus());
+			pstmt.setDate(6, emp.getEmpHireDate());
+			pstmt.setString(7, emp.getEmpEmail());
+			pstmt.executeUpdate();
+			//掘取對應的自增主鍵值
+			String next_memno = null;
+			Integer empNo=null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				next_memno = rs.getString(1);
+				empNo=Integer.parseInt(next_memno);
+				System.out.println("自增主鍵值= " + next_memno +"(剛新增成功的員工編號)");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+			rs.close();
+			// 再同時新增員工
+			EmpAuthJDBCDAO dao = new EmpAuthJDBCDAO();
+			for(Integer authN:authNo){
+				EmpAuth empAuth=new EmpAuth(empNo,authN);
+				dao.add2(empAuth,con);
+			}
+			
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			
+			// Handle any driver errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-dept");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+	
+	
+	
+	
 	@Override
 	public void update(Emp emp) {
 		PreparedStatement pstmt=null;
@@ -261,6 +349,8 @@ public class EmpDAO implements EmpDAO_interface{
 		}
 		return empList;
 	}
+
+
 }
 
 
