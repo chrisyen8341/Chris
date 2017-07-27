@@ -1,6 +1,7 @@
 package com.emp.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import com.emp.model.Emp;
 import com.emp.model.EmpService;
+import com.empauth.model.EmpAuth;
+import com.empauth.model.EmpAuthService;
 import com.member.model.Member;
 import com.member.model.MemberService;
 
@@ -55,9 +58,15 @@ public class EmpLogin extends HttpServlet {
 		} else {
 			EmpService empSvc = new EmpService();
 			Emp empl=empSvc.getEmpById(empId);
+			EmpAuthService eAuthSvc=new EmpAuthService();
+			List<EmpAuth> eAuth=eAuthSvc.findByEmpNo(empl.getEmpNo());
+			List<Integer> auth=new ArrayList<Integer>();
+			for(EmpAuth a:eAuth){
+				auth.add(a.getAuthNo());
+			}
 			HttpSession session=req.getSession();
 			session.setAttribute("emp", empl);
-			
+			session.setAttribute("auth", auth);
 			String location = (String) session.getAttribute("location");
 			if (location != null) {
 				session.removeAttribute("location");

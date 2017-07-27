@@ -126,67 +126,7 @@
 			<script
 				src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-			<script>
-				$(function() {
-					//生日最大可選天數
-					var today = new Date();
-					var dd = today.getDate();
-					var mm = today.getMonth() + 1; //January is 0!
-					var yyyy = today.getFullYear();
-					if (dd < 10) {
-						dd = '0' + dd
-					}
-					if (mm < 10) {
-						mm = '0' + mm
-					}
-
-					today = yyyy + '-' + mm + '-' + dd;
-					document.getElementById("empHireDate").setAttribute("max",
-							today);
-
-					//生日驗證 生日不可以大於今天
-					$("#empHireDate")
-							.blur(
-									function(e) {
-										console.log(e.target.id);
-										var nDay = yyyy + mm + dd;
-										if (e.target.id == "#empHireDate") {
-											days = $("#empHireDate").val()
-													.split("-");
-											tDay = days[0] + days[1] + days[2];
-											console.log(tDay);
-											console.log(nDay);
-											if (tDay > nDay) {
-												$("#empHireDateShow")
-														.html(
-																"&nbsp;&nbsp;&nbsp;&nbsp;不合格的生日")
-														.css('color', 'red');
-											} else {
-												$("#empHireDateShow").html("");
-											}
-										}
-									});
-
-					//信箱驗證
-					$("#empEmail")
-							.blur(
-									function() {
-										if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-												.test($("#empEmail").val())) {
-											$("#empEmailShow").html("").css(
-													'color', 'green');
-											valids[6] = true;
-										} else {
-											$("#empEmailShow")
-													.html(
-															"&nbsp;&nbsp;&nbsp;&nbsp;不合格的EMAIL")
-													.css('color', 'red');
-											valids[6] = false;
-										}
-									});
-
-				});
-			</script>
+			
 </body>
 
 </html>
