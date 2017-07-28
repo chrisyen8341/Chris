@@ -129,7 +129,6 @@ img {
 
 			<div class="col-xs-12 col-sm-8 ">
 				<div class="row">
-					<h5>${mlist}</h5>
 
 					<c:if test="<%=type.equals(\"·|­û\")%>">
 
