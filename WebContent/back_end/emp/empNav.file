@@ -20,10 +20,12 @@
                 </ul>
                 <div class="nav collapse navbar-collapse navbar-right" id="login">
                     <ul class="nav navbar-nav">
-
-                        <li>
-                            <a href="contact.html">管理員登出</a>
-                        </li>
+						<c:if test="${emp!=null}">
+							<li><a href="<%=request.getContextPath() %>/back_end/emp/EmpLogout.do">管理員登出</a></li>
+						</c:if>
+						<c:if test="${emp==null}">
+							<li><a href="<%=request.getContextPath() %>/back_end/emp/empLogin.jsp">管理員入</a></li>
+						</c:if>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->

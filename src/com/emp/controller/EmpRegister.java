@@ -82,13 +82,19 @@ public class EmpRegister extends HttpServlet {
 			for(String eAuth:empAuthb){
 				empAuthNos.add(Integer.parseInt(eAuth));
 				System.out.println(eAuth);
-			}
+			};
+			Emp empf=new Emp();
+			empf.setEmpName(empName);
+			empf.setEmpId(empId);
+			empf.setEmpJob(empJob);
+			empf.setEmpHireDate(empHireDate);
+			empf.setEmpEmail(empEmail);
 
-
+			System.out.println("aaaaaaaaaaa");
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/back_end/emp/empRegister.jsp");
 				req.setAttribute("errorMsgs", errorMsgs);
-				req.setAttribute("emp", "emp");
+				req.setAttribute("emp", empf);
 				dispatcher.forward(req, res);
 				return;
 			}
@@ -115,7 +121,7 @@ public class EmpRegister extends HttpServlet {
 			emp.setEmpEmail(empEmail);
 			EmpService empSvc=new EmpService();
 			empSvc.addEmpWithAuth(empName, empJob, empId, empPwd, 0, empHireDate, empEmail,empAuthNos );
-			
+		
 			
 
 			/**************************** 3.修改完成,準備轉交(Send the Success view)*************/
@@ -124,7 +130,7 @@ public class EmpRegister extends HttpServlet {
 			session.setAttribute("emp", nemp);
 			session.setAttribute("auth", empAuthNos);
 			res.sendRedirect(req.getContextPath()+"/back_end/index_backend.jsp");
-			
+
 			
 		
 		} catch (Exception e) {

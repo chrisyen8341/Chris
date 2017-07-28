@@ -115,7 +115,6 @@ public class EmpDAO implements EmpDAO_interface{
 			} else {
 				System.out.println("未取得自增主鍵值");
 			}
-			System.out.println("2222222222222");
 			rs.close();
 			// 再同時新增員工
 			EmpAuthJDBCDAO dao = new EmpAuthJDBCDAO();
@@ -123,7 +122,6 @@ public class EmpDAO implements EmpDAO_interface{
 				EmpAuth empAuth=new EmpAuth(empNo,authN);
 				dao.add2(empAuth,con);
 			}
-			System.out.println("555555555555");
 			// 2●設定於 pstm.executeUpdate()之後
 			con.commit();
 			con.setAutoCommit(true);

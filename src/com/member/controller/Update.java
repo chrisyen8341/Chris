@@ -385,7 +385,6 @@ public class Update extends HttpServlet {
 
 		//·|­ûµn¥X
 		if ("logout".equals(action)) {	
-			System.out.println("222222222222222");
 			session.removeAttribute("member");
 			res.sendRedirect(req.getContextPath()+"/front_end/index.jsp");
 
