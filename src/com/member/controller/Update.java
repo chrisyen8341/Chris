@@ -420,7 +420,7 @@ public class Update extends HttpServlet {
 			
 			
 			/***************************2.修改完成,準備轉交(Send the Success view)*************/
-			RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/viewOtherMem.jsp");
+			RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/viewOtherMem3.jsp");
 
 			req.setAttribute("type", type);
 

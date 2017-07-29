@@ -30,7 +30,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 	private static final String FIND_PETS_BY_MEMNO = "SELECT * FROM PET WHERE MEMNO = ? AND PETSTATUS = 0 ORDER BY PETNO DESC";
 	private static final String GET_ALL = "SELECT * FROM MEMBER";
 	private static final String FIND_BY_ID = "SELECT * FROM MEMBER WHERE MEMID = ?";
-	private static final String FIND_BY_ID_NAME = "SELECT * FROM MEMBER WHERE UPPER(MEMID) LIKE UPPER(?) OR MEMNAME LIKE UPPER(?)";
+	private static final String FIND_BY_ID_SNAME = "SELECT * FROM MEMBER WHERE UPPER(MEMID) LIKE UPPER(?) OR MEMSNAME LIKE UPPER(?)";
 	private static final String GET_CURRSEQ = "SELECT MEMNO_SQ.CURRVAL FROM DUAL";
 
 	@Override
@@ -616,7 +616,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 		try {
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			pstmt = con.prepareStatement(FIND_BY_ID_NAME);
+			pstmt = con.prepareStatement(FIND_BY_ID_SNAME);
 			pstmt.setString(1, "%"+search+"%");
 			pstmt.setString(2, "%"+search+"%");
 			rs = pstmt.executeQuery();

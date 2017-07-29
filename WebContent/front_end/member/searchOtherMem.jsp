@@ -89,9 +89,7 @@
 								<span class="input-group-btn">
 									
 									<input type="submit" class="btn btn-default searchbtn glyphicon glyphicon-search" value="·j´M" >
-<!-- 									<button class="btn btn-default searchbtn" type="button"> -->
-<!-- 										<span class="glyphicon glyphicon-search"></span> -->
-<!-- 									</button> -->
+
 								</span>
 							</div>
 							

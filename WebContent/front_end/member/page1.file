@@ -24,8 +24,11 @@
          }
     } 
 %>
-<%if (pageNumber>0){%>
-<b><font color= red>第<%=whichPage%>/<%=pageNumber%>頁　</font></b>
-<%}%>
-<b>●符 合 查 詢 條 件 如 下 所 示: 共<font color=red><%=rowNumber%></font>筆</b>
 
+
+<%if (pageNumber>0){%>
+    <hgroup class="mb20">
+		<h1>搜尋結果</h1>
+		<h2 class="lead"><strong class="text-danger">第<%=whichPage%>/<%=pageNumber%>頁,共<%=rowNumber%></strong>比搜尋結果符合 <strong class="text-danger">${search}</strong></h2>								
+	</hgroup>
+<%}%>

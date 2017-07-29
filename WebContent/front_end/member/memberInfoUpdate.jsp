@@ -46,7 +46,7 @@
 			<div class="col-xs-12 col-sm-8 ">
 				<div class="row">
 
-					<h5 class="page-header text-right">目前位置:會員專區</h5>
+					<h5 class="page-header text-right">目前位置:會員個人資訊</h5>
 
 
 					<div class="row">
