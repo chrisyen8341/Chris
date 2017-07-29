@@ -82,33 +82,11 @@
 #custom-search-form {
 	margin-top: 100px
 }
-</style>
+
+
+
 
 <style>
-.card {
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-	transition: 0.3s;
-	width: 150px;
-	height: 200px border-radius: 5px;
-}
-
-.card:hover {
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-
-img {
-	border-radius: 5px 5px 0 0;
-}
-
-.container {
-	padding: 2px 16px;
-}
-</style>
-
-
-
-
-<style type="text/css">
 @import "http://fonts.googleapis.com/css?family=Roboto:300,400,500,700";
 
 .mb20 {
@@ -338,37 +316,39 @@ hgroup h2.lead {
 											begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 
 
+											<a href="<%=request.getContextPath() %>/Update?action=viewOtherMem&memNo=${member.memNo}">
+												 <div>
+												<article class="search-result row">
+													<div class="col-xs-12 col-sm-12 col-md-3">
+														<div class="thumbnail"><img 
+															src="<%=request.getContextPath() %>/front_end/member/MemImgReader2.do?memNo=${member.memNo}"
+															alt="Lorem ipsum" /></div>
+													</div>
+													<div class="col-xs-12 col-sm-12 col-md-2">
+														<ul class="meta-search">
+															<li><i class="glyphicon glyphicon-user"></i> <span>${member.memSname}</span></li>
+															<li><i class="glyphicon glyphicon-user"></i> <span>${member.memId}</span></li>
+															<%
+																String memGender = String.valueOf(member.getMemGender());
+																		HashMap mGender = (HashMap) application.getAttribute("mGender");
+															%>
+															<li><i class="glyphicon glyphicon-time"></i> <span><%=mGender.get(memGender)%></span></li>
 
-											<article class="search-result row">
-												<div class="col-xs-12 col-sm-12 col-md-3">
-													<a href="#" title="Lorem ipsum" class="thumbnail"><img
-														src="<%=request.getContextPath() %>/front_end/member/MemImgReader2.do?memNo=${member.memNo}"
-														alt="Lorem ipsum" /></a>
-												</div>
-												<div class="col-xs-12 col-sm-12 col-md-2">
-													<ul class="meta-search">
-														<li><i class="glyphicon glyphicon-user"></i> <span>${member.memSname}</span></li>
-														<li><i class="glyphicon glyphicon-user"></i> <span>${member.memId}</span></li>
-														<%
-															String memGender = String.valueOf(member.getMemGender());
-																	HashMap mGender = (HashMap) application.getAttribute("mGender");
-														%>
-														<li><i class="glyphicon glyphicon-time"></i> <span><%=mGender.get(memGender)%></span></li>
-
-														<li><i class="glyphicon glyphicon-tags"></i> <span>${member.memBday}</span></li>
-													</ul>
-												</div>
-												<div class="col-xs-12 col-sm-12 col-md-7 excerpet">
-													<h3>
-														<a href="#" title="">${member.memSname}的自我介紹</a>
-													</h3>
-													<p>${member.memSelfintro}</p>
-													<span class="plus"><a href="#" title="Lorem ipsum"><i
-															class="glyphicon glyphicon-plus"></i></a></span>
-												</div>
-												<span class="clearfix borda"></span>
-											</article>
-
+															<li><i class="glyphicon glyphicon-tags"></i> <span>${member.memBday}</span></li>
+														</ul>
+													</div>
+													<div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+														<h3>
+															${member.memSname}的自我介紹
+														</h3>
+														<p>${member.memSelfintro}</p>
+														<span class="plus"><i
+																class="glyphicon glyphicon-plus"></i></span>
+													</div>
+													<span class="clearfix borda"></span>
+												</article>
+												<div>
+											</a>
 
 										</c:forEach>
 
