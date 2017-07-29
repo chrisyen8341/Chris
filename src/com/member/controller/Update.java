@@ -1,5 +1,7 @@
 package com.member.controller;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -440,15 +443,15 @@ public class Update extends HttpServlet {
 	}
 
 	public static byte[] getPictureByteArray(InputStream fis) throws IOException {
+	
+		
+		BufferedImage originalImage = ImageIO.read(fis);
+		int type = originalImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
+		BufferedImage resizeImageJpg = resizeImage(originalImage, type);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
-		int i;
-		while ((i = fis.read(buffer)) != -1) {
-			baos.write(buffer, 0, i);
-		}
+		ImageIO.write( resizeImageJpg, "jpg", baos );
+		baos.flush();
 		baos.close();
-		fis.close();
-
 		return baos.toByteArray();
 	}
 
@@ -475,5 +478,12 @@ public class Update extends HttpServlet {
 		}
 	}
 	
+	private static BufferedImage resizeImage(BufferedImage originalImage, int type){
+		BufferedImage resizedImage = new BufferedImage(400, 300, type);
+		Graphics2D g = resizedImage.createGraphics();
+		g.drawImage(originalImage, 0, 0, 400, 300, null);
+		g.dispose();
 
+		return resizedImage;
+	    }
 }

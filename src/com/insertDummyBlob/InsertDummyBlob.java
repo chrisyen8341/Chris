@@ -1,9 +1,13 @@
 package com.insertDummyBlob;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import com.actImg.model.ActImg;
 import com.actImg.model.ActImgJDBCDAO;
@@ -29,7 +33,10 @@ import com.slide.model.Slide;
 import com.slide.model.SlideJDBCDAO;
 
 public class InsertDummyBlob {
-
+	static int fixed_width=400;
+	static int fixed_height=300;
+	
+	
 	public static void main(String[] args) {
 
 
@@ -39,7 +46,7 @@ public class InsertDummyBlob {
     	MemberJDBCDAO dao=new MemberJDBCDAO();
         Member member=dao.findByPk(i++);
         try {
-			byte[] b = getPictureByteArray(file);
+        	byte[] b = getPictureByteArray(file);
 			member.setMemImg(b);
 			dao.update(member);
 		} catch (IOException e) {
@@ -112,21 +119,27 @@ public class InsertDummyBlob {
 	    
 	}
 
-	
+	private static BufferedImage resizeImage(BufferedImage originalImage, int type){
+		BufferedImage resizedImage = new BufferedImage(fixed_width, fixed_height, type);
+		Graphics2D g = resizedImage.createGraphics();
+		g.drawImage(originalImage, 0, 0, fixed_width, fixed_height, null);
+		g.dispose();
+
+		return resizedImage;
+	    }
 	
 	
 	
 	public static byte[] getPictureByteArray(File file) throws IOException {
-		FileInputStream fis = new FileInputStream(file);
+		
+		BufferedImage originalImage = ImageIO.read(file);
+		int type = originalImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
+		BufferedImage resizeImageJpg = resizeImage(originalImage, type);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
-		int i;
-		while ((i = fis.read(buffer)) != -1) {
-			baos.write(buffer, 0, i);
-		}
+		ImageIO.write( resizeImageJpg, "jpg", baos );
+		baos.flush();
 		baos.close();
-		fis.close();
-
+		
 		return baos.toByteArray();
 	}
 	
