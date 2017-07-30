@@ -17,17 +17,12 @@
 .pet {
 	margin-top: 20px;
 	color:Crimson ;
-	position: absolute;
 }
 
 .addPet {
 	margin-top: 20px;
 }
-.test{
-  border:20px;
-  border-style:solid;
-  padding: 1px;
-}
+
 </STYLE>
 </head>
 

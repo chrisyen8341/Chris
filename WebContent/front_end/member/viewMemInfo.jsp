@@ -21,15 +21,12 @@
 <%@ include file="memHead.file"%>
 <style>
 .pet {
-	margin-buttom: 20px;
+	margin-top: 50px;
 }
 .member {
-	margin-buttom: 50px;
+	margin-buttom: 100px;
 }
 
-.m-t-n-md {
-  margin-top: 20px;
-}
 
 
 </style>
@@ -92,7 +89,7 @@
 							<div class="panel-body">
 								<div class="row">
 
-									<div class="member">
+									<div class="row member">
 
 										<div class="col-md-3 col-lg-3 " align="center">
 											<img alt="User Pic" id="memImg"
@@ -143,9 +140,9 @@
 
 									</div>
 
-									<div style="overflow: visible;">
+									<div>
 										<c:forEach var="pet" items="${list}" varStatus="s">
-											<div style="margin-top:20px;">
+											<div class="row pet">
 												<div class="col-md-3 col-lg-3 " align="center">
 													<img alt="User Pic" id="petImg"
 														src="<%=request.getContextPath() %>/PetImgReader?petNo=${pet.petNo}"
