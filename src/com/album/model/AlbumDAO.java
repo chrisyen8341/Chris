@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -36,6 +38,7 @@ public class AlbumDAO implements AlbumDAO_interface {
 	private static final String DELETE_ALBUM = "DELETE FROM ALBUM WHERE ALBUMNO = ?";
 	private static final String DELETE_ALBUMIMG = "DELETE FROM ALBUMIMG WHERE ALBUMNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM ALBUM WHERE ALBUMNO = ?";
+	private static final String FIND_ALBUMIMGS_BY_MEMNO = "SELECT * FROM ALBUMIMG WHERE ALBUMNO = ? AND ORDER BY IMGNO DESC";
 	private static final String GET_ALL = "SELECT * FROM ALBUM";
 
 
@@ -417,6 +420,64 @@ public class AlbumDAO implements AlbumDAO_interface {
 			}
 		}
 		return albumList;
+	}
+
+
+
+	@Override
+	public Set<AlbumImg> findAImgsByAlbumNo(Integer albumNo) {
+		PreparedStatement pstmt=null;
+		Connection con=null;
+		ResultSet rs=null;
+		Set<AlbumImg> set=new LinkedHashSet<AlbumImg>();
+		
+		try{
+			con=ds.getConnection();
+			pstmt=con.prepareStatement(FIND_ALBUMIMGS_BY_MEMNO);
+			pstmt.setInt(1,albumNo);
+			while(rs.next()){
+				AlbumImg albumImg = new AlbumImg();
+				albumImg.setImgNo(rs.getInt("imgNo"));
+				albumImg.setAlbumNo(rs.getInt("albumNo"));
+				albumImg.setImgTitle(rs.getString("imgTitle"));
+				albumImg.setImgDesc(rs.getString("imgDesc"));
+				albumImg.setImgCreatedTime(rs.getTimestamp("imgCreatedTime"));
+				albumImg.setImgModifiedTime(rs.getTimestamp("imgModifiedTime"));
+				albumImg.setImgFileName(rs.getString("imgFileName"));
+				albumImg.setImgExtName(rs.getString("imgExtName"));
+				albumImg.setImgFile(rs.getBytes("imgFile"));
+				set.add(albumImg);
+			}
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		return set;
 	}
 
 

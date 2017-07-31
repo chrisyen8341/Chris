@@ -2,6 +2,7 @@ package com.album.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 import com.albumimg.model.AlbumImg;
 
@@ -86,6 +87,11 @@ public class AlbumService {
 		return dao.findByPk(albumNo);
 	}
 
+	public Set<AlbumImg> getAlbumImgs(Integer albumNo) {
+		return dao.findAImgsByAlbumNo(albumNo);
+	}
+	
+	
 	public List<Album> getAll() {
 		return dao.getAll();
 	}

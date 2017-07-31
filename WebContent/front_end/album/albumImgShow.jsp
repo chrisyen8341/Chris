@@ -2,14 +2,16 @@
 	pageEncoding="BIG5"%>
 <%@ page import="com.member.model.*"%>
 <%@ page import="com.album.model.*"%>
+<%@ page import="com.albumimg.model.*"%>
 <%@ page import="java.util.HashMap"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
+	Integer albumNo=Integer.parseInt(request.getParameter("albumNo"));
 	AlbumService albumSvc = new AlbumService();
 	MemberService memSvc = new MemberService();
 	Member member = (Member) session.getAttribute("member");
-	Set<Album> albumSet = memSvc.getAlbumsByMemNo(member.getMemNo());
-	pageContext.setAttribute("albumSet", albumSet);
+	Set<AlbumImg> aImgsSet = albumSvc.getAlbumImgs(albumNo);
+	pageContext.setAttribute("aImgsSet", aImgsSet);
 %>
 
 <html lang="">
@@ -106,20 +108,13 @@ max-width: 100%;
 								</div>
 
 								<div class="row" style="margin-top:30px">
-									<c:if test="${not empty albumSet}">
+									<c:if test="${not empty aImgsSet}">
 										<ul>
-											<c:forEach var="album" items="${albumSet}">
+											<c:forEach var="aImg" items="${aImgsSet}">
 												<div class="col-md-3 col-sm-3" width="400px" height="300px">
 													<div class="wrimagecard wrimagecard-topimage" >
-														<a href="<%=request.getContextPath() %>/front_end/album/albumImgShow.jsp?albumNo=${album.albumNo}"> 
-					
-																<img class="aImg" src="<%=request.getContextPath() %>/front_end/album/AlbumReader.do?albumNo=${album.albumNo}">
-
-															<div class="wrimagecard-topimage_title" style="background-color: rgba(130, 93, 9, 0.1)">
-																<h4>${album.albumTitle}
-																	<div class="pull-right badge" id="WrThemesIcons"></div>
-																</h4>
-															</div>
+														<a href="#"> 
+																<img class="aImg" src="<%=request.getContextPath() %>/front_end/album/AlbumReader.do?imgNo=${aImg.imgNo}">
 														</a>
 													</div>
 												</div>
