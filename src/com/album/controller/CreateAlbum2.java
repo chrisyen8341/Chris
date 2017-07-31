@@ -18,31 +18,31 @@ import com.albumimg.model.AlbumImgService;
 import com.member.model.Member;
 
 
-@WebServlet("/CreateAlbum")
-public class CreateAlbum extends HttpServlet {
+@WebServlet("/CreateAlbum2")
+public class CreateAlbum2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		HttpSession session=req.getSession();
+		System.out.println("=======================ddddddddddddddddddd");
 		
-		
-		Member member=(Member)session.getAttribute("member");
-		AlbumImgService aImgSvc=new AlbumImgService();
-		AlbumService albumSvc=new AlbumService();
-		List<AlbumImg> aImgs=new LinkedList<AlbumImg>();
-		
-		
-		LinkedList<Integer> imgNos=(LinkedList<Integer>)session.getAttribute("imgNos");
-		for(int i=0;i<imgNos.size();i++){
-			AlbumImg aImg=aImgSvc.getOneAlbumImg(imgNos.get(i));
-			aImgs.add(aImg);		
-		}
-		byte[] b=aImgs.get(0).getImgFile();
-		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-		albumSvc.addAlbumWithImg(member.getMemNo(),"test", currentTime, currentTime, 0, b, aImgs);
-		session.removeAttribute("imgNos");
-		
+//		Member member=(Member)session.getAttribute("member");
+//		AlbumImgService aImgSvc=new AlbumImgService();
+//		AlbumService albumSvc=new AlbumService();
+//		List<AlbumImg> aImgs=new LinkedList<AlbumImg>();
+//		
+//		
+//		LinkedList<Integer> imgNos=(LinkedList<Integer>)session.getAttribute("imgNos");
+//		for(int i=0;i<imgNos.size();i++){
+//			AlbumImg aImg=aImgSvc.getOneAlbumImg(imgNos.get(i));
+//			aImgs.add(aImg);		
+//		}
+//		byte[] b=aImgs.get(0).getImgFile();
+//		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+//		albumSvc.addAlbumWithImg(member.getMemNo(),"test", currentTime, currentTime, 0, b, aImgs);
+//		session.removeAttribute("imgNos");
+//		
 	}
 
 

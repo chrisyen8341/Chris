@@ -58,7 +58,7 @@ public class FileUpload2 extends HttpServlet {
 				if (getFileNameFromPart(part) != null && part.getContentType() != null) {
 
 					Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-					Integer imgNo=aImgSvc.addAlbumImg2(1,part.getName() , "為此找片新增點描述吧", currentTime, currentTime,
+					Integer imgNo=aImgSvc.addAlbumImg2(0,part.getName() , "為此找片新增點描述吧", currentTime, currentTime,
 							part.getName(), part.getContentType(), getPictureByteArray(part.getInputStream()));
 					imgNos=(LinkedList<Integer>)session.getAttribute("imgNos");
 					if(imgNos==null){
@@ -73,8 +73,7 @@ public class FileUpload2 extends HttpServlet {
 				}
 		} 
 
-			
-		System.out.println("123456");
+
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("result", "ok");
 		response.getWriter().write(jsonObject.toString());

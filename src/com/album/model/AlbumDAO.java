@@ -84,6 +84,59 @@ public class AlbumDAO implements AlbumDAO_interface {
 	
 	
 	@Override
+	public Integer add2(Album album) {
+		PreparedStatement pstmt=null;
+		Connection con=null;
+		Integer albumNo=null;
+		try {
+			
+			con=ds.getConnection();
+			String cols[]={"ALBUMNO"};
+			pstmt=con.prepareStatement(INSERT_STMT);
+			pstmt.setInt(1, album.getMemNo());
+			pstmt.setString(2, album.getAlbumTitle());
+			pstmt.setTimestamp(3, album.getAlbumCreatedTime());
+			pstmt.setTimestamp(4, album.getAlbumModifiedTime());
+			pstmt.setInt(5,album.getAlbumStatus());
+			Blob blob=con.createBlob();
+			blob.setBytes(1, album.getAlbumImgFile());
+			pstmt.setBlob(6, blob);
+			pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				albumNo = rs.getInt(1);
+				System.out.println("自增主鍵值= " + albumNo +"(剛新增成功的相簿編號)");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}	
+			
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return albumNo;
+		
+	}
+	
+	
+	
+	@Override
 	public void addWithImg(Album album, List<AlbumImg> aImgs) {
 		Connection con = null;
 		PreparedStatement pstmt = null;

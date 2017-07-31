@@ -30,6 +30,22 @@ public class AlbumService {
 	}
 	
 	
+	public Integer addAlbum2(Integer memNo, String albumTitle, Timestamp albumCreatedTime,
+			Timestamp albumModifiedTime, Integer albumStatus, byte[] albumImgFile) {
+
+		Album album = new Album();
+		album.setMemNo(memNo);
+		album.setAlbumTitle(albumTitle);
+		album.setAlbumCreatedTime(albumCreatedTime);
+		album.setAlbumModifiedTime(albumModifiedTime);
+		album.setAlbumStatus(albumStatus);
+		album.setAlbumImgFile(albumImgFile);
+		Integer albumNo=dao.add2(album);
+
+		return albumNo ;
+	}
+	
+	
 	public Album addAlbumWithImg(Integer memNo, String albumTitle, Timestamp albumCreatedTime,
 			Timestamp albumModifiedTime, Integer albumStatus, byte[] albumImgFile,List<AlbumImg> aImgs) {
 

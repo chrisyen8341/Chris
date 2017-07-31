@@ -8,16 +8,19 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -25,11 +28,15 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.json.simple.JSONObject;
 
+import com.album.model.AlbumService;
 import com.albumimg.model.AlbumImg;
 import com.albumimg.model.AlbumImgService;
+import com.member.model.Member;
 
-@WebServlet("/FileUpload")
-public class FileUpload extends HttpServlet {
+@WebServlet("/FileUpload3")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024
+* 1024)
+public class FileUpload3 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -39,42 +46,64 @@ public class FileUpload extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		File file1 = null;
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html");
-		AlbumImgService aImgSvc=new AlbumImgService();
+		HttpSession session=request.getSession();
+		Member member=(Member)session.getAttribute("member");
+		AlbumService albumSvc=new AlbumService();
+		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+//		Integer albumNo= albumSvc.addAlbumWithImg(member.getMemNo(), "test", "test", currentTime,currentTime, 0, , aImgs);
 
-		DiskFileItemFactory factory = new DiskFileItemFactory();
-		ServletFileUpload upload = new ServletFileUpload(factory);
-		try {
-			List<FileItem> list = upload.parseRequest(request);
-			AlbumImg aImg=new AlbumImg();
-			for (FileItem fileItem : list) {
-				System.out.println(fileItem.getName()+fileItem.getFieldName());
-				if (fileItem.getFieldName().equals("file_data")) {
-					
-					System.out.println(fileItem.getName());
-					Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-					aImgSvc.addAlbumImg(1,fileItem.getName() , "為此找片新增點描述吧", currentTime, currentTime,
-							fileItem.getName(), fileItem.getContentType(), getPictureByteArray(fileItem.getInputStream()));
-
-				}
-
-			}
-		} catch (FileUploadException e) {
-			e.printStackTrace();
-		}
+//		if(imgNos==null){
+//			List<Integer> imgNoss=new LinkedList<Integer>();
+//			imgNoss.add(imgNo);
+//			session.setAttribute("imgNos", imgNoss);
+//		}
+//		else{
+//		imgNos.add(imgNo);
+//		session.setAttribute("imgNos", imgNos);
+//		}
+//		
+//		
 		
+		
+		
+		
+		AlbumImgService aImgSvc=new AlbumImgService();
+		Collection<Part> parts = request.getParts();
+
+		LinkedList<Integer> imgNos=null;
+		
+		
+		
+			for (Part part:parts) {
+				if (getFileNameFromPart(part) != null && part.getContentType() != null) {
+
+//					Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+					Integer imgNo=aImgSvc.addAlbumImg2(0,part.getName() , "為此找片新增點描述吧", currentTime, currentTime,
+							part.getName(), part.getContentType(), getPictureByteArray(part.getInputStream()));
+					imgNos=(LinkedList<Integer>)session.getAttribute("imgNos");
+					if(imgNos==null){
+						List<Integer> imgNoss=new LinkedList<Integer>();
+						imgNoss.add(imgNo);
+						session.setAttribute("imgNos", imgNoss);
+					}
+					else{
+					imgNos.add(imgNo);
+					session.setAttribute("imgNos", imgNos);
+					}
+				}
+		} 
+			System.out.println("====================bbbbbbbbbbbbbbbbbbbb");
+
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("result", "ok");
 		response.getWriter().write(jsonObject.toString());
+			
 	}
 	
-	
-	
-	
-	
+
 	public static byte[] getPictureByteArray(InputStream fis) throws IOException {
 		BufferedImage originalImage = ImageIO.read(fis);
 		int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
@@ -96,6 +125,14 @@ public class FileUpload extends HttpServlet {
 		return resizedImage;
 	}
 	
-	
+	// 取出上傳的檔案名稱 (因為API未提供method,所以必須自行撰寫)
+	public String getFileNameFromPart(Part part) {
+		String header = part.getHeader("content-disposition");
+		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
+		if (filename.length() == 0) {
+			return null;
+		}
+		return filename;
+	}
 
 }
