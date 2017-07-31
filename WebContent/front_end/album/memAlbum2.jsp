@@ -63,19 +63,12 @@
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document" >
 				<div class="modal-content">
-        <form enctype="multipart/form-data">  
-            <input id="file-1" class="file" type="file" multiple  
-                data-min-file-count="1"> <br>  
+        <form action="<%=request.getContextPath() %>/FileUpload2" method="post" enctype="multipart/form-data">  
+		<input id="input-repl-2" name="imgs" type="file" class="file-loading" accept="image/*" multiple>
         </form>  
 				</div>
 			</div>
 		</div>
-
-
-
-
-
-
 
 
 
@@ -86,23 +79,25 @@
 		</div>
 
 
-		<script>  
-      
-    $("#file-1").fileinput({   
-        language: 'zh',  
-        uploadUrl: '<%=request.getContextPath()%>/FileUpload', 
-        allowedFileExtensions : ['xls','jpg', 'png','gif'],  
-        maxFileCount: 3, 
-       
-    slugCallback: function(filename) {  
-            return filename.replace('(', '_').replace(']', '_');  
-        }  
-    });   
-         
-     $("#file-1").on("fileuploaded", function (event, data, previewId, index) {  
-         top.location.href="<%=request.getContextPath()%>/front_end/album/FileUpload.jsp";
-							});
-		</script>
+<script>
+
+
+$("#input-repl-2").fileinput({
+    uploadUrl: "<%=request.getContextPath()%>/FileUpload2", // server upload action
+    uploadAsync: true,
+    maxFileCount: 5,
+    showBrowse: false,
+    browseOnZoneClick: true,
+    allowedFileExtensions: ["jpg", "png", "gif"]
+});
+
+$("#input-repl-2").on("fileuploaded", function (event, data, previewId, index) {  
+    top.location.href="<%=request.getContextPath()%>/CreateAlbum";
+						});
+
+
+
+</script>
 
 
 

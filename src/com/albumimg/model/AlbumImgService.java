@@ -28,6 +28,25 @@ public class AlbumImgService {
 		return albumImg ;
 	}
 
+	public Integer addAlbumImg2(Integer albumNo, String imgTitle, String imgDesc, Timestamp imgCreatedTime,
+			Timestamp imgModifiedTime, String imgFileName, String imgExtName, byte[] imgFile) {
+
+		AlbumImg albumImg = new AlbumImg();
+		albumImg.setAlbumNo(albumNo);
+		albumImg.setImgTitle(imgTitle);
+		albumImg.setImgDesc(imgDesc);
+		albumImg.setImgCreatedTime(imgCreatedTime);
+		albumImg.setImgModifiedTime(imgModifiedTime);
+		albumImg.setImgFileName(imgFileName);
+		albumImg.setImgExtName(imgExtName);
+		albumImg.setImgFile(imgFile);
+		Integer imgNo=dao.add3(albumImg);
+
+		return imgNo ;
+	}
+	
+	
+	
 	public AlbumImg updateAlbumImg(Integer imgNo, Integer albumNo, String imgTitle, String imgDesc, Timestamp imgCreatedTime,
 			Timestamp imgModifiedTime, String imgFileName, String imgExtName, byte[] imgFile) {
 

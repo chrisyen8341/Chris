@@ -3,6 +3,8 @@ package com.album.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.albumimg.model.AlbumImg;
+
 
 public class AlbumService {
 	
@@ -26,6 +28,23 @@ public class AlbumService {
 
 		return album ;
 	}
+	
+	
+	public Album addAlbumWithImg(Integer memNo, String albumTitle, Timestamp albumCreatedTime,
+			Timestamp albumModifiedTime, Integer albumStatus, byte[] albumImgFile,List<AlbumImg> aImgs) {
+
+		Album album = new Album();
+		album.setMemNo(memNo);
+		album.setAlbumTitle(albumTitle);
+		album.setAlbumCreatedTime(albumCreatedTime);
+		album.setAlbumModifiedTime(albumModifiedTime);
+		album.setAlbumStatus(albumStatus);
+		album.setAlbumImgFile(albumImgFile);
+		dao.addWithImg(album, aImgs);
+		return album ;
+	}
+	
+	
 
 	public Album updateAlbum(Integer albumNo, Integer memNo, String albumTitle, Timestamp albumCreatedTime,
 			Timestamp albumModifiedTime, Integer albumStatus, byte[] albumImgFile) {

@@ -79,6 +79,97 @@ public class AlbumImgDAO implements AlbumImgDAO_interface{
 		
 	}
 
+	
+	
+	@Override
+	public void add2(AlbumImg albumImg, Connection con) {
+		PreparedStatement pstmt = null;
+
+		try {
+			pstmt = con.prepareStatement(INSERT_STMT);
+			pstmt.setInt(1, albumImg.getAlbumNo());
+			pstmt.setString(2, albumImg.getImgTitle());
+			pstmt.setString(3, albumImg.getImgDesc());
+			pstmt.setTimestamp(4, albumImg.getImgCreatedTime());
+			pstmt.setTimestamp(5, albumImg.getImgModifiedTime());
+			pstmt.setString(6, albumImg.getImgFileName());
+			pstmt.setString(7, albumImg.getImgExtName());
+			Blob blob = con.createBlob();
+			blob.setBytes(1, albumImg.getImgFile());
+			pstmt.setBlob(8, blob);
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+	
+	
+	@Override
+	public Integer add3(AlbumImg albumImg) {
+		PreparedStatement pstmt = null;
+		Connection con = null;
+		Integer currSeq=null;
+		try {
+			con = ds.getConnection();
+			String cols[]={"IMGNO"};
+			pstmt = con.prepareStatement(INSERT_STMT,cols);
+			pstmt.setInt(1, albumImg.getAlbumNo());
+			pstmt.setString(2, albumImg.getImgTitle());
+			pstmt.setString(3, albumImg.getImgDesc());
+			pstmt.setTimestamp(4, albumImg.getImgCreatedTime());
+			pstmt.setTimestamp(5, albumImg.getImgModifiedTime());
+			pstmt.setString(6, albumImg.getImgFileName());
+			pstmt.setString(7, albumImg.getImgExtName());
+			Blob blob = con.createBlob();
+			blob.setBytes(1, albumImg.getImgFile());
+			pstmt.setBlob(8, blob);
+			pstmt.executeUpdate();
+			
+			ResultSet rs=pstmt.getGeneratedKeys();
+			
+			if (rs.next()) {
+				currSeq = rs.getInt(1);
+				System.out.println("自增主鍵值= " + currSeq +"(剛新增成功的相片編號)");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return currSeq;
+
+	}
+	
+	
+	
 	@Override
 	public void update(AlbumImg albumImg) {
 		PreparedStatement pstmt=null;
@@ -269,5 +360,7 @@ public class AlbumImgDAO implements AlbumImgDAO_interface{
 		}
 		return albumImgList;
 	}
+
+
 
 }

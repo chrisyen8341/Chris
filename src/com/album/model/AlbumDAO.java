@@ -2,6 +2,7 @@ package com.album.model;
 
 import java.sql.Blob;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +12,9 @@ import java.util.List;
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.albumimg.model.AlbumImg;
+import com.albumimg.model.AlbumImgDAO;
 
 public class AlbumDAO implements AlbumDAO_interface {
 	private static DataSource ds;
@@ -77,6 +81,88 @@ public class AlbumDAO implements AlbumDAO_interface {
 		
 	}
 
+	
+	
+	@Override
+	public void addWithImg(Album album, List<AlbumImg> aImgs) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+		
+			con = ds.getConnection();
+			
+			// 1●設定於 pstm.executeUpdate()之前
+    		con.setAutoCommit(false);
+			
+    		// 先新增會原
+			String cols[] = {"ALBUMNO"};
+			pstmt = con.prepareStatement(INSERT_STMT , cols);			
+			pstmt.setInt(1, album.getMemNo());
+			pstmt.setString(2, album.getAlbumTitle());
+			pstmt.setTimestamp(3, album.getAlbumCreatedTime());
+			pstmt.setTimestamp(4, album.getAlbumModifiedTime());
+			pstmt.setInt(5,album.getAlbumStatus());
+			pstmt.setBytes(6, album.getAlbumImgFile());
+			pstmt.executeUpdate();
+			//掘取對應的自增主鍵值
+			String next_albumno = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				next_albumno = rs.getString(1);
+				System.out.println("自增主鍵值= " + next_albumno +"(剛新增成功的相簿編號)");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+			rs.close();
+			// 再同時新增員工
+			AlbumImgDAO dao = new AlbumImgDAO();
+			for(AlbumImg aImg:aImgs){
+			aImg.setImgNo(new Integer(next_albumno)) ;
+			dao.add2(aImg,con);}
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			
+			// Handle any driver errors
+		}  catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-Album");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+	
+	
+	
+	
 	@Override
 	public void update(Album album) {
 		PreparedStatement pstmt=null;
@@ -279,22 +365,7 @@ public class AlbumDAO implements AlbumDAO_interface {
 		}
 		return albumList;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
 }

@@ -17,8 +17,7 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
 	private static final String USER = "petym";
 	private static final String PASSWORD = "123456";
-	
-	
+
 	private static final String INSERT_STMT = "INSERT INTO ALBUMIMG(IMGNO, ALBUMNO,IMGTITLE,IMGDESC,IMGCREATEDTIME,IMGMODIFIEDTIME,IMGFILENAME,"
 			+ "IMGEXTNAME,IMGFILE) VALUES(ALBUMIMG_SQ.NEXTVAL,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE_STMT = "UPDATE ALBUMIMG SET IMGNO = ?, ALBUMNO = ?, IMGTITLE = ?, "
@@ -26,18 +25,16 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 	private static final String DELETE_STMT = "DELETE FROM ALBUMIMG WHERE IMGNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM ALBUMIMG WHERE IMGNO = ?";
 	private static final String GET_ALL = "SELECT * FROM ALBUMIMG";
-	
 
-	
 	@Override
 	public void add(AlbumImg albumImg) {
-		PreparedStatement pstmt=null;
-		Connection con=null;
-		
+		PreparedStatement pstmt = null;
+		Connection con = null;
+
 		try {
 			Class.forName(DRIVER);
-			con=DriverManager.getConnection(URL,USER,PASSWORD);
-			pstmt=con.prepareStatement(INSERT_STMT);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(INSERT_STMT);
 			pstmt.setInt(1, albumImg.getAlbumNo());
 			pstmt.setString(2, albumImg.getImgTitle());
 			pstmt.setString(3, albumImg.getImgDesc());
@@ -45,7 +42,7 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 			pstmt.setTimestamp(5, albumImg.getImgModifiedTime());
 			pstmt.setString(6, albumImg.getImgFileName());
 			pstmt.setString(7, albumImg.getImgExtName());
-			Blob blob=con.createBlob();
+			Blob blob = con.createBlob();
 			blob.setBytes(1, albumImg.getImgFile());
 			pstmt.setBlob(8, blob);
 			pstmt.executeUpdate();
@@ -55,8 +52,7 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally{
+		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -72,18 +68,121 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 				}
 			}
 		}
-		
+
 	}
 
+	
+	
+	
+	
+	
+	
 	@Override
-	public void update(AlbumImg albumImg) {
-		PreparedStatement pstmt=null;
-		Connection con=null;
-		
+	public void add2(AlbumImg albumImg, Connection con) {
+		PreparedStatement pstmt = null;
+
+		try {
+			pstmt = con.prepareStatement(INSERT_STMT);
+			pstmt.setInt(1, albumImg.getAlbumNo());
+			pstmt.setString(2, albumImg.getImgTitle());
+			pstmt.setString(3, albumImg.getImgDesc());
+			pstmt.setTimestamp(4, albumImg.getImgCreatedTime());
+			pstmt.setTimestamp(5, albumImg.getImgModifiedTime());
+			pstmt.setString(6, albumImg.getImgFileName());
+			pstmt.setString(7, albumImg.getImgExtName());
+			Blob blob = con.createBlob();
+			blob.setBytes(1, albumImg.getImgFile());
+			pstmt.setBlob(8, blob);
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+
+	
+	@Override
+	public Integer add3(AlbumImg albumImg) {
+		PreparedStatement pstmt = null;
+		Connection con = null;
+		Integer currSeq=null;
 		try {
 			Class.forName(DRIVER);
-			con=DriverManager.getConnection(URL,USER,PASSWORD);
-			pstmt=con.prepareStatement(UPDATE_STMT);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			String cols[]={"IMGNO"};
+			pstmt = con.prepareStatement(INSERT_STMT,cols);
+			pstmt.setInt(1, albumImg.getAlbumNo());
+			pstmt.setString(2, albumImg.getImgTitle());
+			pstmt.setString(3, albumImg.getImgDesc());
+			pstmt.setTimestamp(4, albumImg.getImgCreatedTime());
+			pstmt.setTimestamp(5, albumImg.getImgModifiedTime());
+			pstmt.setString(6, albumImg.getImgFileName());
+			pstmt.setString(7, albumImg.getImgExtName());
+			Blob blob = con.createBlob();
+			blob.setBytes(1, albumImg.getImgFile());
+			pstmt.setBlob(8, blob);
+			pstmt.executeUpdate();
+			
+			ResultSet rs=pstmt.getGeneratedKeys();
+			
+			if (rs.next()) {
+				currSeq = rs.getInt(1);
+				System.out.println("自增主鍵值= " + currSeq +"(剛新增成功的相片編號)");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return currSeq;
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public void update(AlbumImg albumImg) {
+		PreparedStatement pstmt = null;
+		Connection con = null;
+
+		try {
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(UPDATE_STMT);
 			pstmt.setInt(1, albumImg.getImgNo());
 			pstmt.setInt(2, albumImg.getAlbumNo());
 			pstmt.setString(3, albumImg.getImgTitle());
@@ -92,7 +191,7 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 			pstmt.setTimestamp(6, albumImg.getImgModifiedTime());
 			pstmt.setString(7, albumImg.getImgFileName());
 			pstmt.setString(8, albumImg.getImgExtName());
-			Blob blob=con.createBlob();
+			Blob blob = con.createBlob();
 			blob.setBytes(1, albumImg.getImgFile());
 			pstmt.setBlob(9, blob);
 			pstmt.setInt(10, albumImg.getImgNo());
@@ -103,8 +202,7 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally{
+		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -120,18 +218,18 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
 	public void delete(int imgNo) {
-		PreparedStatement pstmt=null;
-		Connection con=null;
-		
+		PreparedStatement pstmt = null;
+		Connection con = null;
+
 		try {
 			Class.forName(DRIVER);
-			con=DriverManager.getConnection(URL,USER,PASSWORD);
-			pstmt=con.prepareStatement(DELETE_STMT);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(DELETE_STMT);
 			pstmt.setInt(1, imgNo);
 			pstmt.executeUpdate();
 
@@ -140,8 +238,7 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally{
+		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -157,24 +254,24 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
 	public AlbumImg findByPk(int imgNo) {
-		PreparedStatement pstmt=null;
-		Connection con=null;
-		ResultSet rs=null;
-		AlbumImg albumImg=null;
-		
+		PreparedStatement pstmt = null;
+		Connection con = null;
+		ResultSet rs = null;
+		AlbumImg albumImg = null;
+
 		try {
 			Class.forName(DRIVER);
-			con=DriverManager.getConnection(URL,USER,PASSWORD);
-			pstmt=con.prepareStatement(FIND_BY_PK);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(FIND_BY_PK);
 			pstmt.setInt(1, imgNo);
-			rs=pstmt.executeQuery();
-			while(rs.next()){
-				albumImg=new AlbumImg();
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				albumImg = new AlbumImg();
 				albumImg.setImgNo(rs.getInt("imgNo"));
 				albumImg.setAlbumNo(rs.getInt("albumNo"));
 				albumImg.setImgTitle(rs.getString("imgTitle"));
@@ -185,14 +282,13 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 				albumImg.setImgExtName(rs.getString("imgExtName"));
 				albumImg.setImgFile(rs.getBytes("imgFile"));
 			}
-			
+
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally{
+		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
@@ -221,17 +317,17 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 	@Override
 	public List<AlbumImg> getAll() {
 		List<AlbumImg> albumImgList = new ArrayList<>();
-		PreparedStatement pstmt=null;
-		Connection con=null;
-		ResultSet rs=null;
-		
+		PreparedStatement pstmt = null;
+		Connection con = null;
+		ResultSet rs = null;
+
 		try {
 			Class.forName(DRIVER);
-			con=DriverManager.getConnection(URL,USER,PASSWORD);
-			pstmt=con.prepareStatement(GET_ALL);
-			rs=pstmt.executeQuery();
-			while(rs.next()){
-				AlbumImg albumImg=new AlbumImg();
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(GET_ALL);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				AlbumImg albumImg = new AlbumImg();
 				albumImg.setImgNo(rs.getInt("imgNo"));
 				albumImg.setAlbumNo(rs.getInt("albumNo"));
 				albumImg.setImgTitle(rs.getString("imgTitle"));
@@ -241,16 +337,15 @@ public class AlbumImgJDBCDAO implements AlbumImgDAO_interface {
 				albumImg.setImgFileName(rs.getString("imgFileName"));
 				albumImg.setImgExtName(rs.getString("imgExtName"));
 				albumImg.setImgFile(rs.getBytes("imgFile"));
-				albumImgList.add(albumImg);		
+				albumImgList.add(albumImg);
 			}
-			
+
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally{
+		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
