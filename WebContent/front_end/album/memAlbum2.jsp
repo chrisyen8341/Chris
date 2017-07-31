@@ -91,11 +91,14 @@ $("#input-repl-2").fileinput({
     allowedFileExtensions: ["jpg", "png", "gif"]
 });
 
-$("#input-repl-2").on("fileuploaded", function (event, data, previewId, index) {  
-    top.location.href="<%=request.getContextPath()%>/CreateAlbum";
-						});
+// $("#input-repl-2").on("fileuploaded", function (event, data, previewId, index) {  
+<%--     top.location.href="<%=request.getContextPath()%>/CreateAlbum"; --%>
+// 						});
 
-
+$('#input-repl-2').on('filebatchuploadcomplete', function (event, data, previewId, index) {
+	console.log("aaaaaa");
+	top.location.href="<%=request.getContextPath()%>/CreateAlbum";
+});
 
 </script>
 

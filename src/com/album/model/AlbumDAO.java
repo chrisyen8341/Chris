@@ -119,8 +119,8 @@ public class AlbumDAO implements AlbumDAO_interface {
 			// 再同時新增員工
 			AlbumImgDAO dao = new AlbumImgDAO();
 			for(AlbumImg aImg:aImgs){
-			aImg.setImgNo(new Integer(next_albumno)) ;
-			dao.add2(aImg,con);}
+			aImg.setAlbumNo(new Integer(next_albumno)) ;
+			dao.update2(aImg,con);}
 			// 2●設定於 pstm.executeUpdate()之後
 			con.commit();
 			con.setAutoCommit(true);

@@ -9,6 +9,7 @@ public interface AlbumImgDAO_interface {
 	void add2(AlbumImg albumImg,Connection con);
 	Integer add3(AlbumImg albumImg);
 	void update(AlbumImg albumImg);
+	void update2(AlbumImg albumImg,Connection con);
 	void delete(int imgNo);
 	AlbumImg findByPk(int imgNo);
 	List<AlbumImg> getAll();

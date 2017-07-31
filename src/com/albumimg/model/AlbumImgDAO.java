@@ -216,6 +216,53 @@ public class AlbumImgDAO implements AlbumImgDAO_interface{
 		
 	}
 
+	
+	
+	
+	@Override
+	public void update2(AlbumImg albumImg,Connection con) {
+		PreparedStatement pstmt = null;
+
+		try {
+			pstmt = con.prepareStatement(UPDATE_STMT);
+			pstmt.setInt(1, albumImg.getImgNo());
+			pstmt.setInt(2, albumImg.getAlbumNo());
+			pstmt.setString(3, albumImg.getImgTitle());
+			pstmt.setString(4, albumImg.getImgDesc());
+			pstmt.setTimestamp(5, albumImg.getImgCreatedTime());
+			pstmt.setTimestamp(6, albumImg.getImgModifiedTime());
+			pstmt.setString(7, albumImg.getImgFileName());
+			pstmt.setString(8, albumImg.getImgExtName());
+			Blob blob = con.createBlob();
+			blob.setBytes(1, albumImg.getImgFile());
+			pstmt.setBlob(9, blob);
+			pstmt.setInt(10, albumImg.getImgNo());
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public void delete(int imgNo) {
 		PreparedStatement pstmt=null;
