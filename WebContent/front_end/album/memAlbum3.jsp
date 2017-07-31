@@ -91,20 +91,11 @@ $("#input-repl-2").fileinput({
     allowedFileExtensions: ["jpg", "png", "gif"]
 });
 
-// $("#input-repl-2").on("fileuploaded", function (event, data, previewId, index) {  
-<%--     top.location.href="<%=request.getContextPath()%>/CreateAlbum2"; --%>
-// 						});
-
-// $('#input-repl-2').on('filebatchuploadcomplete', function (event, data, previewId, index) {
-// 	console.log("aaaaaa");
-<%-- 	top.location.href="<%=request.getContextPath()%>/CreateAlbum"; --%>
-// });
 
 </script>
 
 
 
-		<script src="https://code.jquery.com/jquery.js"></script>
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>

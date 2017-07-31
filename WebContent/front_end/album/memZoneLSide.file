@@ -7,12 +7,7 @@
 				<div id="menu">
 					<div class="panel list-group list-color">
 						<a href="<%=request.getContextPath()+"/front_end/member/memberInfo.jsp" %>" class="list-group-item">個人資訊</a> 
-						<% 
-						MemberService memSvc=new MemberService();
-						Member member=(Member)session.getAttribute("member"); 
-						List<Pet> list=memSvc.getPetsByMemNo(member.getMemNo()); 
-						pageContext.setAttribute("list",list);
-						%>
+
 						<c:if test="${not empty list}">
 						<a href="<%=request.getContextPath()+"/front_end/pet/petInfo.jsp" %>" class="list-group-item">寵物資訊</a>
 						</c:if> 

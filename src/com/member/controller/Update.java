@@ -367,7 +367,7 @@ public class Update extends HttpServlet {
 				RequestDispatcher sendBackView = req.getRequestDispatcher("/front_end/member/login.jsp");
 				sendBackView.forward(req, res);
 			} else {
-				Member memberl = allowUser(memId, memPwd);
+				Member memberl = memSvc.getOneMemberById(memId);
 				session.setAttribute("member", memberl);
 				String location = (String) session.getAttribute("location");
 				if (location != null) {
