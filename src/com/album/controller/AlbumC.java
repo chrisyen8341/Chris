@@ -22,86 +22,66 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.json.simple.JSONObject;
+
 
 import com.album.model.AlbumService;
 import com.albumimg.model.AlbumImg;
-import com.albumimg.model.AlbumImgService;
 import com.member.model.Member;
 
-@WebServlet("/FileUpload3")
+@WebServlet("/front_end/album/Album.do")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024
 * 1024)
-public class FileUpload3 extends HttpServlet {
+public class AlbumC extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+       doPost(req,res);
 	}
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setCharacterEncoding("UTF-8");
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html");
-		HttpSession session=request.getSession();
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+		HttpSession session=req.getSession();
 		Member member=(Member)session.getAttribute("member");
 		AlbumService albumSvc=new AlbumService();
+		List<AlbumImg> aImgs=new LinkedList<AlbumImg>();
 		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-//		Integer albumNo= albumSvc.addAlbumWithImg(member.getMemNo(), "test", "test", currentTime,currentTime, 0, , aImgs);
-
-//		if(imgNos==null){
-//			List<Integer> imgNoss=new LinkedList<Integer>();
-//			imgNoss.add(imgNo);
-//			session.setAttribute("imgNos", imgNoss);
-//		}
-//		else{
-//		imgNos.add(imgNo);
-//		session.setAttribute("imgNos", imgNos);
-//		}
-//		
-//		
 		
 		
+		String albumTitle=req.getParameter("albumTitle");
 		
-		
-		AlbumImgService aImgSvc=new AlbumImgService();
-		Collection<Part> parts = request.getParts();
-
-		LinkedList<Integer> imgNos=null;
-		
-		
-		
-			for (Part part:parts) {
-				if (getFileNameFromPart(part) != null && part.getContentType() != null) {
-
-//					Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-					Integer imgNo=aImgSvc.addAlbumImg2(0,part.getName() , "為此找片新增點描述吧", currentTime, currentTime,
-							part.getName(), part.getContentType(), getPictureByteArray(part.getInputStream()));
-					imgNos=(LinkedList<Integer>)session.getAttribute("imgNos");
-					if(imgNos==null){
-						List<Integer> imgNoss=new LinkedList<Integer>();
-						imgNoss.add(imgNo);
-						session.setAttribute("imgNos", imgNoss);
-					}
-					else{
-					imgNos.add(imgNo);
-					session.setAttribute("imgNos", imgNos);
-					}
+		Collection<Part> parts = req.getParts();
+		for (Part part:parts) {
+				if (getFileNameFromPart(part) != null && part.getContentType() != null) {	
+					AlbumImg aImg=new AlbumImg();
+					aImg.setImgTitle("test");
+					aImg.setImgDesc("為此找片新增點描述吧");
+					aImg.setImgCreatedTime(currentTime);
+					aImg.setImgModifiedTime(currentTime);
+					aImg.setImgFileName(getFileNameFromPart(part));
+					aImg.setImgExtName(part.getContentType());
+					aImg.setImgFile(getPictureByteArray(part.getInputStream()));
+					aImgs.add(aImg);
 				}
 		} 
-			System.out.println("====================bbbbbbbbbbbbbbbbbbbb");
-
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("result", "ok");
-		response.getWriter().write(jsonObject.toString());
 			
+
+			albumSvc.addAlbumWithImg(member.getMemNo(),albumTitle, currentTime, currentTime, 0, aImgs.get(1).getImgFile(), aImgs);
+
+			res.sendRedirect(req.getContextPath()+"/front_end/album/albumShow.jsp");
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 	public static byte[] getPictureByteArray(InputStream fis) throws IOException {

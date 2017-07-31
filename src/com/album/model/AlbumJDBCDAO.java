@@ -31,7 +31,7 @@ public class AlbumJDBCDAO implements AlbumDAO_interface {
 	private static final String DELETE_ALBUM = "DELETE FROM ALBUM WHERE ALBUMNO = ?";
 	private static final String DELETE_ALBUMIMG = "DELETE FROM ALBUMIMG WHERE ALBUMNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM ALBUM WHERE ALBUMNO = ?";
-	private static final String FIND_ALBUMIMGS_BY_MEMNO = "SELECT * FROM ALBUMIMG WHERE ALBUMNO = ? AND ORDER BY IMGNO DESC";
+	private static final String FIND_ALBUMIMGS_BY_MEMNO = "SELECT * FROM ALBUMIMG WHERE ALBUMNO = ? ORDER BY IMGNO DESC";
 	private static final String GET_ALL = "SELECT * FROM ALBUM";
 
 	
@@ -448,6 +448,7 @@ public class AlbumJDBCDAO implements AlbumDAO_interface {
 			con=DriverManager.getConnection(URL,USER,PASSWORD);
 			pstmt=con.prepareStatement(FIND_ALBUMIMGS_BY_MEMNO);
 			pstmt.setInt(1,albumNo);
+			rs=pstmt.executeQuery();
 			while(rs.next()){
 				AlbumImg albumImg = new AlbumImg();
 				albumImg.setImgNo(rs.getInt("imgNo"));

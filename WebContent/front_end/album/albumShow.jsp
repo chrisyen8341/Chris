@@ -2,16 +2,14 @@
 	pageEncoding="BIG5"%>
 <%@ page import="com.member.model.*"%>
 <%@ page import="com.album.model.*"%>
-<%@ page import="com.albumimg.model.*"%>
 <%@ page import="java.util.HashMap"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	Integer albumNo=Integer.parseInt(request.getParameter("albumNo"));
 	AlbumService albumSvc = new AlbumService();
 	MemberService memSvc = new MemberService();
 	Member member = (Member) session.getAttribute("member");
-	Set<AlbumImg> aImgsSet = albumSvc.getAlbumImgs(albumNo);
-	pageContext.setAttribute("aImgsSet", aImgsSet);
+	Set<Album> albumSet = memSvc.getAlbumsByMemNo(member.getMemNo());
+	pageContext.setAttribute("albumSet", albumSet);
 %>
 
 <html lang="">
@@ -108,13 +106,20 @@ max-width: 100%;
 								</div>
 
 								<div class="row" style="margin-top:30px">
-									<c:if test="${not empty aImgsSet}">
+									<c:if test="${not empty albumSet}">
 										<ul>
-											<c:forEach var="aImg" items="${aImgsSet}">
+											<c:forEach var="album" items="${albumSet}">
 												<div class="col-md-3 col-sm-3" width="400px" height="300px">
 													<div class="wrimagecard wrimagecard-topimage" >
-														<a href="#"> 
-																<img class="aImg" src="<%=request.getContextPath() %>/front_end/album/AlbumReader.do?imgNo=${aImg.imgNo}">
+														<a href="<%=request.getContextPath() %>/front_end/album/aImgShow.jsp?albumNo=${album.albumNo}"> 
+					
+																<img class="aImg" src="<%=request.getContextPath() %>/front_end/album/AlbumReader.do?albumNo=${album.albumNo}">
+
+															<div class="wrimagecard-topimage_title" style="background-color: rgba(130, 93, 9, 0.1)">
+																<h4>${album.albumTitle}
+																	<div class="pull-right badge" id="WrThemesIcons"></div>
+																</h4>
+															</div>
 														</a>
 													</div>
 												</div>
@@ -137,7 +142,7 @@ max-width: 100%;
 
 
 
-				<!-- Disable MODAL -->
+				<!-- MODAL -->
 				<div class="modal fade" id="addAlbum" tabindex="-1" role="dialog"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog" role="document">
@@ -152,7 +157,7 @@ max-width: 100%;
 
 
 
-							<form action="<%=request.getContextPath()%>/FileUpload4"
+							<form action="<%=request.getContextPath()%>/front_end/album/Album.do"
 								method="post" enctype="multipart/form-data">
 								<div class="form-group">
 									<div class="cols-sm-10">

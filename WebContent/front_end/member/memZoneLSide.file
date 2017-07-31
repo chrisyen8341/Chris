@@ -21,6 +21,6 @@
 						</c:if> 
 						<a href="<%=request.getContextPath()+"/front_end/member/memPwdChange.jsp" %>" class="list-group-item">變更密碼</a> 
 						<a href="<%=request.getContextPath()+"/front_end/member/searchOtherMem.jsp" %>" class="list-group-item">搜尋會員</a> 
-						<a href="<%=request.getContextPath()+"/front_end/album/memAlbum2.jsp" %>" class="list-group-item">相簿管理</a>
+						<a href="<%=request.getContextPath()+"/front_end/album/albumShow.jsp" %>" class="list-group-item">相簿管理</a>
 					</div>
 				</div>
