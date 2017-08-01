@@ -159,6 +159,7 @@ max-width: 100%;
 
 							<form action="<%=request.getContextPath()%>/front_end/album/Album.do"
 								method="post" enctype="multipart/form-data">
+								<input type="hidden" name="action" value="createAlbum">
 								<div class="form-group">
 									<div class="cols-sm-10">
 										<div class="input-group">

@@ -154,6 +154,7 @@ max-width: 100%;
 
 							<form action="<%=request.getContextPath()%>/FileUpload4"
 								method="post" enctype="multipart/form-data">
+								<input type="hidden" name="action" value="createAImg">
 								<div class="form-group">
 									<div class="cols-sm-10">
 										<div class="input-group">
@@ -181,12 +182,14 @@ max-width: 100%;
 
 
 		<script>
-			$(document).on('ready', function() {
-				$("#input-20").fileinput({
-					maxFileCount : 10,
-					allowedFileTypes : [ "image", "video" ]
-				});
-			});
+		$("#input-20").fileinput({
+		    uploadUrl: "<%=request.getContextPath()%>/front_end/album/AImgUpload.do?albumNo=<%=albumNo%>", // server upload action
+		    uploadAsync: true,
+		    maxFileCount: 10,
+		    showBrowse: false,
+		    browseOnZoneClick: true,
+		    allowedFileExtensions: ["jpg", "png", "gif"]
+		});
 		</script>
 
 
