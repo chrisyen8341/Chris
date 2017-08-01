@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -21,8 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.album.model.Album;
 import com.album.model.AlbumService;
 import com.albumimg.model.AlbumImg;
+import com.albumimg.model.AlbumImgService;
 import com.member.model.Member;
 
 @WebServlet("/front_end/album/Album.do")
@@ -40,11 +43,12 @@ public class AlbumC extends HttpServlet {
 		HttpSession session = req.getSession();
 		Member member = (Member) session.getAttribute("member");
 		AlbumService albumSvc = new AlbumService();
+		AlbumImgService aImgSvc=new AlbumImgService();
 		String action = req.getParameter("action");
 
 		
 
-		//創造相簿
+		//新增相簿
 		if ("createAlbum".equals(action)) {
 			List<AlbumImg> aImgs = new LinkedList<AlbumImg>();
 			Timestamp currentTime = new Timestamp(System.currentTimeMillis());
@@ -55,7 +59,7 @@ public class AlbumC extends HttpServlet {
 			for (Part part : parts) {
 				if (getFileNameFromPart(part) != null && part.getContentType() != null) {
 					AlbumImg aImg = new AlbumImg();
-					aImg.setImgTitle("test");
+					aImg.setImgTitle("為此找片新增點描述吧");
 					aImg.setImgDesc("為此找片新增點描述吧");
 					aImg.setImgCreatedTime(currentTime);
 					aImg.setImgModifiedTime(currentTime);
@@ -72,6 +76,126 @@ public class AlbumC extends HttpServlet {
 			res.sendRedirect(req.getContextPath() + "/front_end/album/albumShow.jsp");
 
 		}
+		
+		
+		
+		
+		//修改封面
+		if ("changeCover".equals(action)) {
+			
+			/****************************** 1.接收請求參數 - 輸入格式的錯誤處理**********************/
+			Integer albumNo=null;
+			try{
+				albumNo=Integer.parseInt(req.getParameter("albumNo"));
+			}
+			catch(Exception e){
+				////代寫////
+			}
+			
+			Integer imgNo=null;
+			try{
+				imgNo=Integer.parseInt(req.getParameter("imgNo"));
+			}
+			catch(Exception e){
+				//////代寫///////
+			}
+			
+			
+			
+			/**************************** 2.修改完成,準備轉交(Send the Success view)*************/
+	
+
+			AlbumImg aImg=aImgSvc.getOneAlbumImg(imgNo);
+			Album album=albumSvc.getOneAlbum(albumNo);
+			Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+			albumSvc.updateAlbum(albumNo, album.getMemNo(), album.getAlbumTitle(), album.getAlbumCreatedTime(), currentTime, 0, aImg.getImgFile());
+	
+			
+			
+			/**************************** 3.修改完成,準備轉交(Send the Success view)*************/
+			RequestDispatcher successView = req.getRequestDispatcher("/front_end/album/albumShow.jsp?albumNo="+albumNo);
+
+			successView.forward(req, res);
+			
+		}
+		
+		
+		//刪除封面
+		if ("deleteImg".equals(action)) {
+			
+			/****************************** 1.接收請求參數 - 輸入格式的錯誤處理**********************/
+			Integer albumNo=null;
+			try{
+				albumNo=Integer.parseInt(req.getParameter("albumNo"));
+			}
+			catch(Exception e){
+				////代寫////
+			}
+			
+			Integer imgNo=null;
+			try{
+				imgNo=Integer.parseInt(req.getParameter("imgNo"));
+			}
+			catch(Exception e){
+				//////代寫///////
+			}
+			
+			
+			
+			/**************************** 2.修改完成,準備轉交(Send the Success view)*************/
+	
+			aImgSvc.deleteAlbumImg(imgNo);
+
+	
+			
+			
+			/**************************** 3.修改完成,準備轉交(Send the Success view)*************/
+			RequestDispatcher successView = req.getRequestDispatcher("/front_end/album/aImgShow.jsp?albumNo="+albumNo);
+
+			successView.forward(req, res);
+			
+		}
+		
+		//編輯相片
+		if ("changeCover".equals(action)) {
+			
+			/****************************** 1.接收請求參數 - 輸入格式的錯誤處理**********************/
+			Integer albumNo=null;
+			try{
+				albumNo=Integer.parseInt(req.getParameter("albumNo"));
+			}
+			catch(Exception e){
+				////代寫////
+			}
+			
+			Integer imgNo=null;
+			try{
+				imgNo=Integer.parseInt(req.getParameter("imgNo"));
+			}
+			catch(Exception e){
+				//////代寫///////
+			}
+			
+			
+			
+			/**************************** 2.修改完成,準備轉交(Send the Success view)*************/
+	
+
+			AlbumImg aImg=aImgSvc.getOneAlbumImg(imgNo);
+			Album album=albumSvc.getOneAlbum(albumNo);
+			Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+			albumSvc.updateAlbum(albumNo, album.getMemNo(), album.getAlbumTitle(), album.getAlbumCreatedTime(), currentTime, 0, aImg.getImgFile());
+	
+			
+			
+			/**************************** 3.修改完成,準備轉交(Send the Success view)*************/
+			RequestDispatcher successView = req.getRequestDispatcher("/front_end/album/albumShow.jsp?albumNo="+albumNo);
+
+			successView.forward(req, res);
+			
+		}
+		
+		
 
 	}
 

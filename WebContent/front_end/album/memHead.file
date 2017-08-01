@@ -15,7 +15,7 @@
 <!-- Custom Fonts -->
 <link href="<%=request.getContextPath() %>/front_end/font-awesome/css/font-awesome.css" rel="stylesheet"
 	type="text/css">
-<link href="<%=request.getContextPath() %>/front_end/css/datev.css" rel="stylesheet">
+<!--<link href="<%=request.getContextPath() %>/front_end/css/datev.css" rel="stylesheet">--!>
 <link href="<%=request.getContextPath() %>/front_end/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="<%=request.getContextPath() %>/front_end/js/fileinput.min.js"></script>

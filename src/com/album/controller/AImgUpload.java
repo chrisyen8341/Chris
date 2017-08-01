@@ -44,7 +44,7 @@ public class AImgUpload extends HttpServlet {
 		for (Part part : parts) {
 			if (getFileNameFromPart(part) != null && part.getContentType() != null) {
 
-				aImgSvc.addAlbumImg(albumNo, part.getName(), "為此找片新增點描述吧", currentTime, currentTime, part.getName(),
+				aImgSvc.addAlbumImg(albumNo, getFileNameFromPart(part), "為此找片新增點描述吧", currentTime, currentTime, part.getName(),
 						part.getContentType(), getPictureByteArray(part.getInputStream()));
 
 			}

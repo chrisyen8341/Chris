@@ -71,6 +71,11 @@ max-width: 100%;
 
 }
 
+
+
+.panel-body{
+padding:20px;
+}
 </style>
 
 </head>
@@ -98,14 +103,14 @@ max-width: 100%;
 							</div>
 							<div class="panel-body">
 
-								<div class="row text-right">
+								<div class="row text-right" style="margin-right:10px;">
 										<button type="button" class="btn btn-primary"
 											data-toggle="modal" data-target="#addAlbum">新增相簿</button>
 										<button type="button" class="btn btn-primary"
 											data-toggle="modal" data-target="#addAlbum">編輯相簿</button>
 								</div>
 
-								<div class="row" style="margin-top:30px">
+								<div class="row" style="margin-top:30px;max-width: 100%;">
 									<c:if test="${not empty albumSet}">
 										<ul>
 											<c:forEach var="album" items="${albumSet}">
