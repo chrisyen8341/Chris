@@ -223,33 +223,20 @@ a.wrimagecard:hover, .wrimagecard-topimage:hover {
 										<ul>
 
 											<c:forEach var="album" items="${albumSet}" varStatus="s">
-	
-												
+
+
 												<div class="col-md-3 col-sm-3 col-xs-6">
 													<div class="image-container gallery">
-														<%-- 														<c:if test="${contVO.vdo != null}"> --%>
-														<!-- 															<a -->
-														<%-- 																href="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }" --%>
-														<!-- 																data-caption="Image caption" target="_blank"> <video -->
-														<!-- 																	width="400" controls -->
-														<!-- 																	class="img-responsive img-thumbnail"> -->
-														<!-- 																	<source -->
-														<%-- 																		src="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }" --%>
-														<!-- 																		type="video/mp4"> -->
-														<!-- 																	您的瀏覽器不支援此撥放程式 -->
-														<!-- 																</video> -->
-														<!-- 															</a> -->
-														<%-- 														</c:if> --%>
 
 
 														<div class="wrimagecard wrimagecard-topimage">
 															<a
 																href="<%=request.getContextPath() %>/front_end/album/aImgShow.jsp?albumNo=${album.albumNo}">
 
-																<img class="aImg"
-																src="<%=request.getContextPath() %>/front_end/album/AlbumReader.do?albumNo=${album.albumNo}">
+																<img class="aImg" src="<%=request.getContextPath() %>/front_end/album/AlbumReader.do?albumNo=${album.albumNo}">
 
-																<div class="wrimagecard-topimage_title" style="background-color: rgba(130, 93, 9, 0.1)">
+																<div class="wrimagecard-topimage_title"
+																	style="background-color: rgba(130, 93, 9, 0.1)">
 																	<h4>${album.albumTitle}
 																		<div class="pull-right badge" id="WrThemesIcons"></div>
 																	</h4>
@@ -278,7 +265,7 @@ a.wrimagecard:hover, .wrimagecard-topimage:hover {
 																		data-toggle="modal"
 																		data-target="#updateModal${s.index}">編輯相簿</a>
 																</form>
-																
+
 
 																<form id="delete${s.index}"
 																	action="<%=request.getContextPath()%>/front_end/album/Album.do"
@@ -315,8 +302,9 @@ a.wrimagecard:hover, .wrimagecard-topimage:hover {
 																	action="<%=request.getContextPath()%>/front_end/album/Album.do"
 																	method="post">
 																	<input type='hidden' name='action' value='updateAlbum'>
-																	<input type='hidden' name='albumNo' value='${album.albumNo}'> 
-																	<input type="text" class="form-control" name="albumTitle" id="albumTitle"
+																	<input type='hidden' name='albumNo'
+																		value='${album.albumNo}'> <input type="text"
+																		class="form-control" name="albumTitle" id="albumTitle"
 																		value="${album.albumTitle}" placeholder="為您的相簿輸入標題吧!" />
 																</form>
 															</div>
@@ -414,7 +402,7 @@ a.wrimagecard:hover, .wrimagecard-topimage:hover {
 											<span class="input-group-addon"><i
 												class="fa fa-user fa" aria-hidden="true"></i></span> <input
 												type="text" class="form-control" name="albumTitle"
-												id="albumTitle" placeholder="請輸入相簿名稱" required/>
+												id="albumTitle" placeholder="請輸入相簿名稱" required />
 										</div>
 									</div>
 								</div>

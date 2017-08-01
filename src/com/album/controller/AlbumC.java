@@ -164,7 +164,7 @@ public class AlbumC extends HttpServlet {
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-			
+			System.out.println("222222222222222===================");
 			/****************************** 1.接收請求參數 - 輸入格式的錯誤處理**********************/
 			Integer albumNo=null;
 			try{

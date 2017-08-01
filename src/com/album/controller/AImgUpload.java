@@ -42,7 +42,16 @@ public class AImgUpload extends HttpServlet {
 
 		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 		for (Part part : parts) {
-			if (getFileNameFromPart(part) != null && part.getContentType() != null) {
+			
+			
+			//影音檔上傳
+			if(getFileNameFromPart(part) != null && part.getContentType() != null&&part.getContentType().startsWith("video")){
+				aImgSvc.addAlbumImg(albumNo, getFileNameFromPart(part), "為此找片新增點描述吧", currentTime, currentTime, part.getName(),
+						part.getContentType(), getVideoByteArray(part.getInputStream()));
+			}
+			
+
+			if (getFileNameFromPart(part) != null && part.getContentType() != null&&!part.getContentType().startsWith("video")) {
 
 				aImgSvc.addAlbumImg(albumNo, getFileNameFromPart(part), "為此找片新增點描述吧", currentTime, currentTime, part.getName(),
 						part.getContentType(), getPictureByteArray(part.getInputStream()));
@@ -63,9 +72,19 @@ public class AImgUpload extends HttpServlet {
 	
 	
 	
-	
-	
-	
+
+	public static byte[] getVideoByteArray(InputStream fis) throws IOException {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		byte[] buffer = new byte[8192];
+		int i;
+		while ((i = fis.read(buffer)) != -1) {
+			baos.write(buffer, 0, i);
+		}
+		baos.close();
+		fis.close();
+
+		return baos.toByteArray();
+	}
 	
 	
 	
