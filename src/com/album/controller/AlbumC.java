@@ -8,8 +8,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
@@ -157,7 +159,11 @@ public class AlbumC extends HttpServlet {
 		}
 		
 		//編輯相片
-		if ("changeCover".equals(action)) {
+		if ("updateImg".equals(action)) {
+			
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
 			
 			/****************************** 1.接收請求參數 - 輸入格式的錯誤處理**********************/
 			Integer albumNo=null;
@@ -165,7 +171,7 @@ public class AlbumC extends HttpServlet {
 				albumNo=Integer.parseInt(req.getParameter("albumNo"));
 			}
 			catch(Exception e){
-				////代寫////
+				errorMsgs.put("imgNo", "相簿代號錯誤");
 			}
 			
 			Integer imgNo=null;
@@ -173,23 +179,37 @@ public class AlbumC extends HttpServlet {
 				imgNo=Integer.parseInt(req.getParameter("imgNo"));
 			}
 			catch(Exception e){
-				//////代寫///////
+				errorMsgs.put("imgNo", "照片代號錯誤");
 			}
 			
+			//好像也可以讓他為空 沒關係
+			String imgTitle=req.getParameter("imgTitle");
+			if (imgTitle == null || imgTitle.trim().isEmpty()) {
+				errorMsgs.put("imgTitle", imgTitle);
+			}
 			
+			//好像也可以讓他為空 沒關係
+			String imgDesc=req.getParameter("imgDesc");
+			if (imgDesc == null || imgDesc.trim().isEmpty()) {
+				errorMsgs.put("imgDesc", imgDesc);
+			}
+			
+
+			//我還沒做錯誤處理 map還沒送回去
+
 			
 			/**************************** 2.修改完成,準備轉交(Send the Success view)*************/
 	
 
 			AlbumImg aImg=aImgSvc.getOneAlbumImg(imgNo);
-			Album album=albumSvc.getOneAlbum(albumNo);
 			Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-			albumSvc.updateAlbum(albumNo, album.getMemNo(), album.getAlbumTitle(), album.getAlbumCreatedTime(), currentTime, 0, aImg.getImgFile());
-	
-			
+			aImgSvc.updateAlbumImg(imgNo, albumNo, imgTitle, imgDesc, aImg.getImgCreatedTime(), currentTime, aImg.getImgFileName(), aImg.getImgExtName(), aImg.getImgFile());
+
+
+			System.out.println("=====================111111111111111======================");
 			
 			/**************************** 3.修改完成,準備轉交(Send the Success view)*************/
-			RequestDispatcher successView = req.getRequestDispatcher("/front_end/album/albumShow.jsp?albumNo="+albumNo);
+			RequestDispatcher successView = req.getRequestDispatcher("/front_end/album/aImgShow.jsp?albumNo="+albumNo);
 
 			successView.forward(req, res);
 			

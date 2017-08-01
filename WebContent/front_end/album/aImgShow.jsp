@@ -312,7 +312,7 @@
 																<h4 class="modal-title">編輯相片</h4>
 															</div>
 															<div class="modal-body">
-																<form id="update${s.index}" method="post" action="<%=request.getContextPath()%>/front_end/album/Album.do" method="post">
+																<form id="updateImg${s.index}" method="post" action="<%=request.getContextPath()%>/front_end/album/Album.do" method="post">
 																	<input type='hidden' name='action' value='updateImg'>
 																	<input type='hidden' name='imgNo' value='${aImg.imgNo}'>
 																	<input type='hidden' name='albumNo' value='${aImg.albumNo}'>
@@ -325,7 +325,7 @@
 																	data-dismiss="modal">取消</button>
 																<button type="button" class="btn btn-danger"
 																	data-dismiss="modal" id='deletebtn'
-																	onclick="document.getElementById('update${s.index}').submit();">送出</button>
+																	onclick="document.getElementById('updateImg${s.index}').submit();">送出</button>
 
 															</div>
 															
