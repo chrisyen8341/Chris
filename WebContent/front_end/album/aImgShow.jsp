@@ -253,7 +253,7 @@
 
 
 
-														<!--新增  修改 編輯 -->
+														<!--新增  修改 編輯dropdown -->
 														<div class="overlap dropdown">
 															<button class="btn btn-default btn-xs" type="submit"
 																class='dropbtn'>
@@ -273,7 +273,7 @@
 																</form>
 																
 																
-																<form id="delete${s.index}" action="<%=request.getContextPath()%>/front_end/album/Album.do"
+																<form id="updateImg${s.index}" action="<%=request.getContextPath()%>/front_end/album/Album.do"
 																	method="post">
 																	<input type='hidden' name='action' value='updateImg'>
 																	<input type='hidden' name='imgNo' value='${aImg.imgNo}'>
@@ -318,6 +318,8 @@
 																	<input type='hidden' name='albumNo' value='${aImg.albumNo}'>
 																	<input type="text" class="form-control" name="imgTitle" id="imgTitle" value="${aImg.imgTitle}" placeholder="為您的照片輸入標題吧!" />
 																	<textarea class="form-control" id="imgDesc" name="imgDesc" placeholder="為您的照片輸入點故事吧!">${aImg.imgDesc}</textarea>
+																	<img class="img-responsive" src="<%=request.getContextPath() %>/front_end/album/AImgReader.do?imgNo=${aImg.imgNo}"
+																	alt="The awesome description">
 																</form>
 															</div>
 															<div class="modal-footer">
@@ -345,7 +347,7 @@
 
 
 												<!-- 刪除Modal-->
-												<div class="modal fade" id="deleteModal${s.count}"
+												<div class="modal fade" id="deleteModal${s.index}"
 													role="dialog">
 													<div class="modal-dialog">
 
@@ -390,6 +392,7 @@
 																	<span aria-hidden="true">×</span><span class="sr-only">Close</span>
 																</button>
 																<h4 class="modal-title" id="myModalLabel">${aImg.imgTitle}</h4>
+																<h5 class="modal-title" id="myModalLabel">${aImg.imgDesc}</h4>
 															</div>
 															<div class="modal-body">
 																<img class="img-responsive"

@@ -142,12 +142,12 @@ public class AlbumC extends HttpServlet {
 				//////代寫///////
 			}
 			
-			
+			System.out.print(imgNo);
 			
 			/**************************** 2.修改完成,準備轉交(Send the Success view)*************/
 	
 			aImgSvc.deleteAlbumImg(imgNo);
-
+			System.out.print("===========23165468435============");
 	
 			
 			
@@ -214,6 +214,98 @@ public class AlbumC extends HttpServlet {
 			successView.forward(req, res);
 			
 		}
+		
+		
+		
+		
+		
+		//編輯相簿
+		if ("updateAlbum".equals(action)) {
+			
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			
+			/****************************** 1.接收請求參數 - 輸入格式的錯誤處理**********************/
+			Integer albumNo=null;
+			try{
+				albumNo=Integer.parseInt(req.getParameter("albumNo"));
+			}
+			catch(Exception e){
+				errorMsgs.put("imgNo", "相簿代號錯誤");
+			}
+			
+			
+			//好像也可以讓他為空 沒關係
+			String albumTitle=req.getParameter("albumTitle");
+			if (albumTitle == null || albumTitle.trim().isEmpty()) {
+				errorMsgs.put("imgTitle", albumTitle);
+			}
+			
+
+
+			//我還沒做錯誤處理 map還沒送回去
+
+			
+			/**************************** 2.修改完成,準備轉交(Send the Success view)*************/
+	
+
+			Album album=albumSvc.getOneAlbum(albumNo);
+			Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+			albumSvc.updateAlbum(albumNo, album.getMemNo(), albumTitle, album.getAlbumCreatedTime(),currentTime,0, album.getAlbumImgFile());
+			
+
+
+			
+			/**************************** 3.修改完成,準備轉交(Send the Success view)*************/
+			RequestDispatcher successView = req.getRequestDispatcher("/front_end/album/albumShow.jsp");
+
+			successView.forward(req, res);
+			
+		}
+		
+		
+		//刪除相簿
+		if ("deleteAlbum".equals(action)) {
+			
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			
+			/****************************** 1.接收請求參數 - 輸入格式的錯誤處理**********************/
+			Integer albumNo=null;
+			try{
+				albumNo=Integer.parseInt(req.getParameter("albumNo"));
+			}
+			catch(Exception e){
+				errorMsgs.put("imgNo", "相簿代號錯誤");
+			}
+			
+			
+
+
+			//我還沒做錯誤處理 map還沒送回去
+
+			
+			/**************************** 2.修改完成,準備轉交(Send the Success view)*************/
+	
+
+			Album album=albumSvc.getOneAlbum(albumNo);
+			Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+			albumSvc.updateAlbum(albumNo, album.getMemNo(), album.getAlbumTitle(), album.getAlbumCreatedTime(),currentTime,1, album.getAlbumImgFile());
+			
+
+
+			
+			/**************************** 3.修改完成,準備轉交(Send the Success view)*************/
+			RequestDispatcher successView = req.getRequestDispatcher("/front_end/album/albumShow.jsp");
+
+			successView.forward(req, res);
+			
+		}
+		
+		
+		
 		
 		
 
