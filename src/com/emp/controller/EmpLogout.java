@@ -26,6 +26,7 @@ public class EmpLogout extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		HttpSession session=req.getSession();
 		session.removeAttribute("emp");
+		session.removeAttribute("auth");
 		res.sendRedirect(req.getContextPath()+"/back_end/index_backend.jsp");
 	}
 

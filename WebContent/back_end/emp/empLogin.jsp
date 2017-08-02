@@ -6,7 +6,7 @@
 <%
 	Emp emp = (Emp) request.getAttribute("emp");
 	pageContext.setAttribute("emp", emp);
-
+	
 %>
 <head>
 <meta charset="utf-8">

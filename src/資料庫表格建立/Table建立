@@ -97,7 +97,7 @@ memLocStatus NUMBER(2) NOT NULL
 
 Create Sequence MEMNO_SQ Increment By 1 Start With 5001 Nocache Nocycle;
 
-
+　
 	Insert Into Member Values (5000,'0','0','0','0',0,'M134129471',To_Date('1991-11-17','YYYY-MM-DD'),'0','0','0'
 ,EMPTY_BLOB(),0,0,0,'',0,0,1,0.00,0.00,TO_DATE('19500101 18:30:20','YYYYMMDD HH24:MI:SS'),0);
 
@@ -235,13 +235,15 @@ AuthName VARCHAR2(100));
 
 Create Sequence AuthNO_Sq Increment By 1 Start With 4001 Nocache Nocycle;
 
-Insert Into Auth Values(AuthNo_Sq.Nextval,'商城商品上架審核');
-Insert Into Auth Values(AuthNo_Sq.Nextval,'約會商品上架審核');
-Insert Into Auth Values(AuthNo_Sq.Nextval,'活動發起審核');
-Insert Into Auth Values(AuthNo_Sq.Nextval,'餐廳會員註冊審核');
-Insert Into Auth Values(AuthNo_Sq.Nextval,'約會商品檢舉審核');
-insert into auth values(AuthNo_sq.nextval,'約會商品申訴審核');
-insert into auth values(AuthNo_sq.nextval,'新增員工權現');
+Insert Into Auth Values(AuthNo_Sq.Nextval,'前端看板管理');
+Insert Into Auth Values(AuthNo_Sq.Nextval,'會員帳號管理');
+Insert Into Auth Values(AuthNo_Sq.Nextval,'商城管理');
+Insert Into Auth Values(AuthNo_Sq.Nextval,'檢舉申訴管理');
+Insert Into Auth Values(AuthNo_Sq.Nextval,'權限管理');
+insert into auth values(AuthNo_sq.nextval,'活動管理');
+insert into auth values(AuthNo_sq.nextval,'餐廳管理');
+insert into auth values(AuthNo_sq.nextval,'站內信管理');
+
 
 Create Table Empauth(
 Empno Number(10),

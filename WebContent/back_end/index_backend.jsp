@@ -1,6 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="BIG5"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.emp.model.*"%>
+<%@ page import="java.util.*"%>
+
+
+<%
+	Emp emp = (Emp) session.getAttribute("emp");
+	pageContext.setAttribute("emp", emp);
+	List<Integer> auth = (List<Integer>) session.getAttribute("auth");
+	pageContext.setAttribute("auth", auth);
+%>
+
+
 <!DOCTYPE html>
 <html lang="">
 
@@ -54,10 +66,12 @@
 				<div class="nav collapse navbar-collapse navbar-right" id="login">
 					<ul class="nav navbar-nav">
 						<c:if test="${emp!=null}">
-							<li><a href="<%=request.getContextPath() %>/back_end/emp/EmpLogout.do">管理員登出</a></li>
+							<li><a
+								href="<%=request.getContextPath()%>/back_end/emp/EmpLogout.do">管理員登出</a></li>
 						</c:if>
 						<c:if test="${emp==null}">
-							<li><a href="<%=request.getContextPath() %>/back_end/emp/empLogin.jsp">管理員入</a></li>
+							<li><a
+								href="<%=request.getContextPath()%>/back_end/emp/empLogin.jsp">管理員入</a></li>
 						</c:if>
 					</ul>
 				</div>
@@ -76,59 +90,94 @@
 				<div id="menu">
 					<div class="panel list-group list-color">
 
-						<a href="#" class="list-group-item">後端首頁</a> <a href="#"
-							class="list-group-item" data-toggle="collapse" data-target="#sm1"
-							data-parent="#menu">前端看板管理 <span
-							class="glyphicon glyphicon-triangle-bottom pull-right"></span></a>
-						<div id="sm1" class="sublinks collapse">
-							<a href="#" class="list-group-item small"> 幻燈片管理</a> <a href="#"
-								class="list-group-item small"> 最新消息管理</a>
-						</div>
-
-
-						<a href="#" class="list-group-item" data-toggle="collapse"
-							data-target="#sm2" data-parent="#menu">會員帳號管理 <span
-							class="glyphicon glyphicon-triangle-bottom pull-right"></span></a>
-						<div id="sm2" class="sublinks collapse">
-							<a href="#" class="list-group-item small"> 一般會員管理</a> <a href="#"
-								class="list-group-item small"> 餐廳會員管理</a>
-						</div>
-
-
-						<a href="#" class="list-group-item" data-toggle="collapse"
-							data-target="#sm3" data-parent="#menu">商城管理 <span
-							class="glyphicon glyphicon-triangle-bottom pull-right"></span></a>
-						<div id="sm3" class="sublinks collapse">
-							<a href="#" class="list-group-item small"> 商品管理</a> <a href="#"
-								class="list-group-item small"> 訂單管理</a>
-						</div>
-
-						<a href="#" class="list-group-item" data-toggle="collapse"
-							data-target="#sm4" data-parent="#menu">檢舉申訴管理 <span
-							class="glyphicon glyphicon-triangle-bottom pull-right"></span></a>
-						<div id="sm4" class="sublinks collapse">
-							<a href="#" class="list-group-item small"> 約會商品檢舉管理</a> <a
-								href="#" class="list-group-item small"> 約會商品申訴管理</a>
-						</div>
+						<a href="#" class="list-group-item">後端首頁</a>
+						<%=(((List) pageContext.getAttribute("auth")))%>
 
 
 
-						<a href="#" class="list-group-item" data-toggle="collapse"
-							data-target="#sm5" data-parent="#menu">權限管理 <span
-							class="glyphicon glyphicon-triangle-bottom pull-right"></span></a>
-						<div id="sm5" class="sublinks collapse">
-							<a href="#" class="list-group-item small"> 管理員權限管理</a> <a
-								href="<%=request.getContextPath() %>/back_end/emp/empRegister.jsp" class="list-group-item small"> 註冊新管理員</a>
-						</div>
+						<c:if test="<%=(((List) pageContext.getAttribute(\"auth\")) != null)%>">
 
 
 
-						<a href="#" class="list-group-item">活動審核</a> <a href="#"
-							class="list-group-item">餐廳審核</a> <a href="#"
-							class="list-group-item">管站內信管理</a>
+							<c:if
+								test="<%=(((List) pageContext.getAttribute(\"auth\")).contains(4001))%>">
+								<%-- 						<% if (((List)pageContext.getAttribute("auth")).contains(1)) {%> --%>
+								<a href="#" class="list-group-item" data-toggle="collapse"
+									data-target="#sm1" data-parent="#menu">前端看板管理 <span
+									class="glyphicon glyphicon-triangle-bottom pull-right"></span></a>
+								<div id="sm1" class="sublinks collapse">
+									<a href="#" class="list-group-item small"> 幻燈片管理</a> <a
+										href="#" class="list-group-item small"> 最新消息管理</a>
+								</div>
+								<%-- 						<% } %> --%>
+							</c:if>
+
+							<c:if
+								test="<%=(((List) pageContext.getAttribute(\"auth\")).contains(4002))%>">
+								<a href="#" class="list-group-item" data-toggle="collapse"
+									data-target="#sm2" data-parent="#menu">會員帳號管理 <span
+									class="glyphicon glyphicon-triangle-bottom pull-right"></span></a>
+								<div id="sm2" class="sublinks collapse">
+									<a href="#" class="list-group-item small"> 一般會員管理</a> <a
+										href="#" class="list-group-item small"> 餐廳會員管理</a>
+								</div>
+							</c:if>
 
 
+							<c:if
+								test="<%=(((List) pageContext.getAttribute(\"auth\")).contains(4003))%>">
+								<a href="#" class="list-group-item" data-toggle="collapse"
+									data-target="#sm3" data-parent="#menu">商城管理 <span
+									class="glyphicon glyphicon-triangle-bottom pull-right"></span></a>
+								<div id="sm3" class="sublinks collapse">
+									<a href="#" class="list-group-item small"> 商品管理</a> <a href="#"
+										class="list-group-item small"> 訂單管理</a>
+								</div>
+							</c:if>
 
+
+							<c:if
+								test="<%=(((List) pageContext.getAttribute(\"auth\")).contains(4004))%>">
+								<a href="#" class="list-group-item" data-toggle="collapse"
+									data-target="#sm4" data-parent="#menu">檢舉申訴管理 <span
+									class="glyphicon glyphicon-triangle-bottom pull-right"></span></a>
+								<div id="sm4" class="sublinks collapse">
+									<a href="#" class="list-group-item small"> 約會商品檢舉管理</a> <a
+										href="#" class="list-group-item small"> 約會商品申訴管理</a>
+								</div>
+							</c:if>
+
+
+							<c:if
+								test="<%=(((List) pageContext.getAttribute(\"auth\")).contains(4005))%>">
+								<a href="#" class="list-group-item" data-toggle="collapse"
+									data-target="#sm5" data-parent="#menu">權限管理 <span
+									class="glyphicon glyphicon-triangle-bottom pull-right"></span></a>
+								<div id="sm5" class="sublinks collapse">
+
+
+									<a href="#" class="list-group-item small"> 管理員權限管理</a> <a
+										href="<%=request.getContextPath()%>/back_end/emp/empRegister.jsp"
+										class="list-group-item small"> 註冊新管理員</a>
+								</div>
+							</c:if>
+
+
+							<c:if
+								test="<%=(((List) pageContext.getAttribute(\"auth\")).contains(4006))%>">
+								<a href="#" class="list-group-item">活動審核</a>
+							</c:if>
+							<c:if
+								test="<%=(((List) pageContext.getAttribute(\"auth\")).contains(4007))%>">
+								<a href="#" class="list-group-item">餐廳審核</a>
+							</c:if>
+							<c:if
+								test="<%=(((List) pageContext.getAttribute(\"auth\")).contains(4008))%>">
+								<a href="#" class="list-group-item">管站內信管理</a>
+							</c:if>
+
+
+						</c:if>
 
 
 

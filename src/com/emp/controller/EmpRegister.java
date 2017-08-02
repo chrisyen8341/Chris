@@ -76,13 +76,12 @@ public class EmpRegister extends HttpServlet {
 				errorMsgs.add("請輸入正確的Email信箱");
 			}
 
-			System.out.println("qweqwe");
-			String[] empAuthb=req.getParameterValues("empAuth");
-			List<Integer> empAuthNos=new ArrayList<Integer>( );
-			for(String eAuth:empAuthb){
-				empAuthNos.add(Integer.parseInt(eAuth));
-				System.out.println(eAuth);
-			};
+			String[] empAuthb=req.getParameterValues("empAuth");	
+			if(empAuthb==null){
+				errorMsgs.add("請至少給予員工一個權限");
+			}
+
+	
 			Emp empf=new Emp();
 			empf.setEmpName(empName);
 			empf.setEmpId(empId);
@@ -90,7 +89,7 @@ public class EmpRegister extends HttpServlet {
 			empf.setEmpHireDate(empHireDate);
 			empf.setEmpEmail(empEmail);
 
-			System.out.println("aaaaaaaaaaa");
+
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/back_end/emp/empRegister.jsp");
 				req.setAttribute("errorMsgs", errorMsgs);
@@ -102,15 +101,27 @@ public class EmpRegister extends HttpServlet {
 			/*************************** 2.開始修改資料 *****************************************/
 			 
 			
-			/********************** 密碼處理**************************/
+			/************** 密碼處理**********/
 			//亂數產生亂碼
 			Integer pwd=(int) ((Math.random()*10)*10000000+(Math.random()*1000000));
 			
 			//Email寄發 代修改
-			System.out.println(pwd);
+			System.out.println("===================此帳號密碼為"+pwd);
 			
 			//加密存入db 代修改 
 			String  empPwd =String.valueOf((int)((pwd*3)+67));
+			
+			
+			
+			/************** 權限處理***********/
+			List<Integer> empAuthNos=new ArrayList<Integer>( );
+			System.out.println("此帳號權限如下:");
+			for(String eAuth:empAuthb){
+				empAuthNos.add(Integer.parseInt(eAuth));
+				System.out.println(eAuth);
+			};
+			
+
 			
 			Emp emp=new Emp();
 			emp.setEmpName(empName);

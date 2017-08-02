@@ -6,7 +6,6 @@
 <%
 	Emp emp = (Emp) request.getAttribute("emp");
 	pageContext.setAttribute("emp", emp);
-
 %>
 <head>
 <meta charset="utf-8">
@@ -34,17 +33,13 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
-		
-		
-		<style>
-		
-		
-		.submit{
-		matgin-top: 20px;
-		}
-		
-		
-		</style>
+
+
+<style>
+.submit {
+	matgin-top: 20px;
+}
+</style>
 </head>
 
 <body>
@@ -64,7 +59,9 @@
 				<div
 					class="panel panel-default col-sm-offset-3 col-sm-6 text-center">
 
-					<form action="<%=request.getContextPath() %>/back_end/emp/EmpRegister.do" method="post">
+					<form
+						action="<%=request.getContextPath()%>/back_end/emp/EmpRegister.do"
+						method="post">
 
 						<div class="form-group pwd">
 							<label for="empName" class="cols-sm-2 control-label">姓名</label><span
@@ -138,33 +135,81 @@
 
 
 
-						<div class="form-group pull-left">
-						<label for="empEmail" class="cols-sm-2 control-label">員工權現</label><br>
-							<label class="checkbox-inline"><input type="checkbox" name="empAuth"
-								value="4001">商城商品上架審核</label> <label class="checkbox-inline"><input
-								type="checkbox" name="empAuth" value="4002">約會商品上架審核</label> <label
-								class="checkbox-inline"><input type="checkbox"
-								value="4003">活動發起審核</label> <label class="checkbox-inline"><input
-								type="checkbox" name="empAuth" value="4004">約會商品申訴檢舉審核</label>
-								<label class="checkbox-inline"><input
-								type="checkbox" name="empAuth" value="4005">新增員工權現</label>
+						<label for="empEmail" class="cols-sm-2 control-label">員工權限</label><span
+							id="empEmailShow"></span>
+						<div class="text-left">
+
+
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="checkbox">
+										<label><input type="checkbox" name="empAuth" value="4001">前端看板管理</label>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="checkbox">
+										<label><input type="checkbox" name="empAuth" value="4002">會員帳號管理</label>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="checkbox">
+										<label><input type="checkbox" name="empAuth" value="4003">商城管理</label>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="checkbox">
+										<label><input type="checkbox" name="empAuth" value="4004">檢舉申訴管理</label>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="checkbox">
+										<label><input type="checkbox" name="empAuth" value="4005">權限管理</label>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="checkbox">
+										<label><input type="checkbox" name="empAuth" value="4006">活動管理</label>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="checkbox">
+										<label><input type="checkbox" name="empAuth" value="4007">餐廳管理</label>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="checkbox">
+										<label><input type="checkbox" name="empAuth" value="4008">站內信管理</label>
+									</div>
+								</div>
+							</div>
+
+
 						</div>
 
 
 
-						<input class="btn btn-primary btn-lg btn-block login-button submit"
+						<input
+							class="btn btn-primary btn-lg btn-block login-button submit"
 							type="submit" value="註冊">
 
 
-									<c:if test="${not empty errorMsgs}">
-												<font color="red">
-													<ul>
-														<c:forEach var="message" items="${errorMsgs}">
-															<li>${message}</li>
-														</c:forEach>
-													</ul>
-												</font>
-											</c:if>
+						<c:if test="${not empty errorMsgs}">
+							<font color="red">
+								<ul>
+									<c:forEach var="message" items="${errorMsgs}">
+										<li>${message}</li>
+									</c:forEach>
+								</ul>
+							</font>
+						</c:if>
 
 
 
