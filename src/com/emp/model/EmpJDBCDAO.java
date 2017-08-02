@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.auth.model.AuthJDBCDAO;
 import com.empauth.model.EmpAuth;
@@ -419,6 +420,13 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 			}
 		}
 		return emp;
+	}
+
+
+	@Override
+	public List<Emp> getAll(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

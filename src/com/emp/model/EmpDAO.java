@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -15,6 +16,8 @@ import javax.sql.DataSource;
 
 import com.empauth.model.EmpAuth;
 import com.empauth.model.EmpAuthJDBCDAO;
+
+import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_Emp2;
 
 public class EmpDAO implements EmpDAO_interface{
 
@@ -403,6 +406,68 @@ public class EmpDAO implements EmpDAO_interface{
 			}
 		}
 		return emp;
+	}
+
+	@Override
+	public List<Emp> getAll(Map<String, String[]> map) {
+		List<Emp> list = new ArrayList<Emp>();
+		Emp emp = null;
+	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+			
+			con = ds.getConnection();
+			String finalSQL = "select * from emp "
+		          + jdbcUtil_CompositeQuery_Emp2.get_WhereCondition(map)
+		          + "order by empno";
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("¡´¡´finalSQL(by DAO) = "+finalSQL);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+				emp = new Emp();
+				emp.setEmpNo(rs.getInt("empNo"));
+				emp.setEmpName(rs.getString("empName"));
+				emp.setEmpJob(rs.getString("empJob"));
+				emp.setEmpId(rs.getString("empId"));
+				emp.setEmpPwd(rs.getString("empPwd"));
+				emp.setEmpStatus(rs.getInt("empStatus"));
+				emp.setEmpHireDate(rs.getDate("empHireDate"));
+				emp.setEmpEmail(rs.getString("empEmail"));
+				list.add(emp); // Store the row in the List
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 	}
 
 

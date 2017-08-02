@@ -2,6 +2,7 @@ package com.emp.model;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 
 
@@ -80,5 +81,7 @@ public class EmpService {
 		return dao.findById(empId);
 	}
 	
-	
+	public List<Emp> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
+	}
 }

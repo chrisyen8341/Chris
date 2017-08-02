@@ -71,12 +71,12 @@
 
 								<div class=" col-md-9 col-lg-9 ">
 									<tbody>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/emp/emp.do"
-											name="form1">
+										
+										<a href='<%=request.getContextPath()%>/back_end/emp/listAllEmp.jsp'>List</a> all Emps.<br>
+										
+										
+										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>//back_end/emp/EmpServlet.do" name="form1">
 											<table class="table table-user-information">
-
-
 
 												<tr>
 													<b><font>查詢員工:</font></b>
@@ -85,15 +85,22 @@
 												<tr>
 													<td class="title">員工編號:</td>
 													<td><input type="text" class="form-control"
-														name="empno" id="memSname" value="6001"
+														name="empNo" id="empNo" value="6001"
 														placeholder="請輸入員工編號" /></td>
 												</tr>
-		
+
+
+												<tr>
+													<td class="title">員工帳號:</td>
+													<td><input type="text" class="form-control"
+														name="empId" id="empId" value="吳永志"
+														placeholder="輸入員工姓名" /></td>
+												</tr>		
 
 												<tr>
 													<td class="title">員工姓名:</td>
 													<td><input type="text" class="form-control"
-														name="ename" id="memSname" value="吳永志"
+														name="empName" id="empName" value="吳永志"
 														placeholder="輸入員工姓名" /></td>
 												</tr>
 
@@ -102,6 +109,7 @@
 													<td class="title">職位</td>
 													<td><select class="form-control" id="sel1"
 														name="empJob">
+															<option value=""></option>
 															<option value="總經理">總經理</option>
 															<option value="協理">協理</option>
 															<option value="專員">專員</option>
@@ -112,18 +120,14 @@
 
 												<tr>
 													<td class="title">雇用日期</td>
-													<td><input type="date" name="memBday" min="1910-01-01"
-														max='2000-13-13' id="memBday" value="${member.memBday}"
+													<td><input type="date" name="empHireDate" min="1910-01-01"
+														max='2000-13-13' id="empHireDate" value="${member.memBday}"
 														class="form-control" placeholder="Confirm your Password" /></td>
 												</tr>
 
-
-
-
-
 											</table>
 
-											<input type="hidden" name="action" value="memUpdate">
+											<input type="hidden" name="action" value="listEmps_ByCompositeQuery">
 											<input type="submit" value="修改" class="btn btn-primary">
 
 										</FORM>
