@@ -88,8 +88,10 @@ public class EmpLogin extends HttpServlet {
 		Emp emp = empSvc.getEmpById(empId);
 		try{
 		if (emp == null) {
+			System.out.println((370435-67)/3);
 			return null;
 		} else if (((Integer.parseInt(emp.getEmpPwd())-67)/3)!=Integer.parseInt(empPwd)) {
+			System.out.println((370435-67)/3);
 			return null;
 		} else {
 			return emp;

@@ -98,8 +98,7 @@ memLocStatus NUMBER(2) NOT NULL
 Create Sequence MEMNO_SQ Increment By 1 Start With 5001 Nocache Nocycle;
 
 　
-	Insert Into Member Values (5000,'0','0','0','0',0,'M134129471',To_Date('1991-11-17','YYYY-MM-DD'),'0','0','0'
-,EMPTY_BLOB(),0,0,0,'',0,0,1,0.00,0.00,TO_DATE('19500101 18:30:20','YYYYMMDD HH24:MI:SS'),0);
+
 
 	INSERT INTO MEMBER VALUES (MEMNO_SQ.NEXTVAL,'petym','p123456','李鑑堂','小堂',0,'M134129471',TO_DATE('1991-11-17','YYYY-MM-DD'),'0930160401','高雄三民區中央東路67號','chrisqwe@gmail.com'
 ,EMPTY_BLOB(),10,0,0,'你好我叫小李，我曾在安心田心理諮商所工作過，興趣是打籃球健身寫程式，只不過就算再忙，我還是依舊疼愛我的狗狗',100,2000,1,22.627736,25.666,TO_DATE('20170816 18:30:20','YYYYMMDD HH24:MI:SS'),0);
@@ -221,8 +220,8 @@ empEmail VARCHAR2(100) NOT NULL
 
 Create Sequence EMPNO_SQ  Increment By 1 Start With 6001 Nocache Nocycle;
 
-INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'周樊綱','工讀生','CHOUFAN','CHOODW213',0,TO_DATE('2007-12-17','YYYY-MM-DD'),'cascasd@qwdqw.com');
-INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'吳永志','總經理','DQWDH','EQWEDW213',0,TO_DATE('2005-10-17','YYYY-MM-DD'),'PDascasd@qwdqw.com');
+INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'吳永志','總經理','petym','370435',0,TO_DATE('2005-10-17','YYYY-MM-DD'),'chrisyen8341@gmail.com');
+INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'黃彬華','協理','petym2','370435',0,TO_DATE('2007-12-17','YYYY-MM-DD'),'chrisyen8341@gmail.com');
 INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'王阿鈞','協理','TYHYTAN','EWFWEF213',0,TO_DATE('2007-05-17','YYYY-MM-DD'),'QWdqwcasd@IIw.com');
 INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'陳興','打工仔','HYTHUFAN','CHOWEF213',0,TO_DATE('2002-09-17','YYYY-MM-DD'),'cawerasd@qQWEdqw.com');
 INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'李宗霖','副理','CQWEAN','WEFEW213',0,TO_DATE('2007-12-28','YYYY-MM-DD'),'caswerd@qwdqw.com');
@@ -253,17 +252,23 @@ Constraint Auth_Empno_Fk Foreign Key(Empno) References Emp(Empno),
 constraint Auth_authno_Fk foreign key(AuthNo) references auth(authno)
 );
 
+Insert Into Empauth Values(6001,4001);
+Insert Into Empauth Values(6001,4002);
+Insert Into Empauth Values(6001,4003);
+Insert Into Empauth Values(6001,4004);
+Insert Into Empauth Values(6001,4005);
+Insert Into Empauth Values(6001,4006);
+Insert Into Empauth Values(6001,4007);
+Insert Into Empauth Values(6001,4008);
 Insert Into Empauth Values(6002,4001);
 Insert Into Empauth Values(6002,4002);
-Insert Into Empauth Values(6002,4003);
 Insert Into Empauth Values(6002,4004);
 Insert Into Empauth Values(6002,4005);
 Insert Into Empauth Values(6002,4006);
 Insert Into Empauth Values(6003,4002);
 Insert Into Empauth Values(6003,4004);
 Insert Into Empauth Values(6003,4006);
-Insert Into Empauth Values(6001,4001);
-Insert Into Empauth Values(6001,4002);
+
 
 CREATE TABLE FAQ(
 faqNo NUMBER(10) CONSTRAINT FAQ_faqNo_PK PRIMARY KEY,
@@ -359,8 +364,7 @@ albumimgfile Blob Not Null);
 
 Create Sequence ALBUMNO_SQ Increment By 1 Start With 1 Nocache Nocycle;
 
-INSERT INTO ALBUM VALUES(0,5000,'相簿A',TO_DATE('20170710 17:50:20','YYYYMMDD HH24:MI:SS'),
-TO_DATE('20170710 20:50:20','YYYYMMDD HH24:MI:SS'),0,EMPTY_BLOB());
+
 INSERT INTO ALBUM VALUES(ALBUMNO_SQ.NEXTVAL,5001,'相簿A',TO_DATE('20170710 17:50:20','YYYYMMDD HH24:MI:SS'),
 TO_DATE('20170710 20:50:20','YYYYMMDD HH24:MI:SS'),0,EMPTY_BLOB());
 INSERT INTO ALBUM VALUES(ALBUMNO_SQ.NEXTVAL,5002,'相簿B',TO_DATE('20170610 11:50:20','YYYYMMDD HH24:MI:SS'),

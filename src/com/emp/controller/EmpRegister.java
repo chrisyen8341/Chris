@@ -136,11 +136,10 @@ public class EmpRegister extends HttpServlet {
 			
 
 			/**************************** 3.修改完成,準備轉交(Send the Success view)*************/
-			Emp nemp=empSvc.getEmpById(empId);
-			HttpSession session=req.getSession();
-			session.setAttribute("emp", nemp);
-			session.setAttribute("auth", empAuthNos);
-			res.sendRedirect(req.getContextPath()+"/back_end/index_backend.jsp");
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/back_end/emp/empRegister.jsp");
+			req.setAttribute("errorMsgs", errorMsgs);
+			errorMsgs.add("註冊成功");
+			dispatcher.forward(req, res);
 
 			
 		

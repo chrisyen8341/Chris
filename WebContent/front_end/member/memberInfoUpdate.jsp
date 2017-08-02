@@ -70,7 +70,7 @@
 											<table class="table table-user-information">
 												<tbody>
 													<tr>
-														<td class="title">¼ÊºÙ</td>
+														<td class="title" >¼ÊºÙ</td>
 														<td><input type="text" class="form-control"
 															name="memSname" id="memSname" value="${member.memSname}"
 															placeholder="½Ð¿é¤J¼ÊºÙ" /></td>
