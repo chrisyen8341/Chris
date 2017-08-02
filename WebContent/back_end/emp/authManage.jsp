@@ -8,38 +8,10 @@
 	pageContext.setAttribute("emp", emp);
 %>
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Title Page</title>
-<link href="<%=request.getContextPath()%>/back_end/css/bootstrap.css"
-	rel="stylesheet">
-<link href="<%=request.getContextPath()%>/back_end/css/nav.css"
-	rel="stylesheet">
-<link href="<%=request.getContextPath()%>/back_end/css/colorplan.css"
-	rel="stylesheet">
-<!-- Custom CSS -->
-<link
-	href="<%=request.getContextPath()%>/back_end/css/modern-business.css"
-	rel="stylesheet">
-<!-- Custom Fonts -->
-<link
-	href="<%=request.getContextPath()%>/back_end/font-awesome/css/font-awesome.css"
-	rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath()%>/back_end/css/backend.css"
-	rel="stylesheet">
-<!--[if lt IE 9]>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
+
+<%@ include file="empHeader.file"%>
 
 
-<style>
-.submit {
-	matgin-top: 20px;
-}
-</style>
 </head>
 
 <body>
@@ -71,66 +43,104 @@
 
 								<div class=" col-md-9 col-lg-9 ">
 									<tbody>
-										
-										<a href='<%=request.getContextPath()%>/back_end/emp/listAllEmp.jsp'>List</a> all Emps.<br>
-										
-										
-										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>//back_end/emp/EmpServlet.do" name="form1">
-											<table class="table table-user-information">
-
-												<tr>
-													<b><font>查詢員工:</font></b>
-												</tr>
-
-												<tr>
-													<td class="title">員工編號:</td>
-													<td><input type="text" class="form-control"
-														name="empNo" id="empNo" value="6001"
-														placeholder="請輸入員工編號" /></td>
-												</tr>
 
 
-												<tr>
-													<td class="title">員工帳號:</td>
-													<td><input type="text" class="form-control"
-														name="empId" id="empId" value="吳永志"
-														placeholder="輸入員工姓名" /></td>
-												</tr>		
-
-												<tr>
-													<td class="title">員工姓名:</td>
-													<td><input type="text" class="form-control"
-														name="empName" id="empName" value="吳永志"
-														placeholder="輸入員工姓名" /></td>
-												</tr>
 
 
-												<tr>
-													<td class="title">職位</td>
-													<td><select class="form-control" id="sel1"
-														name="empJob">
-															<option value=""></option>
-															<option value="總經理">總經理</option>
-															<option value="協理">協理</option>
-															<option value="專員">專員</option>
-															<option value="工讀生">工讀生</option>
-													</select></td>
-												</tr>
 
 
-												<tr>
-													<td class="title">雇用日期</td>
-													<td><input type="date" name="empHireDate" min="1910-01-01"
-														max='2000-13-13' id="empHireDate" value="${member.memBday}"
-														class="form-control" placeholder="Confirm your Password" /></td>
-												</tr>
+										<a href="#" class="list-group-item" data-toggle="collapse"
+											data-target="#search" data-parent="#menu">員工查詢 <span
+											class="glyphicon glyphicon-triangle-bottom pull-right"></span></a>
+										<div id="search" class="sublinks collapse">
+											<a class="list-group-item small" href='<%=request.getContextPath()%>/back_end/emp/listAllEmp.jsp'>查詢全部員工</a>
+											<a href="#" class="list-group-item small" data-toggle="modal"
+												data-target="#searchSpec"> 查詢特定員工</a>
+										</div>
 
-											</table>
 
-											<input type="hidden" name="action" value="listEmps_ByCompositeQuery">
-											<input type="submit" value="修改" class="btn btn-primary">
 
-										</FORM>
+
+										<!-- 修改Modal-->
+										<div class="modal fade" id="searchSpec"
+											role="dialog">
+											<div class="modal-dialog">
+
+												<!-- Modal content-->
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal">&times;</button>
+														<h4 class="modal-title">查詢員工</h4>
+													</div>
+													<div class="modal-body">
+
+														<FORM METHOD="post"
+															ACTION="<%=request.getContextPath()%>//back_end/emp/EmpServlet.do">
+															<table class="table table-user-information">
+
+
+																<tr>
+																	<td class="title">員工編號:</td>
+																	<td><input type="text" class="form-control"
+																		name="empNo" id="empNo" value="6001"
+																		placeholder="請輸入員工編號" /></td>
+																</tr>
+
+
+																<tr>
+																	<td class="title">員工帳號:</td>
+																	<td><input type="text" class="form-control"
+																		name="empId" id="empId" value="吳永志"
+																		placeholder="輸入員工姓名" /></td>
+																</tr>
+
+																<tr>
+																	<td class="title">員工姓名:</td>
+																	<td><input type="text" class="form-control"
+																		name="empName" id="empName" value="吳永志"
+																		placeholder="輸入員工姓名" /></td>
+																</tr>
+
+
+																<tr>
+																	<td class="title">職位</td>
+																	<td><select class="form-control" id="sel1"
+																		name="empJob">
+																			<option value=""></option>
+																			<option value="總經理">總經理</option>
+																			<option value="協理">協理</option>
+																			<option value="專員">專員</option>
+																			<option value="工讀生">工讀生</option>
+																	</select></td>
+																</tr>
+
+
+																<tr>
+																	<td class="title">雇用日期</td>
+																	<td><input type="date" name="empHireDate"
+																		min="1910-01-01" max='2000-13-13' id="empHireDate"
+																		value="${member.memBday}" class="form-control"
+																		placeholder="Confirm your Password" /></td>
+																</tr>
+
+															</table>
+
+															<input type="hidden" name="action"
+																value="listEmps_ByCompositeQuery"> <input
+																type="submit" value="查詢" class="btn btn-primary">
+
+														</FORM>
+													</div>
+
+
+												</div>
+
+											</div>
+										</div>
+
+
+
+
 									</tbody>
 
 
@@ -150,83 +160,6 @@
 						</div>
 					</div>
 				</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-				<!-- 				<div class="panel panel-default col-sm-offset-3 col-sm-6 text-center"> -->
-
-				<!-- 					<FORM METHOD="post" -->
-				<%-- 						ACTION="<%=request.getContextPath()%>/emp/emp.do" name="form1"> --%>
-				<!-- 						<b><font color=blue>萬用複合查詢:</font></b> <br>  -->
-				<!-- 						<b>輸入員工編號:</b>  -->
-				<!-- 						<input type="text" name="empno" value="7001"><br>  -->
-
-				<!-- 						<b>輸入員工姓名:</b> -->
-				<!-- 						<input type="text" name="ename" value="KING"><br> -->
-
-
-
-				<!-- 						<b>選擇部門:</b>  -->
-
-
-				<!-- 						<div class="form-group"> -->
-				<!-- 							<label for="sel1">職位</label> <select class="form-control" -->
-				<!-- 								id="sel1" name="empJob"> -->
-				<!-- 								<option value="總經理">總經理</option> -->
-				<!-- 								<option value="協理">協理</option> -->
-				<!-- 								<option value="專員">專員</option> -->
-				<!-- 								<option value="工讀生">工讀生</option> -->
-				<!-- 							</select> -->
-				<!-- 						</div> -->
-
-				<!-- 						<br>  -->
-				<!-- 						<b>雇用日期:</b> <input class="cal-TextBox" -->
-				<!-- 							onFocus="this.blur()" size="9" readonly type="text" -->
-				<!-- 							name="hiredate" value="1981-11-17">  -->
-				<!-- 							<a class="so-BtnLink" -->
-				<!-- 							href="javascript:calClick();return false;" -->
-				<!-- 							onmouseover="calSwapImg('BTN_date', 'img_Date_OVER',true);" -->
-				<!-- 							onmouseout="calSwapImg('BTN_date', 'img_Date_UP',true);" -->
-				<!-- 							onclick="calSwapImg('BTN_date', 'img_Date_DOWN');showCalendar('form1','hiredate','BTN_date');return false;"> -->
-				<!-- 						</a> <input type="submit" value="送出"> <input type="hidden" -->
-				<!-- 							name="action" value="listEmps_ByCompositeQuery"> -->
-				<!-- 					</FORM> -->
-
-
-				<!-- 				</div> -->
-
 
 
 

@@ -11,105 +11,180 @@
 	pageContext.setAttribute("emp", emp);
 %>
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Title Page</title>
-<link href="<%=request.getContextPath()%>/back_end/css/bootstrap.css"
-	rel="stylesheet">
-<link href="<%=request.getContextPath()%>/back_end/css/nav.css"
-	rel="stylesheet">
-<link href="<%=request.getContextPath()%>/back_end/css/colorplan.css"
-	rel="stylesheet">
-<!-- Custom CSS -->
-<link
-	href="<%=request.getContextPath()%>/back_end/css/modern-business.css"
-	rel="stylesheet">
-<!-- Custom Fonts -->
-<link
-	href="<%=request.getContextPath()%>/back_end/font-awesome/css/font-awesome.css"
-	rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath()%>/back_end/css/backend.css"
-	rel="stylesheet">
-<!--[if lt IE 9]>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
+<%@ include file="empHeader.file"%>
 
-
-<style>
-.submit {
-	matgin-top: 20px;
-}
-</style>
 </head>
 
-<link rel="stylesheet" type="text/css" href="js/calendar.css">
-<script language="JavaScript" src="js/calendarcode.js"></script>
-<div id="popupcalendar" class="text"></div>
 
-<body bgcolor='white'>
-
-<table border='1' cellpadding='5' cellspacing='0' width='400'>
-	<tr bgcolor='#CCCCFF' align='center' valign='middle' height='20'>
-		<td>
-		<h3>員工資料修改 - update_emp_input.jsp</h3>
-		<a href="<%=request.getContextPath()%>/back_end/emp/authManage.jsp">回首頁</a></td>
-	</tr>
-</table>
-
-<h3>資料修改:</h3>
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>請修正以下錯誤:
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li>${message}</li>
-		</c:forEach>
-	</ul>
-	</font>
-</c:if>
-
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/emp/EmpServlet.do" name="form1">
-<table border="0">
-	<tr>
-		<td>員工編號:<font color=red><b>*</b></font></td>
-		<td><%=empVO.getEmpNo() %></td>
-	</tr>
-	<tr>
-		<td>員工姓名:</td>
-		<td><input type="TEXT" name="ename" size="45" value="<%=empVO.getEmpName()%>" /></td>
-	</tr>
-	<tr>
-		<td>職位:</td>
-		<td><input type="TEXT" name="job" size="45"	value="<%=empVO.getEmpJob()%>" /></td>
-	</tr>
-	<tr>
-		<td>雇用日期:</td>
-		<td bgcolor="#CCCCFF">
-		    
-		    <input type="date" name="hiredate" min="1910-01-01" id="hiredate" value="<%=empVO.getEmpHireDate() %>" class="form-control" placeholder="Confirm your Password" />
-		    
-		</td>
-	</tr>
-	<tr>
-		<td>Email:</td>
-		<td><input type="TEXT" name="empEmail" size="45"	value="<%=empVO.getEmpEmail()%>" /></td>
-	</tr>
+<body>
 
 
 
-</table>
-<br>
-<input type="hidden" name="action" value="update">
-<input type="hidden" name="empno" value="<%=empVO.getEmpNo()%>">
-<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"><!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
-<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">  <!--用於:istAllEmp.jsp 與 複合查詢 listEmps_ByCompositeQuery.jsp-->
-<input type="submit" value="送出修改"></FORM>
 
-<br>送出修改的來源網頁路徑:<br><b>
-   <font color=blue>request.getParameter("requestURL"):</font> <%= request.getParameter("requestURL")%><br>
-   <font color=blue>request.getParameter("whichPage"):</font> <%= request.getParameter("whichPage")%> (此範例目前用於:istAllEmp.jsp 與 複合查詢 listEmps_ByCompositeQuery.jsp)</b>
+
+
+
+
+
+
+
+
+
+
+
+	<%@ include file="empNav.file"%>
+
+	<div class="container-fluid">
+		<div class="row">
+
+			<%@ include file="empLSide.file"%>
+
+			<div class="col-xs-12 col-sm-8">
+
+
+				<h5 class="page-header text-right">目前位置:後端首頁</h5>
+
+
+				<div class="row">
+
+					<div class="panel panel-info">
+
+						<div class="panel-heading">
+							<h3 class="panel-title">${member.memId}</h3>
+						</div>
+
+						<div class="panel-body">
+
+
+							<div class="row">
+
+								<div class=" col-md-9 col-lg-9 ">
+									<tbody>
+
+										<table border='1' cellpadding='5' cellspacing='0' width='400'>
+											<tr bgcolor='#CCCCFF' align='center' valign='middle'
+												height='20'>
+												<td>
+													<h3>員工資料修改</h3> <a
+													href="<%=request.getContextPath()%>/back_end/emp/authManage.jsp">回首頁</a>
+												</td>
+											</tr>
+										</table>
+
+										<h3>資料修改:</h3>
+										<%-- 錯誤表列 --%>
+										<c:if test="${not empty errorMsgs}">
+											<font color='red'>請修正以下錯誤:
+												<ul>
+													<c:forEach var="message" items="${errorMsgs}">
+														<li>${message}</li>
+													</c:forEach>
+												</ul>
+											</font>
+										</c:if>
+
+										<FORM METHOD="post"
+											ACTION="<%=request.getContextPath()%>/back_end/emp/EmpServlet.do"
+											name="form1">
+											<table border="0">
+
+
+
+
+												<tr>
+													<td>員工編號:<font color=red><b>*</b></font></td>
+													<td><%=empVO.getEmpNo()%></td>
+												</tr>
+
+
+
+												<tr>
+													<td class="title">員工姓名:</td>
+													<td><input type="text" class="form-control"
+														name="empName" id="empName" value="<%=empVO.getEmpName()%>"
+														placeholder="輸入員工姓名" /></td> 
+												</tr>
+
+
+												<tr>
+													<td class="title">職位</td>
+													<td><select class="form-control" id="sel1"
+														name="empJob" value="<%=empVO.getEmpJob()%>">
+															<option value=""></option>
+															<option value="總經理">總經理</option>
+															<option value="協理">協理</option>
+															<option value="專員">專員</option>
+															<option value="工讀生">工讀生</option>
+													</select></td>
+												</tr>
+
+
+												<tr>
+													<td class="title">雇用日期</td>
+													<td><input type="date" name="empHireDate"
+														min="1910-01-01" max='2000-13-13' id="empHireDate"
+														value="<%=empVO.getEmpHireDate()%>" class="form-control"
+														placeholder="Confirm your Password" /></td>
+												</tr>
+
+
+
+
+
+
+
+
+
+											</table>
+											<br> <input type="hidden" name="action" value="update">
+											<input type="hidden" name="empno"
+												value="<%=empVO.getEmpNo()%>"> <input type="hidden"
+												name="requestURL"
+												value="<%=request.getParameter("requestURL")%>">
+											<!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
+											<input type="hidden" name="whichPage"
+												value="<%=request.getParameter("whichPage")%>">
+											<!--用於:istAllEmp.jsp 與 複合查詢 listEmps_ByCompositeQuery.jsp-->
+											<input type="submit" value="送出修改">
+										</FORM>
+
+										<br>送出修改的來源網頁路徑:
+										<br>
+										<b> <font color=blue>request.getParameter("requestURL"):</font>
+											<%=request.getParameter("requestURL")%><br> <font
+											color=blue>request.getParameter("whichPage"):</font> <%=request.getParameter("whichPage")%>
+											(此範例目前用於:istAllEmp.jsp 與 複合查詢 listEmps_ByCompositeQuery.jsp)
+										</b>
+									</tbody>
+
+
+									<c:if test="${not empty errorMsgs}">
+										<font color="red">
+											<ul>
+												<c:forEach var="message" items="${errorMsgs}">
+													<li>${message}</li>
+												</c:forEach>
+											</ul>
+										</font>
+									</c:if>
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+			</div>
+
+			<script src="https://code.jquery.com/jquery.js"></script>
+			<script
+				src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+			<script>
+				
+			</script>
 </body>
 </html>
