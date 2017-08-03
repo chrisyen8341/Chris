@@ -38,11 +38,11 @@ public class EmpDAO implements EmpDAO_interface{
 			+ " VALUES(EMPNO_SQ.NEXTVAL,?,?,?,?,?,?,?)";
 	private static final String UPDATE_STMT = "UPDATE EMP SET EMPNO = ?, EMPNAME = ?, EMPJOB = ?, "
 			+ "EMPID = ?, EMPPWD = ?,EMPSTATUS = ?,EMPHIREDATE = ?,EMPEMAIL= ? WHERE EMPNO =¡@?";
-	private static final String DELETE_STMT = "DELETE FROM EMP WHERE EMPNO = ?";
+	private static final String DELETE_STMT = "UPDATE EMP SET EMPSTATUS = 1 WHERE EMPNO =¡@?";
 	private static final String FIND_BY_PK = "SELECT * FROM EMP WHERE EMPNO = ?";
 	private static final String FIND_BY_ID = "SELECT * FROM EMP WHERE EMPID = ?";
 	private static final String GET_ALL = "SELECT * FROM EMP";
-
+	private static final String GET_AUTH_BY_EMPNO = "SELECT * FROM EMPAUTH WHERE EMPNO = ?";
 	
 	@Override
 	public void add(Emp emp) {
@@ -468,6 +468,52 @@ public class EmpDAO implements EmpDAO_interface{
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public List<Integer> getAuthByEmpNo(Integer empNo) {
+		List<Integer> authList = new ArrayList<>();
+		PreparedStatement pstmt=null;
+		Connection con=null;
+		ResultSet rs=null;
+		
+		try {
+			con=ds.getConnection();
+			pstmt=con.prepareStatement(GET_AUTH_BY_EMPNO);
+			pstmt.setInt(1, empNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				authList.add(rs.getInt("empNo"));		
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return authList ;
 	}
 
 

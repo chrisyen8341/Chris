@@ -84,4 +84,9 @@ public class EmpService {
 	public List<Emp> getAll(Map<String, String[]> map) {
 		return dao.getAll(map);
 	}
+	
+	public List<Integer> getAuthByEmpNo(Integer empNo) {
+		return dao.getAuthByEmpNo(empNo);
+	}
+	
 }

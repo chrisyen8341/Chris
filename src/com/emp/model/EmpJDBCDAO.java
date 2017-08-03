@@ -29,10 +29,11 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 			+ " VALUES(EMPNO_SQ.NEXTVAL,?,?,?,?,?,?,?)";
 	private static final String UPDATE_STMT = "UPDATE EMP SET EMPNO = ?, EMPNAME = ?, EMPJOB = ?, "
 			+ "EMPID = ?, EMPPWD = ?,EMPSTATUS = ?,EMPHIREDATE = ?,EMPEMAIL= ? WHERE EMPNO =¡@?";
-	private static final String DELETE_STMT = "DELETE FROM EMP WHERE EMPNO = ?";
+	private static final String DELETE_STMT = "UPDATE EMP SET EMPSTATUS = 1 WHERE EMPNO =¡@?";
 	private static final String FIND_BY_PK = "SELECT * FROM EMP WHERE EMPNO = ?";
 	private static final String FIND_BY_ID = "SELECT * FROM EMP WHERE EMPID = ?";
 	private static final String GET_ALL = "SELECT * FROM EMP";
+	private static final String GET_AUTH_BY_EMPNO = "SELECT * FROM EMPAUTH WHERE EMPNO = ?";
 	
 	
 	@Override
@@ -425,6 +426,13 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 
 	@Override
 	public List<Emp> getAll(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<Integer> getAuthByEmpNo(Integer empNo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

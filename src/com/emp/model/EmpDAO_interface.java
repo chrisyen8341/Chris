@@ -14,4 +14,5 @@ public interface EmpDAO_interface {
 	Emp findById(String empId);
 	List<Emp> getAll();
 	List<Emp> getAll(Map<String, String[]> map); 
+	List<Integer> getAuthByEmpNo(Integer empNo); 
 }

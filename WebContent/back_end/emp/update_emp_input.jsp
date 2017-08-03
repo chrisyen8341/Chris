@@ -58,7 +58,7 @@
 
 							<div class="row">
 
-								<div class=" col-md-9 col-lg-9 ">
+								<div class=" col-md-9 col-lg-9">
 									<tbody>
 
 										<table border='1' cellpadding='5' cellspacing='0' width='400'>
@@ -83,42 +83,64 @@
 											</font>
 										</c:if>
 
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/back_end/emp/EmpServlet.do"
-											name="form1">
-											<table border="0">
+										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/emp/EmpServlet.do" name="form1">
+											<table class="table table-user-information" border="0">
 
-
-
-
+	
 												<tr>
 													<td>員工編號:<font color=red><b>*</b></font></td>
 													<td><%=empVO.getEmpNo()%></td>
 												</tr>
-
-
+											
 
 												<tr>
 													<td class="title">員工姓名:</td>
 													<td><input type="text" class="form-control"
-														name="empName" id="empName" value="<%=empVO.getEmpName()%>"
-														placeholder="輸入員工姓名" /></td> 
+														name="empName" id="empName"
+														value="<%=empVO.getEmpName()%>" placeholder="輸入員工姓名" /></td>
 												</tr>
-
-
+											
+												
+									
 												<tr>
 													<td class="title">職位</td>
 													<td><select class="form-control" id="sel1"
-														name="empJob" value="<%=empVO.getEmpJob()%>">
-															<option value=""></option>
-															<option value="總經理">總經理</option>
-															<option value="協理">協理</option>
-															<option value="專員">專員</option>
-															<option value="工讀生">工讀生</option>
+														name="empJob">
+															<c:if test="${empVO.getEmpJob()=='總經理'}">
+																<option value="總經理" selected>總經理</option>
+															</c:if>
+															<c:if test="${empVO.getEmpJob()!='總經理'}">
+																<option value="總經理">總經理</option>
+															</c:if>
+
+															<c:if test="${empVO.getEmpJob()=='協理'}">
+																<option value="協理" selected>協理</option>
+															</c:if>
+															<c:if test="${empVO.getEmpJob()!='協理'}">
+																<option value="總協理">協理</option>
+															</c:if>
+
+
+															<c:if test="${empVO.getEmpJob()=='專員'}">
+																<option value="專員" selected>專員</option>
+															</c:if>
+															<c:if test="${empVO.getEmpJob()!='專員'}">
+																<option value="專員">專員</option>
+															</c:if>
+
+
+															<c:if test="${empVO.getEmpJob()=='工讀生'}">
+																<option value="工讀生" selected>工讀生</option>
+															</c:if>
+															<c:if test="${empVO.getEmpJob()!='工讀生'}">
+																<option value="工讀生">工讀生</option>
+															</c:if>
 													</select></td>
 												</tr>
-
-
+											
+												
+												
+							
 												<tr>
 													<td class="title">雇用日期</td>
 													<td><input type="date" name="empHireDate"
@@ -127,17 +149,76 @@
 														placeholder="Confirm your Password" /></td>
 												</tr>
 
+	</table>
+
+												
+													員工權限
+
+														<div class="row">
+															<div class="col-sm-4">
+																<div class="checkbox">
+																	<label><input type="checkbox" name="empAuth"
+																		value="4001">前端看板管理</label>
+																</div>
+															</div>
+															<div class="col-sm-4">
+																<div class="checkbox">
+																	<label><input type="checkbox" name="empAuth"
+																		value="4002">會員帳號管理</label>
+																</div>
+															</div>
+															<div class="col-sm-4">
+																<div class="checkbox">
+																	<label><input type="checkbox" name="empAuth"
+																		value="4003">商城管理</label>
+																</div>
+															</div>
+														</div>
+
+
+														<div class="row">
+															<div class="col-sm-4">
+																<div class="checkbox">
+																	<label><input type="checkbox" name="empAuth"
+																		value="4004">檢舉申訴管理</label>
+																</div>
+															</div>
+															<div class="col-sm-4">
+																<div class="checkbox">
+																	<label><input type="checkbox" name="empAuth"
+																		value="4005">權限管理</label>
+																</div>
+															</div>
+															<div class="col-sm-4">
+																<div class="checkbox">
+																	<label><input type="checkbox" name="empAuth"
+																		value="4006">活動管理</label>
+																</div>
+															</div>
+														</div>
+
+
+														<div class="row">
+															<div class="col-sm-4">
+																<div class="checkbox">
+																	<label><input type="checkbox" name="empAuth"
+																		value="4007">餐廳管理</label>
+																</div>
+															</div>
+															<div class="col-sm-4">
+																<div class="checkbox">
+																	<label><input type="checkbox" name="empAuth"
+																		value="4008">站內信管理</label>
+																</div>
+															</div>
+														</div>
+											
 
 
 
-
-
-
-
-
-											</table>
+										
 											<br> <input type="hidden" name="action" value="update">
-											<input type="hidden" name="empno"
+											<input type="hidden" name="empNo"
 												value="<%=empVO.getEmpNo()%>"> <input type="hidden"
 												name="requestURL"
 												value="<%=request.getParameter("requestURL")%>">
@@ -145,16 +226,10 @@
 											<input type="hidden" name="whichPage"
 												value="<%=request.getParameter("whichPage")%>">
 											<!--用於:istAllEmp.jsp 與 複合查詢 listEmps_ByCompositeQuery.jsp-->
-											<input type="submit" value="送出修改">
+											<input class="btn btn-primary" type="submit" value="送出修改">
 										</FORM>
 
-										<br>送出修改的來源網頁路徑:
-										<br>
-										<b> <font color=blue>request.getParameter("requestURL"):</font>
-											<%=request.getParameter("requestURL")%><br> <font
-											color=blue>request.getParameter("whichPage"):</font> <%=request.getParameter("whichPage")%>
-											(此範例目前用於:istAllEmp.jsp 與 複合查詢 listEmps_ByCompositeQuery.jsp)
-										</b>
+
 									</tbody>
 
 

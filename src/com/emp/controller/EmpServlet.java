@@ -132,15 +132,15 @@ public class EmpServlet extends HttpServlet {
 		
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				Integer empno = new Integer(req.getParameter("empno").trim());
-				String ename = req.getParameter("ename").trim();
-				String job = req.getParameter("job").trim();				
+				Integer empNo = new Integer(req.getParameter("empNo").trim());
+				String empName = req.getParameter("empName").trim();
+				String empJob = req.getParameter("empJob").trim();				
 				
-				java.sql.Date hiredate = null;
+				java.sql.Date empHireDate = null;
 				try {
-					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
+					empHireDate = java.sql.Date.valueOf(req.getParameter("empHireDate").trim());
 				} catch (IllegalArgumentException e) {
-					hiredate=new java.sql.Date(System.currentTimeMillis());
+					empHireDate=new java.sql.Date(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
 
@@ -148,10 +148,10 @@ public class EmpServlet extends HttpServlet {
 				
 
 				Emp empVO = new Emp();
-				empVO.setEmpNo(empno);
-				empVO.setEmpName(ename);
-				empVO.setEmpJob(job);
-				empVO.setEmpHireDate(hiredate);
+				empVO.setEmpNo(empNo);
+				empVO.setEmpName(empName);
+				empVO.setEmpJob(empJob);
+				empVO.setEmpHireDate(empHireDate);
 				empVO.setEmpEmail(empEmail);
 
 				// Send the use back to the form, if there were errors
@@ -165,8 +165,8 @@ public class EmpServlet extends HttpServlet {
 				
 				/***************************2.開始修改資料*****************************************/
 				EmpService empSvc = new EmpService();
-				Emp empc=empSvc.getOneEmp(empno);
-				empVO = empSvc.updateEmp(empno, ename, job, empc.getEmpId(), empc.getEmpPwd(), 0, hiredate, empEmail);
+				Emp empc=empSvc.getOneEmp(empNo);
+				empVO = empSvc.updateEmp(empNo, empName, empJob, empc.getEmpId(), empc.getEmpPwd(), 0, empHireDate, empEmail);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/				
 
