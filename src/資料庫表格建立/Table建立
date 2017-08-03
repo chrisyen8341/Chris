@@ -222,11 +222,12 @@ Create Sequence EMPNO_SQ  Increment By 1 Start With 6001 Nocache Nocycle;
 
 INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'吳永志','總經理','petym','370435',0,TO_DATE('2005-10-17','YYYY-MM-DD'),'chrisyen8341@gmail.com');
 INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'黃彬華','協理','petym2','370435',0,TO_DATE('2007-12-17','YYYY-MM-DD'),'chrisyen8341@gmail.com');
-INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'王阿鈞','協理','TYHYTAN','EWFWEF213',0,TO_DATE('2007-05-17','YYYY-MM-DD'),'QWdqwcasd@IIw.com');
-INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'陳興','打工仔','HYTHUFAN','CHOWEF213',0,TO_DATE('2002-09-17','YYYY-MM-DD'),'cawerasd@qQWEdqw.com');
-INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'李宗霖','副理','CQWEAN','WEFEW213',0,TO_DATE('2007-12-28','YYYY-MM-DD'),'caswerd@qwdqw.com');
-
-
+INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'吳永志','總經理','petym3','370435',0,TO_DATE('2005-10-17','YYYY-MM-DD'),'chrisyen8341@gmail.com');
+INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'王阿鈞','協理','petym4','370435',0,TO_DATE('2007-05-17','YYYY-MM-DD'),'QWdqwcasd@IIw.com');
+INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'梁育誠','工讀生','petym5','370435',0,TO_DATE('2002-09-17','YYYY-MM-DD'),'cawerasd@qQWEdqw.com');
+INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'梁小城','專員','petym6','370435',0,TO_DATE('2002-09-17','YYYY-MM-DD'),'cawerasd@qQWEdqw.com');
+INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'卜小哥','協理','petym7','370435',0,TO_DATE('2002-09-17','YYYY-MM-DD'),'cawerasd@qQWEdqw.com');
+INSERT INTO EMP VALUES (EMPNO_SQ.NEXTVAL,'廖國賓','專員','petym8','370435',0,TO_DATE('2002-09-17','YYYY-MM-DD'),'cawerasd@qQWEdqw.com');
 
 Create Table Auth(
 AuthNo Number(10) Constraint Auth_Authno_Pk Primary Key,

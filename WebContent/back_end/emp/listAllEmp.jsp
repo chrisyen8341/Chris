@@ -8,6 +8,8 @@
 	EmpService empSvc = new EmpService();
 	List<Emp> list = empSvc.getAll();
 	pageContext.setAttribute("list", list);
+	List<Integer> auth = (List<Integer>) session.getAttribute("auth");
+	pageContext.setAttribute("auth", auth);
 %>
 
 
@@ -38,7 +40,7 @@
 					<div class="panel panel-info">
 
 						<div class="panel-heading">
-							<h3 class="panel-title">${member.memId}</h3>
+							<h3 class="panel-title">${emp.empName}</h3>
 						</div>
 
 						<div class="panel-body">
@@ -54,7 +56,7 @@
 											<tr bgcolor='#CCCCFF' align='center' valign='middle'
 												height='20'>
 												<td>
-													<h3>所有員工資料 - ListAllEmp.jsp</h3> <a
+													<h3>所有員工資料</h3> <a
 													href="<%=request.getContextPath()%>/back_end/emp/authManage.jsp">回首頁</a>
 												</td>
 											</tr>
@@ -124,11 +126,7 @@
 										</table>
 										<%@ include file="pages/page2.file"%>
 
-										<br>本網頁的路徑:
-										<br>
-										<b> <font color=blue>request.getServletPath():</font> <%=request.getServletPath()%><br>
-											<font color=blue>request.getRequestURI(): </font> <%=request.getRequestURI()%>
-										</b>
+						
 
 									</tbody>
 

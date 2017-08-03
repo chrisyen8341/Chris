@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="BIG5"%>
 <%@ page import="com.emp.model.*"%>
+<%@ page import="java.util.*"%>
+
 <!DOCTYPE html>
 <html lang="">
 <%
 	Emp emp = (Emp) request.getAttribute("emp");
 	pageContext.setAttribute("emp", emp);
+	List<Integer> auth = (List<Integer>) session.getAttribute("auth");
+	pageContext.setAttribute("auth", auth);
 	
 %>
 <head>

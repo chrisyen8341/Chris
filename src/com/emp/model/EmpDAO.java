@@ -44,7 +44,7 @@ public class EmpDAO implements EmpDAO_interface{
 	private static final String DELETE_STMT = "UPDATE EMP SET EMPSTATUS = 1 WHERE EMPNO =¡@?";
 	private static final String FIND_BY_PK = "SELECT * FROM EMP WHERE EMPNO = ?";
 	private static final String FIND_BY_ID = "SELECT * FROM EMP WHERE EMPID = ?";
-	private static final String GET_ALL = "SELECT * FROM EMP";
+	private static final String GET_ALL = "SELECT * FROM EMP WHERE EMPSTATUS = 0";
 	private static final String GET_AUTH_BY_EMPNO = "SELECT * FROM EMPAUTH WHERE EMPNO = ?";
 	
 	@Override

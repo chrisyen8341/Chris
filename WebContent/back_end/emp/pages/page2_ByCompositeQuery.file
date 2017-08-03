@@ -3,13 +3,13 @@
  <tr>
   <%if (rowsPerPage<rowNumber) {%>
     <%if(pageIndex>=rowsPerPage){%>
-        <td><A href="<%=request.getContextPath()%>/emp/emp.do?whichPage=1&action=listEmps_ByCompositeQuery">至第一頁</A>&nbsp;</td>
-        <td><A href="<%=request.getContextPath()%>/emp/emp.do?whichPage=<%=whichPage-1%>&action=listEmps_ByCompositeQuery">上一頁 </A>&nbsp;</td>
+        <td><A href="<%=request.getContextPath()%>/back_end/emp/EmpServlet.do?whichPage=1&action=listEmps_ByCompositeQuery">至第一頁</A>&nbsp;</td>
+        <td><A href="<%=request.getContextPath()%>/back_end/emp/EmpServlet.do?whichPage=<%=whichPage-1%>&action=listEmps_ByCompositeQuery">上一頁 </A>&nbsp;</td>
     <%}%>
   
     <%if(pageIndex<pageIndexArray[pageNumber-1]){%>
-        <td><A href="<%=request.getContextPath()%>/emp/emp.do?whichPage=<%=whichPage+1%>&action=listEmps_ByCompositeQuery">下一頁 </A>&nbsp;</td>
-        <td><A href="<%=request.getContextPath()%>/emp/emp.do?whichPage=<%=pageNumber%>&action=listEmps_ByCompositeQuery">至最後一頁</A>&nbsp;</td>
+        <td><A href="<%=request.getContextPath()%>/back_end/emp/EmpServlet.do?whichPage=<%=whichPage+1%>&action=listEmps_ByCompositeQuery">下一頁 </A>&nbsp;</td>
+        <td><A href="<%=request.getContextPath()%>/back_end/emp/EmpServlet.do?whichPage=<%=pageNumber%>&action=listEmps_ByCompositeQuery">至最後一頁</A>&nbsp;</td>
     <%}%>
   <%}%>  
  </tr>
@@ -20,7 +20,7 @@
         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </td>
-   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do">   
+   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/emp/EmpServlet.do">   
         <td>
            <select size="1" name="whichPage">
         <%for (int i=1; i<=pageNumber; i++){%>

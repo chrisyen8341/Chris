@@ -2,16 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.emp.model.*"%>
 <%@ page import="java.util.*"%>
-<%
-	Emp empVO = (Emp) request.getAttribute("empVO"); //EmpServlet.java (Concroller), 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
-%>
+
 <!DOCTYPE html>
 <html lang="">
 <%
-	Emp emp = (Emp) request.getAttribute("emp");
-	List<Integer> auth=(List<Integer>)request.getAttribute("auth");
-	pageContext.setAttribute("emp", emp);
+	Emp empVO = (Emp) request.getAttribute("empVO");
+	List<Integer> authForUpdate=(List<Integer>)request.getAttribute("auth");
+	List<Integer> auth = (List<Integer>) session.getAttribute("auth");
+	pageContext.setAttribute("empVO", empVO);
 	pageContext.setAttribute("auth", auth);
+	pageContext.setAttribute("authForUpdate", authForUpdate);
 %>
 <head>
 <%@ include file="empHeader.file"%>
@@ -20,20 +20,6 @@
 
 
 <body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	<%@ include file="empNav.file"%>
 
@@ -53,7 +39,7 @@
 					<div class="panel panel-info">
 
 						<div class="panel-heading">
-							<h3 class="panel-title">${member.memId}</h3>
+							<h3 class="panel-title">${emp.empName}</h3>
 						</div>
 
 						<div class="panel-body">
@@ -103,6 +89,14 @@
 														value="<%=empVO.getEmpName()%>" placeholder="輸入員工姓名" /></td>
 												</tr>
 											
+												
+												
+												<tr>
+													<td class="title">員工Email:</td>
+													<td><input type="text" class="form-control"
+														name="empEmail" id="empEmail"
+														value="<%=empVO.getEmpEmail()%>" placeholder="輸入員工Email" /></td>
+												</tr>
 												
 									
 												<tr>
@@ -155,14 +149,14 @@
 	</table>
 
 												
-													員工權限<%=auth %>
-<c:if test="<%=auth!=null %>">
+													員工權限<%=authForUpdate %>
+<c:if test="<%=authForUpdate!=null %>">
 														<div class="row">
 															<div class="col-sm-4">
 																<div class="checkbox">
 																	<label><input type="checkbox" name="empAuth"
 																		value="4001"
-																		<c:if test="<%=auth.contains(4001) %>">
+																		<c:if test="<%=authForUpdate.contains(4001) %>">
 																		checked
 																		</c:if>
 																		>前端看板管理</label>
@@ -172,7 +166,7 @@
 																<div class="checkbox">
 																	<label><input type="checkbox" name="empAuth"
 																		value="4002"
-																		<c:if test="<%=auth.contains(4002) %>">
+																		<c:if test="<%=authForUpdate.contains(4002) %>">
 																		checked
 																		</c:if>
 																		>會員帳號管理</label>
@@ -182,7 +176,7 @@
 																<div class="checkbox">
 																	<label><input type="checkbox" name="empAuth"
 																		value="4003"
-																		<c:if test="<%=auth.contains(4003) %>">
+																		<c:if test="<%=authForUpdate.contains(4003) %>">
 																		checked
 																		</c:if>
 																		>商城管理</label>
@@ -196,7 +190,7 @@
 																<div class="checkbox">
 																	<label><input type="checkbox" name="empAuth"
 																		value="4004"
-																		<c:if test="<%=auth.contains(4004) %>">
+																		<c:if test="<%=authForUpdate.contains(4004) %>">
 																		checked
 																		</c:if>
 																		>檢舉申訴管理</label>
@@ -206,7 +200,7 @@
 																<div class="checkbox">
 																	<label><input type="checkbox" name="empAuth"
 																		value="4005"
-																		<c:if test="<%=auth.contains(4005) %>">
+																		<c:if test="<%=authForUpdate.contains(4005) %>">
 																		checked
 																		</c:if>
 																		>權限管理</label>
@@ -216,7 +210,7 @@
 																<div class="checkbox">
 																	<label><input type="checkbox" name="empAuth"
 																		value="4006"
-																		<c:if test="<%=auth.contains(4006) %>">
+																		<c:if test="<%=authForUpdate.contains(4006) %>">
 																		checked
 																		</c:if>
 																		>活動管理</label>
@@ -230,7 +224,7 @@
 																<div class="checkbox">
 																	<label><input type="checkbox" name="empAuth"
 																		value="4007"
-																	    <c:if test="<%=auth.contains(4007) %>">
+																	    <c:if test="<%=authForUpdate.contains(4007) %>">
 																		checked
 																		</c:if>
 																		>餐廳管理</label>
@@ -240,7 +234,7 @@
 																<div class="checkbox">
 																	<label><input type="checkbox" name="empAuth"
 																		value="4008"
-																		<c:if test="<%=auth.contains(4008) %>">
+																		<c:if test="<%=authForUpdate.contains(4008) %>">
 																		checked
 																		</c:if>
 																		>站內信管理</label>

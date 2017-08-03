@@ -91,7 +91,7 @@
 					<div class="panel list-group list-color">
 
 						<a href="#" class="list-group-item">後端首頁</a>
-						<%=(((List) pageContext.getAttribute("auth")))%>
+	
 
 
 
@@ -156,7 +156,7 @@
 								<div id="sm5" class="sublinks collapse">
 
 
-									<a href="#" class="list-group-item small"> 管理員權限管理</a> <a
+									<a href="<%=request.getContextPath()%>/back_end/emp/authManage.jsp" class="list-group-item small"> 管理員權限管理</a> <a
 										href="<%=request.getContextPath()%>/back_end/emp/empRegister.jsp"
 										class="list-group-item small"> 註冊新管理員</a>
 								</div>

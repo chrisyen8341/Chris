@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="BIG5"%>
 <%@ page import="com.emp.model.*"%>
+<%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html lang="">
 <%
 	Emp emp = (Emp) request.getAttribute("emp");
 	pageContext.setAttribute("emp", emp);
+	List<Integer> auth = (List<Integer>) session.getAttribute("auth");
+	pageContext.setAttribute("auth", auth);
 %>
 <head>
 
@@ -33,7 +36,7 @@
 					<div class="panel panel-info">
 
 						<div class="panel-heading">
-							<h3 class="panel-title">${member.memId}</h3>
+							<h3 class="panel-title">${emp.empName}</h3>
 						</div>
 
 						<div class="panel-body">
@@ -66,7 +69,10 @@
 											role="dialog">
 											<div class="modal-dialog">
 
-												<!-- Modal content-->
+												
+												
+												
+												<!-- 複合查詢Modal content-->
 												<div class="modal-content">
 													<div class="modal-header">
 														<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -82,7 +88,7 @@
 																<tr>
 																	<td class="title">員工編號:</td>
 																	<td><input type="text" class="form-control"
-																		name="empNo" id="empNo" value="6001"
+																		name="empNo" id="empNo"
 																		placeholder="請輸入員工編號" /></td>
 																</tr>
 
@@ -90,14 +96,14 @@
 																<tr>
 																	<td class="title">員工帳號:</td>
 																	<td><input type="text" class="form-control"
-																		name="empId" id="empId" value="吳永志"
+																		name="empId" id="empId"
 																		placeholder="輸入員工姓名" /></td>
 																</tr>
 
 																<tr>
 																	<td class="title">員工姓名:</td>
 																	<td><input type="text" class="form-control"
-																		name="empName" id="empName" value="吳永志"
+																		name="empName" id="empName"
 																		placeholder="輸入員工姓名" /></td>
 																</tr>
 
@@ -119,7 +125,7 @@
 																	<td class="title">雇用日期</td>
 																	<td><input type="date" name="empHireDate"
 																		min="1910-01-01" max='2000-13-13' id="empHireDate"
-																		value="${member.memBday}" class="form-control"
+																		 class="form-control"
 																		placeholder="Confirm your Password" /></td>
 																</tr>
 
