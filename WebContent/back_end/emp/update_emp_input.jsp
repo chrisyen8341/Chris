@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.emp.model.*"%>
+<%@ page import="java.util.*"%>
 <%
 	Emp empVO = (Emp) request.getAttribute("empVO"); //EmpServlet.java (Concroller), 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
 %>
@@ -8,7 +9,9 @@
 <html lang="">
 <%
 	Emp emp = (Emp) request.getAttribute("emp");
+	List<Integer> auth=(List<Integer>)request.getAttribute("auth");
 	pageContext.setAttribute("emp", emp);
+	pageContext.setAttribute("auth", auth);
 %>
 <head>
 <%@ include file="empHeader.file"%>
@@ -152,25 +155,37 @@
 	</table>
 
 												
-													員工權限
-
+													員工權限<%=auth %>
+<c:if test="<%=auth!=null %>">
 														<div class="row">
 															<div class="col-sm-4">
 																<div class="checkbox">
 																	<label><input type="checkbox" name="empAuth"
-																		value="4001">前端看板管理</label>
+																		value="4001"
+																		<c:if test="<%=auth.contains(4001) %>">
+																		checked
+																		</c:if>
+																		>前端看板管理</label>
 																</div>
 															</div>
 															<div class="col-sm-4">
 																<div class="checkbox">
 																	<label><input type="checkbox" name="empAuth"
-																		value="4002">會員帳號管理</label>
+																		value="4002"
+																		<c:if test="<%=auth.contains(4002) %>">
+																		checked
+																		</c:if>
+																		>會員帳號管理</label>
 																</div>
 															</div>
 															<div class="col-sm-4">
 																<div class="checkbox">
 																	<label><input type="checkbox" name="empAuth"
-																		value="4003">商城管理</label>
+																		value="4003"
+																		<c:if test="<%=auth.contains(4003) %>">
+																		checked
+																		</c:if>
+																		>商城管理</label>
 																</div>
 															</div>
 														</div>
@@ -180,19 +195,31 @@
 															<div class="col-sm-4">
 																<div class="checkbox">
 																	<label><input type="checkbox" name="empAuth"
-																		value="4004">檢舉申訴管理</label>
+																		value="4004"
+																		<c:if test="<%=auth.contains(4004) %>">
+																		checked
+																		</c:if>
+																		>檢舉申訴管理</label>
 																</div>
 															</div>
 															<div class="col-sm-4">
 																<div class="checkbox">
 																	<label><input type="checkbox" name="empAuth"
-																		value="4005">權限管理</label>
+																		value="4005"
+																		<c:if test="<%=auth.contains(4005) %>">
+																		checked
+																		</c:if>
+																		>權限管理</label>
 																</div>
 															</div>
 															<div class="col-sm-4">
 																<div class="checkbox">
 																	<label><input type="checkbox" name="empAuth"
-																		value="4006">活動管理</label>
+																		value="4006"
+																		<c:if test="<%=auth.contains(4006) %>">
+																		checked
+																		</c:if>
+																		>活動管理</label>
 																</div>
 															</div>
 														</div>
@@ -202,18 +229,26 @@
 															<div class="col-sm-4">
 																<div class="checkbox">
 																	<label><input type="checkbox" name="empAuth"
-																		value="4007">餐廳管理</label>
+																		value="4007"
+																	    <c:if test="<%=auth.contains(4007) %>">
+																		checked
+																		</c:if>
+																		>餐廳管理</label>
 																</div>
 															</div>
 															<div class="col-sm-4">
 																<div class="checkbox">
 																	<label><input type="checkbox" name="empAuth"
-																		value="4008">站內信管理</label>
+																		value="4008"
+																		<c:if test="<%=auth.contains(4008) %>">
+																		checked
+																		</c:if>
+																		>站內信管理</label>
 																</div>
 															</div>
 														</div>
 											
-
+	</c:if>
 
 
 										

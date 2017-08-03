@@ -10,6 +10,7 @@ public interface EmpDAO_interface {
 	void addWithAuth(Emp emp,List<Integer> authNo);
 	void update(Emp emp);
 	void delete(int empNo);
+	void updateWithAuth(Emp emp,List<Integer> auth);
 	Emp findByPk(int empNo);
 	Emp findById(String empId);
 	List<Emp> getAll();

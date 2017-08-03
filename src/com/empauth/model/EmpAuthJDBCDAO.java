@@ -322,6 +322,13 @@ public class EmpAuthJDBCDAO implements EmpAuthDAO_interface {
 		return empAuthList;
 	}
 
+	@Override
+	public void delete2(int empNo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 
 

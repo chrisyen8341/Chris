@@ -104,9 +104,11 @@ public class EmpServlet extends HttpServlet {
 				/***************************2.開始查詢資料****************************************/
 				EmpService empSvc = new EmpService();
 				Emp empVO = empSvc.getOneEmp(empno);
+				List<Integer> auth=empSvc.getAuthByEmpNo(empno);
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("empVO", empVO); // 資料庫取出的empVO物件,存入req
+				req.setAttribute("auth", auth);
 				String url = "/back_end/emp/update_emp_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交update_emp_input.jsp
 				successView.forward(req, res);
@@ -146,6 +148,20 @@ public class EmpServlet extends HttpServlet {
 
 				String empEmail = req.getParameter("empEmail");
 				
+				
+				String[] empAuthb=req.getParameterValues("empAuth");	
+				if(empAuthb==null){
+					errorMsgs.add("請至少給予員工一個權限");
+				}
+				
+				List<Integer> empAuthNos=new ArrayList<Integer>( );
+				System.out.println("此帳號修改權限如下:");
+				for(String eAuth:empAuthb){
+					empAuthNos.add(Integer.parseInt(eAuth));
+					System.out.println(eAuth);
+				};
+				
+				
 
 				Emp empVO = new Emp();
 				empVO.setEmpNo(empNo);
@@ -166,8 +182,9 @@ public class EmpServlet extends HttpServlet {
 				/***************************2.開始修改資料*****************************************/
 				EmpService empSvc = new EmpService();
 				Emp empc=empSvc.getOneEmp(empNo);
-				empVO = empSvc.updateEmp(empNo, empName, empJob, empc.getEmpId(), empc.getEmpPwd(), 0, empHireDate, empEmail);
-				
+				empVO = empSvc.updateEmpWithAuth(empNo, empName, empJob, empc.getEmpId(), empc.getEmpPwd(), 0, empHireDate, empEmail, empAuthNos);
+						
+						
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/				
 
 				

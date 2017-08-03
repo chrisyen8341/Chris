@@ -438,6 +438,13 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 	}
 
 
+	@Override
+	public void updateWithAuth(Emp emp, List<Integer> auth) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 	
 }

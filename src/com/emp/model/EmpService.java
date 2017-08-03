@@ -65,6 +65,24 @@ public class EmpService {
 		return emp;
 	}
 
+	public Emp updateEmpWithAuth(Integer empNo, String empName, String empJob, String empId, String empPwd, Integer empStatus,Date empHireDate,String empEmail,List<Integer> auth) {
+
+		Emp emp = new Emp();
+		emp.setEmpNo(empNo);
+		emp.setEmpName(empName);
+		emp.setEmpJob(empJob);
+		emp.setEmpId(empId);
+		emp.setEmpPwd(empPwd);
+		emp.setEmpStatus(0);
+		emp.setEmpHireDate(empHireDate);
+		emp.setEmpEmail(empEmail);
+		dao.updateWithAuth(emp, auth); 
+
+		return emp;
+	}
+	
+	
+	
 	public void deleteEmp(Integer empNo) {
 		dao.delete(empNo);
 	}

@@ -15,6 +15,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.empauth.model.EmpAuth;
+import com.empauth.model.EmpAuthDAO;
 import com.empauth.model.EmpAuthJDBCDAO;
 
 import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_Emp2;
@@ -37,6 +38,8 @@ public class EmpDAO implements EmpDAO_interface{
 	private static final String INSERT_STMT = "INSERT INTO EMP(EMPNO,EMPNAME,EMPJOB,EMPID,EMPPWD,EMPSTATUS,EMPHIREDATE,EMPEMAIL)"
 			+ " VALUES(EMPNO_SQ.NEXTVAL,?,?,?,?,?,?,?)";
 	private static final String UPDATE_STMT = "UPDATE EMP SET EMPNO = ?, EMPNAME = ?, EMPJOB = ?, "
+			+ "EMPID = ?, EMPPWD = ?,EMPSTATUS = ?,EMPHIREDATE = ?,EMPEMAIL= ? WHERE EMPNO =　?";
+	private static final String UPDATE_AUTH_STMT = "UPDATE EMPAUTH SET EMPNO = ?, EMPNAME = ?, EMPJOB = ?, "
 			+ "EMPID = ?, EMPPWD = ?,EMPSTATUS = ?,EMPHIREDATE = ?,EMPEMAIL= ? WHERE EMPNO =　?";
 	private static final String DELETE_STMT = "UPDATE EMP SET EMPSTATUS = 1 WHERE EMPNO =　?";
 	private static final String FIND_BY_PK = "SELECT * FROM EMP WHERE EMPNO = ?";
@@ -483,7 +486,7 @@ public class EmpDAO implements EmpDAO_interface{
 			pstmt.setInt(1, empNo);
 			rs=pstmt.executeQuery();
 			while(rs.next()){
-				authList.add(rs.getInt("empNo"));		
+				authList.add(rs.getInt("authNo"));		
 			}
 			
 		} catch (SQLException e) {
@@ -514,6 +517,57 @@ public class EmpDAO implements EmpDAO_interface{
 			}
 		}
 		return authList ;
+	}
+
+	@Override
+	public void updateWithAuth(Emp emp, List<Integer> auth) {
+		PreparedStatement pstmt=null;
+
+		Connection con=null;
+		
+		try {
+			
+			con=ds.getConnection();
+			pstmt=con.prepareStatement(UPDATE_STMT);
+			pstmt.setInt(1, emp.getEmpNo());
+			pstmt.setString(2, emp.getEmpName());
+			pstmt.setString(3, emp.getEmpJob());
+			pstmt.setString(4, emp.getEmpId());
+			pstmt.setString(5, emp.getEmpPwd());
+			pstmt.setInt(6, emp.getEmpStatus());
+			pstmt.setDate(7, emp.getEmpHireDate());
+			pstmt.setString(8, emp.getEmpEmail());
+			pstmt.setInt(9, emp.getEmpNo());
+			pstmt.executeUpdate();
+			EmpAuthDAO dao=new EmpAuthDAO();
+			//把該員工舊的權限全部刪除 再給予新權限
+			dao.delete2(emp.getEmpNo());
+			for(Integer aut:auth){
+				EmpAuth eAu=new EmpAuth(emp.getEmpNo(),aut);
+				dao.add(eAu);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
 	}
 
 
