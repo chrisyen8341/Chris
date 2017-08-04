@@ -15,9 +15,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.email.MailService;
 import com.emp.model.Emp;
 import com.emp.model.EmpService;
 import com.member.model.Member;
+
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 
 @WebServlet("/back_end/emp/EmpRegister.do")
@@ -107,6 +118,17 @@ public class EmpRegister extends HttpServlet {
 			
 			//Email寄發 代修改
 			System.out.println("===================此帳號密碼為"+pwd);
+			
+		      String to = empEmail;
+		      
+		      String subject = "員工到職密碼通知";
+		      
+		      String messageText = "嗨! " + empName+"歡迎您加入寵物You&Me大家庭，您的員工帳號為 : "+empId + " 請謹記此密碼: " + pwd + "\n" +" (已經啟用)"; 
+		       
+		      MailService mailService = new MailService();
+		      mailService.sendMail(to, subject, messageText);
+					
+			
 			
 			//加密存入db 代修改 
 			String  empPwd =String.valueOf((int)((pwd*3)+67));
