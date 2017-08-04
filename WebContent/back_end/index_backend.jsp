@@ -56,7 +56,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand logo" href="index.html">寵物You&amp;Me</a>
+				<a class="navbar-brand logo" href="<%=request.getContextPath()%>/back_end/index_backend.jsp">寵物You&amp;Me</a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse"
@@ -90,7 +90,7 @@
 				<div id="menu">
 					<div class="panel list-group list-color">
 
-						<a href="#" class="list-group-item">後端首頁</a>
+						<a href="<%=request.getContextPath()%>/back_end/index_backend.jsp" class="list-group-item">後端首頁</a>
 	
 
 
@@ -118,7 +118,7 @@
 									data-target="#sm2" data-parent="#menu">會員帳號管理 <span
 									class="glyphicon glyphicon-triangle-bottom pull-right"></span></a>
 								<div id="sm2" class="sublinks collapse">
-									<a href="#" class="list-group-item small"> 一般會員管理</a> <a
+									<a href="<%=request.getContextPath()%>/back_end/member/memManage.jsp" class="list-group-item small"> 一般會員管理</a> <a
 										href="#" class="list-group-item small"> 餐廳會員管理</a>
 								</div>
 							</c:if>

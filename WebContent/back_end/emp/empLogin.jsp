@@ -10,7 +10,6 @@
 	pageContext.setAttribute("emp", emp);
 	List<Integer> auth = (List<Integer>) session.getAttribute("auth");
 	pageContext.setAttribute("auth", auth);
-	
 %>
 <head>
 <meta charset="utf-8">
@@ -38,17 +37,13 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
-		
-		
-		<style>
-		
-		
-		.submit{
-		matgin-top: 20px;
-		}
-		
-		
-		</style>
+
+
+<style>
+.submit {
+	matgin-top: 20px;
+}
+</style>
 </head>
 
 <body>
@@ -57,67 +52,73 @@
 	<div class="container-fluid">
 		<div class="row">
 
+			<%@ include file="empLSide.file"%>
 
 			<div class="col-xs-12 col-sm-8">
 
-<div class="row">
-			<div class="col-sm-6 col-sm-offset-3">
+				<div class="row">
+					<div class="col-sm-6 col-sm-offset-3">
 
-				<div align="center">
-					<Img src="<%=request.getContextPath() %>/back_end/images/logo.png" height="250px" width="400px" />
+						<div align="center">
+							<Img
+								src="<%=request.getContextPath()%>/back_end/images/logo.png"
+								height="250px" width="400px" />
+						</div>
+
+						<form class=""
+							action="<%=request.getContextPath()%>//back_end/emp/EmpLogin.do"
+							method="post">
+
+
+							<div class="form-group">
+								<label for="empId" class="cols-sm-2 control-label">帳號</label><span
+									id="memIdShow"> <c:if test="${not empty errorMsgs}">
+										<font color="red">&nbsp;&nbsp;帳號密碼錯誤</font>
+									</c:if>
+
+								</span>
+								<div class="cols-sm-10">
+									<div class="input-group">
+										<span class="input-group-addon"><i
+											class="fa fa-user fa" aria-hidden="true"></i></span> <input
+											type="text" class="form-control" name="empId" id="empId"
+											value="<%=(emp == null) ? "" : emp.getEmpId()%>"
+											placeholder="請輸入帳號" required />
+									</div>
+								</div>
+							</div>
+
+
+							<div class="form-group pwd">
+								<label for="empPwd" class="cols-sm-2 control-label">密碼</label><span
+									id="empPwdShow"></span>
+								<div class="cols-sm-10">
+									<div class="input-group">
+										<span class="input-group-addon"><i
+											class="fa fa-user fa" aria-hidden="true"></i></span> <input
+											type="password" class="form-control" name="empPwd"
+											id="empPwd" value="<%=(emp == null) ? "" : emp.getEmpPwd()%>"
+											placeholder="請輸入帳號" required />
+									</div>
+								</div>
+							</div>
+
+							<div class="checkbox">
+								<label> <input type="checkbox"> 記住我
+								</label>
+							</div>
+
+							<input
+								class="btn btn-primary btn-lg btn-block login-button login"
+								type="submit" value="登錄">
+							<div>
+								<a href="#" class="btn btn-link">忘記密碼</a>
+							</div>
+							<input type="hidden" name="action" value="login">
+						</form>
+
+					</div>
 				</div>
-
-				<form class="" action="<%=request.getContextPath() %>//back_end/emp/EmpLogin.do" method="post">
-
-
-					<div class="form-group">
-						<label for="empId" class="cols-sm-2 control-label">帳號</label><span
-							id="memIdShow"> <c:if test="${not empty errorMsgs}">
-								<font color="red">&nbsp;&nbsp;帳號密碼錯誤</font>
-							</c:if>
-
-						</span>
-						<div class="cols-sm-10">
-							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-user fa"
-									aria-hidden="true"></i></span> <input type="text" class="form-control"
-									name="empId" id="empId"
-									value="<%=(emp == null) ? "" : emp.getEmpId()%>"
-									placeholder="請輸入帳號" required />
-							</div>
-						</div>
-					</div>
-
-
-					<div class="form-group pwd">
-						<label for="empPwd" class="cols-sm-2 control-label">密碼</label><span
-							id="empPwdShow"></span>
-						<div class="cols-sm-10">
-							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-user fa"
-									aria-hidden="true"></i></span> <input type="password"
-									class="form-control" name="empPwd" id="empPwd"
-									value="<%=(emp == null) ? "" : emp.getEmpPwd()%>"
-									placeholder="請輸入帳號" required />
-							</div>
-						</div>
-					</div>
-
-					<div class="checkbox">
-						<label> <input type="checkbox"> 記住我
-						</label>
-					</div>
-
-					<input class="btn btn-primary btn-lg btn-block login-button login"
-						type="submit" value="登錄">
-					<div>
-						<a href="#" class="btn btn-link">忘記密碼</a> 
-					</div>
-					<input type="hidden" name="action" value="login">
-				</form>
-
-			</div>
-		</div>
 
 
 
@@ -128,8 +129,6 @@
 			<script src="https://code.jquery.com/jquery.js"></script>
 			<script
 				src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-			
 </body>
 
 </html>

@@ -50,7 +50,7 @@
 
 										
 										<a href="#" class="list-group-item small" data-toggle="modal"
-												data-target="#searchSpec"> 查詢特定員工</a>
+												data-target="#searchSpec"> 查詢特定會員</a>
 						
 
 
