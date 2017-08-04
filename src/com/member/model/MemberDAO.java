@@ -48,6 +48,7 @@ public class MemberDAO implements MemberDAO_interface {
 	private static final String FIND_ALBUMS_BY_MEMNO = "SELECT * FROM ALBUM WHERE MEMNO = ? AND ALBUMSTATUS = 0 ORDER BY ALBUMNO DESC";
 	private static final String GET_ALL = "SELECT * FROM MEMBER";
 	private static final String FIND_BY_ID = "SELECT * FROM MEMBER WHERE MEMID = ?";
+	private static final String FIND_BY_EMAIL = "SELECT * FROM MEMBER WHERE MEMEMAIL = ?";
 	private static final String FIND_BY_ID_SNAME = "SELECT * FROM MEMBER WHERE UPPER(MEMID) LIKE UPPER(?) OR MEMSNAME LIKE UPPER(?)";
 	private static final String GET_CURRSEQ = "SELECT MEMNO_SQ.CURRVAL FROM DUAL";
 
@@ -785,6 +786,76 @@ public class MemberDAO implements MemberDAO_interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public Member findByEmail(String memEmail) {
+		Member member = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(FIND_BY_EMAIL);
+			pstmt.setString(1, memEmail);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				member = new Member();
+				member.setMemNo(rs.getInt("memNo"));
+				member.setMemId(rs.getString("memId"));
+				member.setMemPwd(rs.getString("memPwd"));
+				member.setMemName(rs.getString("memName"));
+				member.setMemSname(rs.getString("memSname"));
+				member.setMemGender(rs.getInt("memGender"));
+				member.setMemIdNo(rs.getString("memIdNo"));
+				member.setMemBday(rs.getDate("memBday"));
+				member.setMemPhone(rs.getString("memPhone"));
+				member.setMemAddress(rs.getString("memAddress"));
+				member.setMemEmail(rs.getString("memEmail"));
+				member.setMemImg(rs.getBytes("memImg"));
+				member.setMemReported(rs.getInt("memReported"));
+				member.setMemStatus(rs.getInt("memStatus"));
+				member.setMemRelation(rs.getInt("memRelation"));
+				member.setMemSelfintro(rs.getString("memSelfintro"));
+				member.setMemFollowed(rs.getInt("memFollowed"));
+				member.setMemPoint(rs.getInt("memPoint"));
+				member.setMemSaleRank(rs.getInt("memSaleRank"));
+				member.setMemLongtitude(rs.getDouble("memLongtitude"));
+				member.setMemLatitude(rs.getDouble("memLatitude"));
+				member.setMemLocTime(rs.getTimestamp("memLocTime"));
+				member.setMemLocStatus(rs.getInt("memLocStatus"));
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return member;
 	}
 
 }

@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.email.MailService;
 import com.member.model.Member;
 import com.member.model.MemberService;
 import com.pet.model.Pet;
@@ -454,6 +455,64 @@ public class Update extends HttpServlet {
 			failureView.forward(req, res);
 
 		}
+		
+		
+		// 忘記密碼
+		if ("forgetPwd".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+
+			/*****************************
+			 * 1.接收請求參數 - 輸入格式的錯誤處理
+			 **********************/
+			String memEmail = req.getParameter("memEmail");
+			if (memEmail == null || memEmail.trim().isEmpty()) {
+				errorMsgs.add("請填寫Email");
+			}
+
+			Member memberf=memSvc.getMemberByEmail(memEmail);
+			if(memberf==null){
+				errorMsgs.add("查無此Email");
+			}
+			
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/forgetPwd.jsp");
+				req.setAttribute("errorMsgs", errorMsgs);
+				failureView.forward(req, res);
+				return;// 程式中斷
+			}
+			
+			
+			
+			/*************************** 2.開始修改資料 *****************************************/
+			
+			String memPwd=memberf.getMemPwd();;
+
+
+
+
+		      
+		    String subject = "Pet You&Me 忘記密碼通知";
+		      
+		    String messageText = "嗨! " + memberf.getMemName()+"，您的帳號為 : "+memberf.getMemId() + "， 您的密碼為 : " 
+		    + memPwd + "\n" +" (已經啟用)"; 
+		       
+		    MailService mailService = new MailService();
+		    mailService.sendMail(memEmail, subject, messageText);
+			
+			
+			
+
+			/***************************
+			 * 2.修改完成,準備轉交(Send the Success view)
+			 *************/
+			RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/forgetPwd.jsp");
+
+			req.setAttribute("success", "Email已寄出，請至信箱確認");
+
+			failureView.forward(req, res);
+
+		}
+		
 
 	}
 

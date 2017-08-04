@@ -18,6 +18,7 @@ public interface MemberDAO_interface {
 	Set<Album> findAlbumsByMemNo(Integer memno);
 	List<Member> getAll();
 	List<Member> findByIdAndName(String search);
+	Member findByEmail(String memEmail);
 	Member findById(String memId);
 	List<Member> getAll(Map<String, String[]> map); 
 	

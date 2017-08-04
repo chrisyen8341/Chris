@@ -116,14 +116,14 @@ public class EmpRegister extends HttpServlet {
 			//亂數產生亂碼
 			Integer pwd=(int) ((Math.random()*10)*10000000+(Math.random()*1000000));
 			
-			//Email寄發 代修改
+			//Email寄發 
 			System.out.println("===================此帳號密碼為"+pwd);
 			
 		      String to = empEmail;
 		      
 		      String subject = "員工到職密碼通知";
 		      
-		      String messageText = "嗨! " + empName+"歡迎您加入寵物You&Me大家庭，您的員工帳號為 : "+empId + " 請謹記此密碼: " + pwd + "\n" +" (已經啟用)"; 
+		      String messageText = "嗨! " + empName+"，歡迎您加入寵物You&Me大家庭，您的員工帳號為 : "+empId + " 請謹記此密碼 : " + pwd + "\n" +" (已經啟用)"; 
 		       
 		      MailService mailService = new MailService();
 		      mailService.sendMail(to, subject, messageText);

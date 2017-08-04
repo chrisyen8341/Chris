@@ -166,5 +166,7 @@ public class MemberService {
 		return dao.getAll(map);
 	}
 	
-	
+	public Member getMemberByEmail(String memEmail) {
+		return dao.findByEmail(memEmail);
+	}
 }

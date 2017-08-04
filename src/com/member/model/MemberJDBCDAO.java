@@ -750,4 +750,11 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 		return null;
 	}
 
+
+	@Override
+	public Member findByEmail(String memEmail) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

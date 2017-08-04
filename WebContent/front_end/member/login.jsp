@@ -60,20 +60,16 @@
 									aria-hidden="true"></i></span> <input type="password"
 									class="form-control" name="memPwd" id="memId"
 									value="<%=(member == null) ? "" : member.getMemPwd()%>"
-									placeholder="請輸入帳號" required />
+									placeholder="請輸入密碼" required />
 							</div>
 						</div>
 					</div>
 
-					<div class="checkbox">
-						<label> <input type="checkbox"> 記住我
-						</label>
-					</div>
 
 					<input class="btn btn-primary btn-lg btn-block login-button login"
 						type="submit" value="登錄">
 					<div>
-						<a href="#" class="btn btn-link">忘記密碼</a> <a href="<%=request.getContextPath() %>/front_end/member/register.jsp"
+						<a href="<%=request.getContextPath() %>/front_end/member/forgetPwd.jsp" class="btn btn-link">忘記密碼</a> <a href="<%=request.getContextPath() %>/front_end/member/register.jsp"
 							class="btn btn-link">註冊</a>
 					</div>
 					<input type="hidden" name="action" value="login">
