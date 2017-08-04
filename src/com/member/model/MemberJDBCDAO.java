@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.album.model.Album;
@@ -27,7 +28,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			+ " VALUES(MEMNO_SQ.NEXTVAL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE_STMT = "UPDATE MEMBER SET MEMNO = ?, MEMID = ?, MEMPWD = ?, MEMNAME = ?, MEMSNAME = ?, MEMGENDER = ?, MEMIDNO = ?, MEMBDAY = ?, MEMPHONE = ?, MEMADDRESS = ?,MEMEMAIL = ? "
 			+ ",MEMIMG = ?, MEMREPORTED = ?, MEMSTATUS = ?, MEMRELATION = ?, MEMSELFINTRO = ?, MEMFOLLOWED = ?, MEMPOINT = ?, MEMSALERANK = ?, MEMLONGTITUDE = ?, MEMLATITUDE = ?, MEMLOCTIME = ?, MEMLOCSTATUS = ? WHERE MEMNO = ?";
-	private static final String DELETE_STMT = "DELETE FROM MEMBER WHERE MEMNO = ?";
+	private static final String DELETE_STMT = "UPDATE MEMBER SET MEMSTATUS = 1 WHERE MEMNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM MEMBER WHERE MEMNO = ?";
 	private static final String FIND_PETS_BY_MEMNO = "SELECT * FROM PET WHERE MEMNO = ? AND PETSTATUS = 0 ORDER BY PETNO DESC";
 	private static final String FIND_ALBUMS_BY_MEMNO = "SELECT * FROM ALBUM WHERE MEMNO = ? AND ALBUMSTATUS = 0 ORDER BY ALBUMNO DESC";
@@ -740,6 +741,13 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 		}
 		
 		return set;
+	}
+
+
+	@Override
+	public List<Member> getAll(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

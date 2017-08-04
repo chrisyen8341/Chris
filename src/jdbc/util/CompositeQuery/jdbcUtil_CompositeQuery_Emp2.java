@@ -15,9 +15,11 @@ public class jdbcUtil_CompositeQuery_Emp2 {
 
 		String aCondition = null;
 
-		if ("empNo".equals(columnName)) // 用於其他
+		if ("empNo".equals(columnName)|| "memNo".equals(columnName)||"memGender".equals(columnName)) // 用於其他
 			aCondition = columnName + "=" + value;
-		else if ("empName".equals(columnName) || "empId".equals(columnName)|| "empName".equals(columnName)|| "empJob".equals(columnName)) // 用於varchar
+		else if ("empName".equals(columnName) || "empId".equals(columnName)|| "empName".equals(columnName)
+				|| "empJob".equals(columnName)|| "memId".equals(columnName)|| "memName".equals(columnName)
+				|| "memEmail".equals(columnName)) // 用於varchar
 			aCondition = columnName + " like '%" + value + "%'";
 		else if ("empHireDate".equals(columnName))                          // 用於Oracle的date
 			aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";

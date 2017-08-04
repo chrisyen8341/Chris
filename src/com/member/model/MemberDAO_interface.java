@@ -1,9 +1,11 @@
 package com.member.model;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.album.model.Album;
+import com.emp.model.Emp;
 import com.pet.model.Pet;
 
 public interface MemberDAO_interface {
@@ -17,5 +19,6 @@ public interface MemberDAO_interface {
 	List<Member> getAll();
 	List<Member> findByIdAndName(String search);
 	Member findById(String memId);
+	List<Member> getAll(Map<String, String[]> map); 
 	
 }

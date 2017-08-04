@@ -3,9 +3,11 @@ package com.member.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.album.model.Album;
+import com.emp.model.Emp;
 import com.pet.model.Pet;
 
 
@@ -159,5 +161,10 @@ public class MemberService {
 	public List<Member> getMembersByIdName(String search){
 		return dao.findByIdAndName(search);
 	}
+	
+	public List<Member> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
+	}
+	
 	
 }
