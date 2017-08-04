@@ -7,7 +7,7 @@
 	pageContext.setAttribute("auth", auth);
 %>
 
-<jsp:useBean id="listEmps_ByCompositeQuery" scope="request"
+<jsp:useBean id="listMembers_ByCompositeQuery" scope="request"
 	type="java.util.List" />
 
 <html>
@@ -78,7 +78,7 @@
 												<th>·|­ûEmail</th>
 											</tr>
 											<%@ include file="pages/page1_ByCompositeQuery.file"%>
-											<c:forEach var="member" items="${listEmps_ByCompositeQuery}"
+											<c:forEach var="member" items="${listMembers_ByCompositeQuery}"
 												begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 												<tr align='center' valign='middle'
 													${(empVO.empNo==param.empNo) ? 'bgcolor=#CCCCFF':''}>

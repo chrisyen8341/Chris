@@ -46,9 +46,9 @@ public class Suspension extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 			String requestURL = req.getParameter("requestURL"); // 送出刪除的來源網頁路徑: 可能為【/emp/listAllEmp.jsp】 或  【/dept/listEmps_ByDeptno.jsp】 或 【 /dept/listAllDept.jsp】 或 【 /emp/listEmps_ByCompositeQuery.jsp】
-			System.out.println(requestURL);
+	
 			try {
-				/***************************1.接收請求參數***************************************/
+	
 				Integer memNo = new Integer(req.getParameter("memNo"));
 				
 				/***************************2.開始刪除資料***************************************/
@@ -58,7 +58,7 @@ public class Suspension extends HttpServlet {
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/
 
-				System.out.println("11111111111111111111111111111111111111");
+				
 				if(requestURL.equals("/back_end/member/listMembers_ByCompositeQuery.jsp")){
 					HttpSession session = req.getSession();
 					Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
@@ -110,7 +110,7 @@ public class Suspension extends HttpServlet {
 				List<Member> list  = memSvc.getAll(map);
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
-				req.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
+				req.setAttribute("listMembers_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
 				RequestDispatcher successView = req.getRequestDispatcher("/back_end/member/listMembers_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 				successView.forward(req, res);
 				

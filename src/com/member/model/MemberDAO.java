@@ -722,7 +722,7 @@ public class MemberDAO implements MemberDAO_interface {
 		try {
 			
 			con = ds.getConnection();
-			String finalSQL = "select * from member "
+			String finalSQL = "select * from member where memstatus = 0 "
 		          + jdbcUtil_CompositeQuery_Emp2.get_WhereCondition(map)
 		          + "order by memno";
 			pstmt = con.prepareStatement(finalSQL);
