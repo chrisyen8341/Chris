@@ -66,7 +66,7 @@
 						</div>
 
 						<form class=""
-							action="<%=request.getContextPath()%>//back_end/emp/EmpLogin.do"
+							action="<%=request.getContextPath()%>//back_end/emp/EmpLogin2.do"
 							method="post">
 
 

@@ -493,8 +493,12 @@ public class Update extends HttpServlet {
 		      
 		    String subject = "Pet You&Me 忘記密碼通知";
 		      
-		    String messageText = "嗨! " + memberf.getMemName()+"，您的帳號為 : "+memberf.getMemId() + "， 您的密碼為 : " 
-		    + memPwd + "\n" +" (已經啟用)"; 
+		    java.util.Date current=new java.util.Date();
+		    java.text.SimpleDateFormat sdf=new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		    String c=sdf.format(current);
+		    String messageText = "嗨! " + memberf.getMemName()+"您在"+c+"曾發送忘記帳號密碼請求。 "+ "\n" 
+		    +"您的帳號為 : "+memberf.getMemId() + "， 您的密碼為 : " + memPwd + "\n"
+		    +"如此請求並非由您發出，請至客服反映"; 
 		       
 		    MailService mailService = new MailService();
 		    mailService.sendMail(memEmail, subject, messageText);
