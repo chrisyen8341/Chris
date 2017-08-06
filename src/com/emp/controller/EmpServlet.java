@@ -182,7 +182,7 @@ public class EmpServlet extends HttpServlet {
 				/***************************2.開始修改資料*****************************************/
 				EmpService empSvc = new EmpService();
 				Emp empc=empSvc.getOneEmp(empNo);
-				empVO = empSvc.updateEmpWithAuth(empNo, empName, empJob, empc.getEmpId(), empc.getEmpPwd(), 0, empHireDate, empEmail, empAuthNos);
+				empVO = empSvc.updateEmpWithAuth(empNo, empName, empJob, empc.getEmpId(), empc.getEmpPwd(),empc.getEmpPwdSalt(), 0, empHireDate, empEmail, empAuthNos);
 						
 						
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/				

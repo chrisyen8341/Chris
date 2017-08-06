@@ -13,13 +13,14 @@ public class EmpService {
 		dao=new EmpDAO();
 	}
 	
-	public Emp addEmp(String empName, String empJob, String empId, String empPwd,Integer empStatus,Date empHireDate,String empEmail) {
+	public Emp addEmp(String empName, String empJob, String empId, String empPwd,String empPwdSalt,Integer empStatus,Date empHireDate,String empEmail) {
 
 		Emp emp = new Emp();
 		emp.setEmpName(empName);
 		emp.setEmpJob(empJob);
 		emp.setEmpId(empId);
 		emp.setEmpPwd(empPwd);
+		emp.setEmpPwdSalt(empPwdSalt);
 		emp.setEmpStatus(0);
 		emp.setEmpHireDate(empHireDate);
 		emp.setEmpEmail(empEmail);
@@ -50,7 +51,7 @@ public class EmpService {
 	
 	
 	
-	public Emp updateEmp(Integer empNo, String empName, String empJob, String empId, String empPwd, Integer empStatus,Date empHireDate,String empEmail) {
+	public Emp updateEmp(Integer empNo, String empName, String empJob, String empId, String empPwd, String empPwdSalt,Integer empStatus,Date empHireDate,String empEmail) {
 
 		Emp emp = new Emp();
 		emp.setEmpNo(empNo);
@@ -58,6 +59,7 @@ public class EmpService {
 		emp.setEmpJob(empJob);
 		emp.setEmpId(empId);
 		emp.setEmpPwd(empPwd);
+		emp.setEmpPwdSalt(empPwdSalt);
 		emp.setEmpStatus(0);
 		emp.setEmpHireDate(empHireDate);
 		emp.setEmpEmail(empEmail);
@@ -66,7 +68,7 @@ public class EmpService {
 		return emp;
 	}
 
-	public Emp updateEmpWithAuth(Integer empNo, String empName, String empJob, String empId, String empPwd, Integer empStatus,Date empHireDate,String empEmail,List<Integer> auth) {
+	public Emp updateEmpWithAuth(Integer empNo, String empName, String empJob, String empId, String empPwd,String empPwdSalt, Integer empStatus,Date empHireDate,String empEmail,List<Integer> auth) {
 
 		Emp emp = new Emp();
 		emp.setEmpNo(empNo);
@@ -74,6 +76,7 @@ public class EmpService {
 		emp.setEmpJob(empJob);
 		emp.setEmpId(empId);
 		emp.setEmpPwd(empPwd);
+		emp.setEmpPwdSalt(empPwdSalt);
 		emp.setEmpStatus(0);
 		emp.setEmpHireDate(empHireDate);
 		emp.setEmpEmail(empEmail);

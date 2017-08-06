@@ -108,14 +108,6 @@ public class EmpLogin2 extends HttpServlet {
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException e1) {
 			e1.printStackTrace();
 		}
-        System.out.println("ccccccccccccccccccccc");
-        try {
-        	System.out.println("empSalt"+emp.getEmpPwdSalt());
-			System.out.println(de.Encrytor3("b283af"+empPwd +"b283af", keySpec));
-		} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		try{
 		if (emp == null) {
 			return null;
