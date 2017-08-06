@@ -35,10 +35,10 @@ public class EmpDAO implements EmpDAO_interface{
 	
 	private int currSeq;
 	
-	private static final String INSERT_STMT = "INSERT INTO EMP(EMPNO,EMPNAME,EMPJOB,EMPID,EMPPWD,EMPSTATUS,EMPHIREDATE,EMPEMAIL)"
-			+ " VALUES(EMPNO_SQ.NEXTVAL,?,?,?,?,?,?,?)";
+	private static final String INSERT_STMT = "INSERT INTO EMP(EMPNO,EMPNAME,EMPJOB,EMPID,EMPPWD,EMPPWDSALT,EMPSTATUS,EMPHIREDATE,EMPEMAIL)"
+			+ " VALUES(EMPNO_SQ.NEXTVAL,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE_STMT = "UPDATE EMP SET EMPNO = ?, EMPNAME = ?, EMPJOB = ?, "
-			+ "EMPID = ?, EMPPWD = ?,EMPSTATUS = ?,EMPHIREDATE = ?,EMPEMAIL= ? WHERE EMPNO =　?";
+			+ "EMPID = ?, EMPPWD = ?, EMPPWDSALT = ?,EMPSTATUS = ?,EMPHIREDATE = ?,EMPEMAIL= ? WHERE EMPNO =　?";
 	private static final String UPDATE_AUTH_STMT = "UPDATE EMPAUTH SET EMPNO = ?, EMPNAME = ?, EMPJOB = ?, "
 			+ "EMPID = ?, EMPPWD = ?,EMPSTATUS = ?,EMPHIREDATE = ?,EMPEMAIL= ? WHERE EMPNO =　?";
 	private static final String DELETE_STMT = "UPDATE EMP SET EMPSTATUS = 1 WHERE EMPNO =　?";
@@ -59,9 +59,10 @@ public class EmpDAO implements EmpDAO_interface{
 			pstmt.setString(2, emp.getEmpJob());
 			pstmt.setString(3, emp.getEmpId());
 			pstmt.setString(4,emp.getEmpPwd());
-			pstmt.setInt(5, emp.getEmpStatus());
-			pstmt.setDate(6, emp.getEmpHireDate());
-			pstmt.setString(7, emp.getEmpEmail());
+			pstmt.setString(5, emp.getEmpPwdSalt());
+			pstmt.setInt(6, emp.getEmpStatus());
+			pstmt.setDate(7, emp.getEmpHireDate());
+			pstmt.setString(8, emp.getEmpEmail());
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -106,9 +107,10 @@ public class EmpDAO implements EmpDAO_interface{
 			pstmt.setString(2, emp.getEmpJob());
 			pstmt.setString(3, emp.getEmpId());
 			pstmt.setString(4,emp.getEmpPwd());
-			pstmt.setInt(5, emp.getEmpStatus());
-			pstmt.setDate(6, emp.getEmpHireDate());
-			pstmt.setString(7, emp.getEmpEmail());
+			pstmt.setString(5, emp.getEmpPwdSalt());
+			pstmt.setInt(6, emp.getEmpStatus());
+			pstmt.setDate(7, emp.getEmpHireDate());
+			pstmt.setString(8, emp.getEmpEmail());
 			pstmt.executeUpdate();
 			//掘取對應的自增主鍵值
 			String next_memno = null;
@@ -184,10 +186,11 @@ public class EmpDAO implements EmpDAO_interface{
 			pstmt.setString(3, emp.getEmpJob());
 			pstmt.setString(4, emp.getEmpId());
 			pstmt.setString(5, emp.getEmpPwd());
-			pstmt.setInt(6, emp.getEmpStatus());
-			pstmt.setDate(7, emp.getEmpHireDate());
-			pstmt.setString(8, emp.getEmpEmail());
-			pstmt.setInt(9, emp.getEmpNo());
+			pstmt.setString(6, emp.getEmpPwdSalt());
+			pstmt.setInt(7, emp.getEmpStatus());
+			pstmt.setDate(8, emp.getEmpHireDate());
+			pstmt.setString(9, emp.getEmpEmail());
+			pstmt.setInt(10, emp.getEmpNo());
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -267,6 +270,7 @@ public class EmpDAO implements EmpDAO_interface{
 				emp.setEmpJob(rs.getString("empJob"));
 				emp.setEmpId(rs.getString("empId"));
 				emp.setEmpPwd(rs.getString("empPwd"));
+				emp.setEmpPwdSalt(rs.getString("empPwdSalt"));
 				emp.setEmpStatus(rs.getInt("empStatus"));
 				emp.setEmpHireDate(rs.getDate("empHireDate"));
 				emp.setEmpEmail(rs.getString("empEmail"));
@@ -320,6 +324,7 @@ public class EmpDAO implements EmpDAO_interface{
 				emp.setEmpJob(rs.getString("empJob"));
 				emp.setEmpId(rs.getString("empId"));
 				emp.setEmpPwd(rs.getString("empPwd"));
+				emp.setEmpPwdSalt(rs.getString("empPwdSalt"));
 				emp.setEmpStatus(rs.getInt("empStatus"));
 				emp.setEmpHireDate(rs.getDate("empHireDate"));
 				emp.setEmpEmail(rs.getString("empEmail"));
@@ -376,6 +381,7 @@ public class EmpDAO implements EmpDAO_interface{
 				emp.setEmpJob(rs.getString("empJob"));
 				emp.setEmpId(rs.getString("empId"));
 				emp.setEmpPwd(rs.getString("empPwd"));
+				emp.setEmpPwdSalt(rs.getString("empPwdSalt"));
 				emp.setEmpStatus(rs.getInt("empStatus"));
 				emp.setEmpHireDate(rs.getDate("empHireDate"));
 				emp.setEmpEmail(rs.getString("empEmail"));
@@ -437,6 +443,7 @@ public class EmpDAO implements EmpDAO_interface{
 				emp.setEmpJob(rs.getString("empJob"));
 				emp.setEmpId(rs.getString("empId"));
 				emp.setEmpPwd(rs.getString("empPwd"));
+				emp.setEmpPwdSalt(rs.getString("empPwdSalt"));
 				emp.setEmpStatus(rs.getInt("empStatus"));
 				emp.setEmpHireDate(rs.getDate("empHireDate"));
 				emp.setEmpEmail(rs.getString("empEmail"));
@@ -534,10 +541,11 @@ public class EmpDAO implements EmpDAO_interface{
 			pstmt.setString(3, emp.getEmpJob());
 			pstmt.setString(4, emp.getEmpId());
 			pstmt.setString(5, emp.getEmpPwd());
-			pstmt.setInt(6, emp.getEmpStatus());
-			pstmt.setDate(7, emp.getEmpHireDate());
-			pstmt.setString(8, emp.getEmpEmail());
-			pstmt.setInt(9, emp.getEmpNo());
+			pstmt.setString(6, emp.getEmpPwdSalt());
+			pstmt.setInt(7, emp.getEmpStatus());
+			pstmt.setDate(8, emp.getEmpHireDate());
+			pstmt.setString(9, emp.getEmpEmail());
+			pstmt.setInt(10, emp.getEmpNo());
 			pstmt.executeUpdate();
 			EmpAuthDAO dao=new EmpAuthDAO();
 			//把該員工舊的權限全部刪除 再給予新權限

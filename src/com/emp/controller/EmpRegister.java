@@ -1,7 +1,10 @@
 package com.emp.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,12 +18,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.aesencrypt.EncrypAES;
 import com.email.MailService;
 import com.emp.model.Emp;
 import com.emp.model.EmpService;
 import com.member.model.Member;
 
 import java.util.Properties;
+import java.util.UUID;
+
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -114,7 +122,11 @@ public class EmpRegister extends HttpServlet {
 			
 			/************** 密碼處理**********/
 			//亂數產生亂碼
-			Integer pwd=(int) ((Math.random()*10)*10000000+(Math.random()*1000000));
+			
+			UUID uuid=UUID.randomUUID();
+			String pwd=uuid.toString().substring(0,8);
+			UUID uuid2=UUID.randomUUID();
+			String pwdSalt=uuid2.toString().substring(0,6);
 			
 			//Email寄發 
 			System.out.println("===================此帳號密碼為"+pwd);
@@ -131,7 +143,21 @@ public class EmpRegister extends HttpServlet {
 			
 			
 			//加密存入db 代修改 
-			String  empPwd =String.valueOf((int)((pwd*3)+67));
+		      byte[] keyBytes = null;
+		        EncrypAES de=null;
+				try {
+					keyBytes = Base64.getDecoder().decode("xe/uyYXy0CtrFYDOV3ctkQ==".getBytes("UTF-8"));
+				} catch (UnsupportedEncodingException e2) {
+					e2.printStackTrace();
+				}
+		        SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
+		        try {
+					de=new EncrypAES();
+				} catch (NoSuchAlgorithmException | NoSuchPaddingException e1) {
+					e1.printStackTrace();
+				}  
+     
+		        String  empPwd = de.Encrytor3(pwdSalt+pwd+pwdSalt, keySpec);
 			
 			
 			
@@ -150,10 +176,11 @@ public class EmpRegister extends HttpServlet {
 			emp.setEmpId(empId);
 			emp.setEmpJob(empJob);
 			emp.setEmpPwd(empPwd);
+			emp.setEmpPwdSalt(pwdSalt);
 			emp.setEmpHireDate(empHireDate);
 			emp.setEmpEmail(empEmail);
 			EmpService empSvc=new EmpService();
-			empSvc.addEmpWithAuth(empName, empJob, empId, empPwd, 0, empHireDate, empEmail,empAuthNos );
+			empSvc.addEmpWithAuth(empName, empJob, empId, empPwd, pwdSalt,0, empHireDate, empEmail,empAuthNos );
 		
 			
 

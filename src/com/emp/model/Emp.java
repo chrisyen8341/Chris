@@ -10,23 +10,28 @@ public class Emp implements Serializable{
 	private String empJob;
 	private String empId;	
 	private String empPwd;
+	private String empPwdSalt;
 	private Integer empStatus;
 	private Date empHireDate;
 	private String empEmail;
 
 	public Emp(){}
 
-	public Emp(Integer empNo, String empName, String empJob, String empId, String empPwd, Integer empStatus,Date empHireDate,String empEmail) {
+
+	public Emp(Integer empNo, String empName, String empJob, String empId, String empPwd, String empPwdSalt,
+			Integer empStatus, Date empHireDate, String empEmail) {
 		super();
 		this.empNo = empNo;
 		this.empName = empName;
 		this.empJob = empJob;
 		this.empId = empId;
 		this.empPwd = empPwd;
-		this.empStatus=empStatus;
-		this.empHireDate=empHireDate;
-		this.empEmail=empEmail;
+		this.empPwdSalt = empPwdSalt;
+		this.empStatus = empStatus;
+		this.empHireDate = empHireDate;
+		this.empEmail = empEmail;
 	}
+
 
 	public Integer getEmpNo() {
 		return empNo;
@@ -67,6 +72,18 @@ public class Emp implements Serializable{
 	public void setEmpPwd(String empPwd) {
 		this.empPwd = empPwd;
 	}
+
+	
+	
+	public String getEmpPwdSalt() {
+		return empPwdSalt;
+	}
+
+
+	public void setEmpPwdSalt(String empPwdSalt) {
+		this.empPwdSalt = empPwdSalt;
+	}
+
 
 	public Integer getEmpStatus() {
 		return empStatus;

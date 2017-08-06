@@ -28,13 +28,14 @@ public class EmpService {
 		return emp ;
 	}
 
-	public Emp addEmpWithAuth(String empName, String empJob, String empId, String empPwd, Integer empStatus,Date empHireDate,String empEmail,List<Integer> authNos) {
+	public Emp addEmpWithAuth(String empName, String empJob, String empId, String empPwd,String empPwdSalt, Integer empStatus,Date empHireDate,String empEmail,List<Integer> authNos) {
 
 		Emp emp = new Emp();
 		emp.setEmpName(empName);
 		emp.setEmpJob(empJob);
 		emp.setEmpId(empId);
 		emp.setEmpPwd(empPwd);
+		emp.setEmpPwdSalt(empPwdSalt);
 		emp.setEmpStatus(0);
 		emp.setEmpHireDate(empHireDate);
 		emp.setEmpEmail(empEmail);

@@ -110,6 +110,7 @@ public class EmpLogin2 extends HttpServlet {
 		}
         System.out.println("ccccccccccccccccccccc");
         try {
+        	System.out.println("empSalt"+emp.getEmpPwdSalt());
 			System.out.println(de.Encrytor3("b283af"+empPwd +"b283af", keySpec));
 		} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException e1) {
 			// TODO Auto-generated catch block
@@ -118,10 +119,9 @@ public class EmpLogin2 extends HttpServlet {
 		try{
 		if (emp == null) {
 			return null;
-		} else if (!emp.getEmpPwd().equals(de.Encrytor3("b283af"+empPwd +"b283af", keySpec))) {
+		} else if (!emp.getEmpPwd().equals(de.Encrytor3(emp.getEmpPwdSalt()+empPwd +emp.getEmpPwdSalt(), keySpec))) {
 			return null;
 		} else {
-			System.out.println("bbbbbbbbbbbbbbbbbbbbbb");
 			return emp;
 		}
 		}
