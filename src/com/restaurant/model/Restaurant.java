@@ -6,6 +6,7 @@ public class Restaurant implements Serializable{
 	private Integer restNo;
 	private String restName;
 	private String restAdd;
+	private String restLocate;
 	private String restPhone;
 	private String restIntro;
 	private Integer restKind;
@@ -15,16 +16,23 @@ public class Restaurant implements Serializable{
 	
 	
 	
+	public String getRestLocate() {
+		return restLocate;
+	}
+	public void setRestLocate(String restLocate) {
+		this.restLocate = restLocate;
+	}
 	public Restaurant() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Restaurant(Integer restNo, String restName, String restAdd, String restPhone, String restIntro,
+	public Restaurant(Integer restNo, String restName, String restAdd,String restLocate, String restPhone, String restIntro,
 			Integer restKind, Integer restReviewStatus, Double restLongtitude, Double restLatitude) {
 		super();
 		this.restNo = restNo;
 		this.restName = restName;
 		this.restAdd = restAdd;
+		this.restLocate =restLocate;
 		this.restPhone = restPhone;
 		this.restIntro = restIntro;
 		this.restKind = restKind;

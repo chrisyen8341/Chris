@@ -28,10 +28,12 @@ public class RestaurantDAO implements RestaurantDAO_Interface {
 
 	}
 
-	private static final String INSERT_REST = "INSERT INTO REST (RESTNO,RESTNAME,RESTADD,RESTPHONE,"
-												+ "RESTINTRO,RESTKIND,RESTREVIEWSTATUS,RESTLONGTITUDE,RESTLATITUDE)" + "VALUES(REST_SEQ.NEXTVAL,?,?,?,?,?,?,?,?)";
-	private static final String UPDATE_REST = "UPDATE REST SET RESTNAME=?,RESTADD=?,RESTPHONE=?"
+	private static final String INSERT_REST = "INSERT INTO REST (RESTNO,RESTNAME,RESTADD,RESTLOCATE,RESTPHONE,"
+												+ "RESTINTRO,RESTKIND,RESTREVIEWSTATUS,RESTLONGTITUDE,RESTLATITUDE)" + "VALUES(REST_SEQ.NEXTVAL,?,?,?,?,?,?,?,?,?)";
+	private static final String UPDATE_REST_MANAGER = "UPDATE REST SET RESTNAME=?,RESTADD=?,RESTLOCATE=?,RESTPHONE=?"
 												+ ",RESTINTRO=?,RESTKIND=?,RESTREVIEWSTATUS=?,RESTLONGTITUDE=?,RESTLATITUDE=? WHERE RESTNO=?";
+	private static final String UPDATE_REST_MEMBER = "UPDATE REST SET RESTNAME=?,RESTADD=?,RESTPHONE=?,RESTINTRO=?,RESTKIND=? WHERE RESTNO=?";
+												
 	private static final String DELETE_REST = "DELETE FROM REST WHERE RESTNO=?";
 	private static final String FIND_BY_PK = "SELECT * FROM REST WHERE RESTNO=?";
 	private static final String GET_ALL = "SELECT * FROM REST";
@@ -47,12 +49,13 @@ public class RestaurantDAO implements RestaurantDAO_Interface {
 			pstmt = conn.prepareStatement(INSERT_REST,cols);
 			pstmt.setString(1, rest.getRestName());
 			pstmt.setString(2, rest.getRestAdd());
-			pstmt.setString(3, rest.getRestPhone());
-			pstmt.setString(4, rest.getRestIntro());
-			pstmt.setInt(5, rest.getRestKind());
-			pstmt.setInt(6, rest.getRestReviewStatus());
-			pstmt.setDouble(7, rest.getRestLongtitude());
-			pstmt.setDouble(8, rest.getRestLatitude());
+			pstmt.setString(3, rest.getRestAdd().substring(0,2)+"¿¤");
+			pstmt.setString(4, rest.getRestPhone());
+			pstmt.setString(5, rest.getRestIntro());
+			pstmt.setInt(6, rest.getRestKind());
+			pstmt.setInt(7, rest.getRestReviewStatus());
+			pstmt.setDouble(8, rest.getRestLongtitude());
+			pstmt.setDouble(9, rest.getRestLatitude());
 			
 			
 			pstmt.executeUpdate();
@@ -80,24 +83,25 @@ public class RestaurantDAO implements RestaurantDAO_Interface {
 	}
 
 	@Override
-	public void update(Restaurant rest) {
+	public void updateRestForManager(Restaurant rest) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			
 			conn = ds.getConnection();
-			pstmt = conn.prepareStatement(UPDATE_REST);
+			pstmt = conn.prepareStatement(UPDATE_REST_MANAGER);
 			
 			pstmt.setString(1, rest.getRestName());
 			pstmt.setString(2, rest.getRestAdd());
-			pstmt.setString(3, rest.getRestPhone());
-			pstmt.setString(4, rest.getRestIntro());
-			pstmt.setInt(5, rest.getRestKind());
-			pstmt.setInt(6, rest.getRestReviewStatus());
-			pstmt.setDouble(7, rest.getRestLongtitude());
-			pstmt.setDouble(8, rest.getRestLatitude());
+			pstmt.setString(3, rest.getRestAdd().substring(0,2)+"¿¤");
+			pstmt.setString(4, rest.getRestPhone());
+			pstmt.setString(5, rest.getRestIntro());
+			pstmt.setInt(6, rest.getRestKind());
+			pstmt.setInt(7, rest.getRestReviewStatus());
+			pstmt.setDouble(8, rest.getRestLongtitude());
+			pstmt.setDouble(9, rest.getRestLatitude());
 			
-			pstmt.setInt(9, rest.getRestNo());
+			pstmt.setInt(10, rest.getRestNo());
 			
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -123,6 +127,8 @@ public class RestaurantDAO implements RestaurantDAO_Interface {
 			}
 		}
 	}
+	
+	
 
 	@Override
 	public void delete(Integer restNo) {
@@ -177,6 +183,7 @@ public class RestaurantDAO implements RestaurantDAO_Interface {
 				rest.setRestNo(rs.getInt("RESTNO"));
 				rest.setRestName(rs.getString("RESTNAME"));
 				rest.setRestAdd(rs.getString("RESTADD"));
+				rest.setRestLocate(rs.getString("RESTLOCATE"));
 				rest.setRestPhone(rs.getString("RESTPHONE"));
 				rest.setRestIntro(rs.getString("RESTINTRO"));
 				rest.setRestKind(rs.getInt("RESTKIND"));
@@ -234,6 +241,7 @@ public class RestaurantDAO implements RestaurantDAO_Interface {
 				rest.setRestNo(rs.getInt("restNO"));
 				rest.setRestName(rs.getString("restNAME"));
 				rest.setRestAdd(rs.getString("restADD"));
+				rest.setRestLocate(rs.getString("RESTLOCATE"));
 				rest.setRestPhone(rs.getString("RestPHONE"));
 				rest.setRestIntro(rs.getString("restINTRO"));
 				rest.setRestKind(rs.getInt("restKIND"));
