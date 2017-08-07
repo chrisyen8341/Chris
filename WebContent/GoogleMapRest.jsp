@@ -33,9 +33,15 @@ pageContext.setAttribute("rests", rests);
 	<body>
 
   <h1>My Google Map</h1>
+  <p> 輸入欲查詢的地址<input id="address" type="text" size="50" value="">   <input type="button" value="查經緯度並在地圖上顯示" onClick="codeAddress()"> </p>
   <div id="map"></div>
   <script>
-    function initMap(){
+  var geocoder;
+  var map, popup;
+  
+  
+  
+  function initMap(){
       // Map options
       var options = {
         zoom:10,
@@ -43,7 +49,9 @@ pageContext.setAttribute("rests", rests);
       }
 
       // New map
-      var map = new google.maps.Map(document.getElementById('map'), options);
+      map = new google.maps.Map(document.getElementById('map'), options);
+      geocoder = new google.maps.Geocoder();
+      popup = new google.maps.InfoWindow();
 
       // Listen for click on map
       google.maps.event.addListener(map, 'click', function(event){
@@ -131,7 +139,40 @@ pageContext.setAttribute("rests", rests);
           });
         }
       }
+      
+     
     }
+    
+    
+    
+    
+    function codeAddress() {
+  	    var address = document.getElementById("address").value;
+  	    geocoder.geocode( { 'address': address}, function(results, status) {
+  	      if (status == google.maps.GeocoderStatus.OK) {
+  	        map.setCenter(results[0].geometry.location);
+
+  			document.getElementById("lat").value=results[0].geometry.location.lat();
+  			document.getElementById("lng").value=results[0].geometry.location.lng();
+  	        var marker = new google.maps.Marker({
+  	            map: map,
+  	            position: results[0].geometry.location
+  	        });
+
+  			showAddress(results[0], marker);
+  	      } else {
+  	        alert("失敗, 原因: " + status);
+  	      }
+  	    });
+  	  }
+
+  	  function showAddress(result, marker) {
+  	        var popupContent = result.formatted_address;
+  	        popup.setContent(popupContent);
+  	        popup.open(map, marker);
+  	  }
+    
+    
   </script>
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAUbYcDBdfK_UjTWa9G6FSe3EfERMpEZQ&callback=initMap">
