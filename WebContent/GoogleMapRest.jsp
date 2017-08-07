@@ -44,8 +44,8 @@ pageContext.setAttribute("rests", rests);
   function initMap(){
       // Map options
       var options = {
-        zoom:10,
-        center:{lat: 25.105497,lng:121.59736}
+        zoom:15,
+        center:{lat: 25.039489,lng:121.549328}
       }
 
       // New map
@@ -101,7 +101,11 @@ pageContext.setAttribute("rests", rests);
 	        	marker=new Object();
 				marker.coords={lat:${rest.getRestLatitude()},lng:${rest.getRestLongtitude()}};
  				marker.iconImage='https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
- 				marker.content="${rest.restName}";
+ 				marker.content=
+ 				"<H1>${rest.restName}</H1>"
+ 				+"<H2>${rest.restPhone}</H2>"
+ 				+"<H3>${rest.restAdd}</H3>"
+ 				+"<input type=\"button\" value=\"選擇此餐廳\" onClick=\"chooseRest()\">" ;
 				markers.push(marker);
 			</c:forEach>
       
@@ -159,20 +163,20 @@ pageContext.setAttribute("rests", rests);
   	            position: results[0].geometry.location
   	        });
 
-  			showAddress(results[0], marker);
+
   	      } else {
   	        alert("失敗, 原因: " + status);
   	      }
   	    });
   	  }
 
-  	  function showAddress(result, marker) {
-  	        var popupContent = result.formatted_address;
-  	        popup.setContent(popupContent);
-  	        popup.open(map, marker);
-  	  }
+
     
     
+  	  function chooseRest() {
+			 console.log("123");
+	  }
+  	  
   </script>
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAUbYcDBdfK_UjTWa9G6FSe3EfERMpEZQ&callback=initMap">

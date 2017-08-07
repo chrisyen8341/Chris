@@ -1,0 +1,33 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="BIG5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-2">
+             <div class="frontend"><img src="<%=request.getContextPath() %>/front_end/images/logo-sp.png" class="img-rounded img-bg try-color">
+             </div>
+                <div id="menu">
+                    <div class="panel list-group list-color postion-left-group">
+                        <a href="<%=request.getContextPath() %>/front_end/dateitem/select_page.jsp" class="list-group-item">約會首頁</a>
+                        <a href="#" class="list-group-item">人氣排行</a>
+                        <a href="#" class="list-group-item">即將到來的約會</a>
+                        <a href="<%=request.getContextPath() %>/front_end/dateitem/dateitem.do?action=list_buyer_future" class="list-group-item">買家購買紀錄</a>
+                    </div>
+                    <div class="panel list-group list-color">
+                        <a href="<%=request.getContextPath() %>/front_end/dateitem/dateitem.do?action=check_Seller" class="list-group-item">上架約會商品</a>
+                        <a href="<%=request.getContextPath() %>/front_end/dateitem/list_seller_future.jsp" class="list-group-item">賣家管理約會商品</a>
+                    </div>
+                </div>
+            	</div>
+           
+
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+    <!--最後需用一個 div封起來-->

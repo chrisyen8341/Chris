@@ -10,7 +10,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.sql.Clob;
 
@@ -25,12 +27,12 @@ public class DateItemJDBCDAO implements DateItemDAO_interface{
 	private static final String INSERT_STMT = "INSERT INTO DATEITEM(DATEITEMNO,SELLERNO,RESTLISTNO,"
 			+ "DATEITEMTITLE,DATEITEMIMG,DATEITEMTEXT,DATEITEMTIME,DATEMEETINGTIME,DATEITEMLOCATE,"
 			+ "DATEITEMPEOPLE,HASMATE,DATEITEMPRICE,DATEITEMSTATUS,DATEITEMSHOW,DATEITEMVIEWER,BUYERNO,"
-			+ "ISQRCCHECKED,BUYERREP,SELLERREP,ISINSTANTDATE)"
-			+ " VALUES(DATEITEMNO_SQ.NEXTVAL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			+ "ISQRCCHECKED,BUYERREP,SELLERREP,ISINSTANTDATE,PETNO)"
+			+ " VALUES(DATEITEMNO_SQ.NEXTVAL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE_STMT = "UPDATE DATEITEM SET DATEITEMNO = ?, SELLERNO = ?, RESTLISTNO = ?, "
 			+ "DATEITEMTITLE = ?, DATEITEMIMG = ?, DATEITEMTEXT = ?, DATEITEMTIME = ?, DATEMEETINGTIME = ?, "
 			+ "DATEITEMLOCATE = ? ,DATEITEMPEOPLE = ? , HASMATE =?, DATEITEMPRICE =? , DATEITEMSTATUS=? ,"
-			+ "DATEITEMSHOW=?, DATEITEMVIEWER=?, BUYERNO=?, ISQRCCHECKED=?, BUYERREP=? , SELLERREP=? ,ISINSTANTDATE=? WHERE DATEITEMNO =　?";
+			+ "DATEITEMSHOW=?, DATEITEMVIEWER=?, BUYERNO=?, ISQRCCHECKED=?, BUYERREP=? , SELLERREP=? ,ISINSTANTDATE=? , PETNO=? WHERE DATEITEMNO =　?";
 	private static final String DELETE_STMT = "DELETE FROM DATEITEM WHERE DATEITEMNO = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM DATEITEM WHERE DATEITEMNO = ?";
 	private static final String GET_ALL = "SELECT * FROM DATEITEM";
@@ -49,14 +51,17 @@ public class DateItemJDBCDAO implements DateItemDAO_interface{
 			pstmt.setInt(1, dateItemVO.getSellerNo());
 			pstmt.setInt(2, dateItemVO.getRestListNo());
 			pstmt.setString(3, dateItemVO.getDateItemTitle());
-			Blob blob=con.createBlob();
-			blob.setBytes(1, dateItemVO.getDateItemImg());
-			pstmt.setBlob(4, blob);
-			Clob clob=con.createClob();
-			clob.setString(1, dateItemVO.getDateItemText());
-			pstmt.setClob(5, clob);
-			pstmt.setDate(6, dateItemVO.getDateItemTime());
-			pstmt.setDate(7, dateItemVO.getDateMeetingTime());
+//			Blob blob=con.createBlob();
+//			blob.setBytes(1, dateItemVO.getDateItemImg());
+//			pstmt.setBlob(4, blob);
+			pstmt.setBytes(4, dateItemVO.getDateItemImg());
+			
+//			Clob clob=con.createClob();
+//			clob.setString(1, dateItemVO.getDateItemText());
+//			pstmt.setClob(5, clob);
+			pstmt.setString(5, dateItemVO.getDateItemText());
+			pstmt.setTimestamp(6, dateItemVO.getDateItemTime());
+			pstmt.setTimestamp(7, dateItemVO.getDateMeetingTime());
 			pstmt.setString(8, dateItemVO.getDateItemLocate());
 			pstmt.setInt(9, dateItemVO.getDateItemPeople());
 			pstmt.setBoolean(10, dateItemVO.getHasMate());
@@ -69,6 +74,7 @@ public class DateItemJDBCDAO implements DateItemDAO_interface{
 			pstmt.setInt(17, dateItemVO.getBuyerRep());
 			pstmt.setInt(18, dateItemVO.getSellerRep());
 			pstmt.setBoolean(19, dateItemVO.getIsInstantDate());
+			pstmt.setInt(20, dateItemVO.getPetNo());
 			pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException e) {
@@ -114,8 +120,8 @@ public class DateItemJDBCDAO implements DateItemDAO_interface{
 			Clob clob=con.createClob();
 			clob.setString(1, dateItemVO.getDateItemText());
 			pstmt.setClob(6, clob);
-			pstmt.setDate(7, dateItemVO.getDateItemTime());
-			pstmt.setDate(8, dateItemVO.getDateMeetingTime());
+			pstmt.setTimestamp(7, dateItemVO.getDateItemTime());
+			pstmt.setTimestamp(8, dateItemVO.getDateMeetingTime());
 			pstmt.setString(9, dateItemVO.getDateItemLocate());
 			pstmt.setInt(10, dateItemVO.getDateItemPeople());
 			pstmt.setBoolean(11, dateItemVO.getHasMate());
@@ -128,7 +134,8 @@ public class DateItemJDBCDAO implements DateItemDAO_interface{
 			pstmt.setInt(18, dateItemVO.getBuyerRep());
 			pstmt.setInt(19, dateItemVO.getSellerRep());
 			pstmt.setBoolean(20, dateItemVO.getIsInstantDate());
-			pstmt.setInt(21, dateItemVO.getDateItemNo());
+			pstmt.setInt(21,dateItemVO.getPetNo());
+			pstmt.setInt(22, dateItemVO.getDateItemNo());
 			pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException e) {
@@ -198,7 +205,7 @@ public class DateItemJDBCDAO implements DateItemDAO_interface{
 		PreparedStatement pstmt=null;
 		Connection con=null;
 		ResultSet rs=null;
-		DateItemVO dateItem=null;
+		DateItemVO dateItemVO=null;
 		
 		try {
 			Class.forName(DRIVER);
@@ -207,27 +214,30 @@ public class DateItemJDBCDAO implements DateItemDAO_interface{
 			pstmt.setInt(1, dateItemNo);
 			rs=pstmt.executeQuery();
 			while(rs.next()){
-				dateItem=new DateItemVO();
-				dateItem.setDateItemNo(rs.getInt("dateItemNo"));
-				dateItem.setSellerNo(rs.getInt("sellerNo"));
-				dateItem.setRestListNo(rs.getInt("restListNo"));
-				dateItem.setDateItemTitle(rs.getString("dateItemTitle"));
-				dateItem.setDateItemImg(rs.getBytes("dateItemImg"));
-				dateItem.setDateItemText(rs.getString("dateItemText"));
-				dateItem.setDateItemTime(rs.getDate("dateItemTime"));
-				dateItem.setDateMeetingTime(rs.getDate("dateMeetingTime"));
-				dateItem.setDateItemLocate(rs.getString("dateItemLocate"));
-				dateItem.setDateItemPeople(rs.getInt("dateItemPeople"));
-				dateItem.setHasMate(rs.getBoolean("hasMate"));
-				dateItem.setDateItemPrice(rs.getInt("dateItemPrice"));
-				dateItem.setDateItemShow(rs.getInt("dateItemShow"));;
-				dateItem.setDateItemStatus(rs.getInt("dateItemStatus"));
-				dateItem.setDateItemViewer(rs.getInt("dateItemViewer"));
-				dateItem.setBuyerNo(rs.getInt("buyerNo"));
-				dateItem.setIsQRCChecked(rs.getBoolean("isQRCChecked"));
-				dateItem.setBuyerRep(rs.getInt("buyerRep"));
-				dateItem.setSellerRep(rs.getInt("sellerRep"));		
-				dateItem.setIsInstantDate(rs.getBoolean("isInstantDate"));
+				dateItemVO =new DateItemVO();	
+				
+				dateItemVO.setDateItemNo(rs.getInt("dateItemNo"));
+				dateItemVO.setSellerNo(rs.getInt("sellerNo"));
+				dateItemVO.setRestListNo(rs.getInt("restListNo"));
+				dateItemVO.setDateItemTitle(rs.getString("dateItemTitle"));
+				dateItemVO.setDateItemImg(rs.getBytes("dateItemImg"));
+				dateItemVO.setDateItemText(rs.getString("dateItemText"));
+				dateItemVO.setDateItemTime(rs.getTimestamp("dateItemTime"));
+				dateItemVO.setDateMeetingTime(rs.getTimestamp("dateMeetingTime"));
+				dateItemVO.setDateItemLocate(rs.getString("dateItemLocate"));
+				dateItemVO.setDateItemPeople(rs.getInt("dateItemPeople"));
+				dateItemVO.setHasMate(rs.getBoolean("hasMate"));
+				dateItemVO.setDateItemPrice(rs.getInt("dateItemPrice"));
+				dateItemVO.setDateItemStatus(rs.getInt("dateItemStatus"));
+				dateItemVO.setDateItemShow(rs.getInt("dateItemShow"));
+				dateItemVO.setDateItemViewer(rs.getInt("dateItemShow"));
+				dateItemVO.setBuyerNo(rs.getInt("buyerNo"));
+				dateItemVO.setIsQRCChecked(rs.getBoolean("isQRCChecked"));
+				dateItemVO.setBuyerRep(rs.getInt("buyerRep"));
+				dateItemVO.setSellerRep(rs.getInt("SellerRep"));
+				dateItemVO.setIsInstantDate(rs.getBoolean("isInstantDate"));
+				dateItemVO.setPetNo(rs.getInt("petNo"));
+				
 			}
 			
 		} catch (ClassNotFoundException e) {
@@ -259,7 +269,7 @@ public class DateItemJDBCDAO implements DateItemDAO_interface{
 				}
 			}
 		}
-		return dateItem;
+		return dateItemVO;
 	}
 
 	@Override
@@ -282,17 +292,21 @@ public class DateItemJDBCDAO implements DateItemDAO_interface{
 				dateItemVO.setDateItemTitle(rs.getString("dateItemTitle"));
 				dateItemVO.setDateItemImg(rs.getBytes("dateItemImg"));
 				dateItemVO.setDateItemText(rs.getString("dateItemText"));
-				dateItemVO.setDateItemTime(rs.getDate("dateItemTime"));
-				dateItemVO.setDateMeetingTime(rs.getDate("dateMeetingTime"));
+				dateItemVO.setDateItemTime(rs.getTimestamp("dateItemTime"));
+				dateItemVO.setDateMeetingTime(rs.getTimestamp("dateMeetingTime"));
 				dateItemVO.setDateItemLocate(rs.getString("dateItemLocate"));
 				dateItemVO.setDateItemPeople(rs.getInt("dateItemPeople"));
 				dateItemVO.setHasMate(rs.getBoolean("hasMate"));
 				dateItemVO.setDateItemPrice(rs.getInt("dateItemPrice"));
 				dateItemVO.setDateItemStatus(rs.getInt("dateItemStatus"));
+				dateItemVO.setDateItemShow(rs.getInt("dateItemShow"));
+				dateItemVO.setDateItemViewer(rs.getInt("dateItemShow"));
 				dateItemVO.setBuyerNo(rs.getInt("buyerNo"));
 				dateItemVO.setIsQRCChecked(rs.getBoolean("isQRCChecked"));
 				dateItemVO.setBuyerRep(rs.getInt("buyerRep"));
-				dateItemVO.setSellerRep(rs.getInt("SellerRep"));	
+				dateItemVO.setSellerRep(rs.getInt("SellerRep"));
+				dateItemVO.setIsInstantDate(rs.getBoolean("isInstantDate"));
+				dateItemVO.setPetNo(rs.getInt("petNo"));
 				dateItemList.add(dateItemVO);		
 			}
 			
@@ -330,20 +344,25 @@ public class DateItemJDBCDAO implements DateItemDAO_interface{
 	
 	// Main方法
 	public static void main(String [ ] args) throws IOException{
-		byte[] testImg = new byte[123];		
+		byte[] testImg = getPictureByteArray("C:\\Users\\PSP\\Desktop\\bh.png");		
 		DateItemJDBCDAO dao=new DateItemJDBCDAO();
 		DateItemVO dateItemVO = new DateItemVO();
 		
 		
 
-		dateItemVO.setDateItemNo(4001);
+	
 		dateItemVO.setSellerNo(5001);
 		dateItemVO.setRestListNo(7001);
 		dateItemVO.setDateItemTitle("陽光午後約會大好");
 		dateItemVO.setDateItemImg(testImg);
-		dateItemVO.setDateItemText("來進行一場午後的約會吧測試測試");
-		dateItemVO.setDateItemTime(java.sql.Date.valueOf("2017-07-17"));
-		dateItemVO.setDateMeetingTime(java.sql.Date.valueOf("2017-07-24"));
+		dateItemVO.setDateItemText("22來進行一場午後的約會吧測試測試");
+		
+		GregorianCalendar cal = new GregorianCalendar(2017,07,31,18,30,59);
+		java.util.Date ud = cal.getTime();
+		Timestamp ts= new Timestamp(ud.getTime());
+		
+		dateItemVO.setDateItemTime(ts);
+		dateItemVO.setDateMeetingTime(ts);	
 		dateItemVO.setDateItemLocate("台北市");
 		dateItemVO.setDateItemPeople(0);
 		dateItemVO.setHasMate(false);
@@ -356,46 +375,54 @@ public class DateItemJDBCDAO implements DateItemDAO_interface{
 		dateItemVO.setBuyerRep(0);
 		dateItemVO.setSellerRep(0);
 		dateItemVO.setIsInstantDate(false);
+		dateItemVO.setPetNo(1001);
 		
 		//新增
 		dao.add(dateItemVO);		
 		System.out.println("已新增第1筆");
-		dao.add(dateItemVO);
-		System.out.println("已新增第2筆");
-		dao.add(dateItemVO);
-		System.out.println("已新增第3筆");
+//		dao.add(dateItemVO);
+//		System.out.println("已新增第2筆");
+//		dao.add(dateItemVO);
+//		System.out.println("已新增第3筆");
+//		
+//		//修改
+//		dateItemVO.setDateItemNo(4002);
+//		dateItemVO.setDateItemTitle("已修改已修改過了");	
+//		dao.update(dateItemVO);
+//		System.out.println("已修改第二筆");
 		
-		//修改
-		dateItemVO.setDateItemNo(4002);
-		dateItemVO.setDateItemTitle("已修改已修改過了");	
-		dao.update(dateItemVO);
-		System.out.println("已修改第二筆");
-		
-		//刪除
-		dao.delete(4001);
-		System.out.println("已刪除4001");
-		
-		//查詢 by PK
-		dateItemVO = dao.findByPk(4003);
+//		//刪除
+//		dao.delete(4001);
+//		System.out.println("已刪除4001");
+//		
+//		//查詢 by PK
+//
+//		
+//		
+		dateItemVO = dao.findByPk(4006);
+		dateItemVO.setDateItemTime(ts);
 		System.out.println(dateItemVO.getDateItemLocate());
 		System.out.println(dateItemVO.getDateItemText());
 		System.out.println(dateItemVO.getDateItemNo());
 		System.out.println(dateItemVO.getDateItemPrice());
+		System.out.println(dateItemVO.getDateItemTime());
+		System.out.println(dateItemVO.getDateMeetingTime());
 		
-		//getAll
-		List<DateItemVO> dateItemList = dao.getAll();
-		for(DateItemVO dateItem : dateItemList){
-		System.out.println(dateItem.getDateItemNo());
-		System.out.println(dateItem.getDateItemTitle());
-		System.out.println(dateItem.getDateItemPrice());
-		System.out.println(dateItem.getSellerNo());
-		System.out.println(dateItem.getDateItemShow());
-		System.out.println(dateItem.getDateItemText());
-		System.out.println(dateItem.getRestListNo());
-		System.out.println(dateItem.getDateMeetingTime());
-		System.out.println(dateItem.getDateItemTime());
-		System.out.println(dateItem.getIsInstantDate());
-	}
+//		
+//		//getAll
+//		List<DateItemVO> dateItemList = dao.getAll();
+//		for(DateItemVO dateItem : dateItemList){
+//		System.out.println(dateItem.getDateItemNo());
+//		System.out.println(dateItem.getDateItemTitle());
+//		System.out.println(dateItem.getDateItemPrice());
+//		System.out.println(dateItem.getSellerNo());
+//		System.out.println(dateItem.getDateItemShow());
+//		System.out.println(dateItem.getDateItemText());
+//		System.out.println(dateItem.getRestListNo());
+//		System.out.println(dateItem.getDateMeetingTime());
+//		System.out.println(dateItem.getDateItemTime());
+//		System.out.println(dateItem.getIsInstantDate());
+//	}
 		
 		
 	}
@@ -414,6 +441,48 @@ public class DateItemJDBCDAO implements DateItemDAO_interface{
 		fis.close();
 
 		return baos.toByteArray();
+	}
+
+	@Override
+	public List<DateItemVO> getAllItems() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DateItemVO> findBySeller_future(int sellerNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DateItemVO> findBySeller_history(int sellerNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DateItemVO> findBySeller_onsale(int sellerNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DateItemVO> findByBuyer_future(int buyerNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DateItemVO> findByBuyer_history(int buyerNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateByVO(DateItemVO dateItemVO) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

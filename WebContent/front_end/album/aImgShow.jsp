@@ -200,8 +200,12 @@
 
 
 
-											<input id="input-20" name="img" type="file"
-												class="file-loading" multiple>
+											<p>
+												輸入欲查詢的地址<input id="address" type="text" size="50" value="">
+												<input type="button" value="查經緯度並在地圖上顯示"
+													onClick="codeAddress()">
+											</p>
+											<div id="map"></div>
 
 										</div>
 									</div>
@@ -224,40 +228,46 @@
 									<c:if test="${not empty aImgsSet}">
 										<ul>
 											<c:forEach var="aImg" items="${aImgsSet}" varStatus="s">
-												
+
 												<c:if test="${s.index%4==0}">
 													<div class="row">
 												</c:if>
-												
-												
+
+
 												<div class="col-md-3 col-sm-3 col-xs-6">
 													<div class="image-container gallery">
-														
-														<% AlbumImg aImg = (AlbumImg) pageContext.getAttribute("aImg"); %>   
-										
-														<c:if test="<%=aImg.getImgExtName().startsWith(\"video\") %>">
-														<div class="thumbnail">
-															<video controls class="img-responsive">
-																	<source src="<%=request.getContextPath() %>/front_end/album/AImgReader.do?imgNo=${aImg.imgNo}"
-																		type="video/mp4" alt="您的瀏覽器不支援此撥放程式" data-toggle="modal" data-target="#myModal${s.index}">
-															</video>
-															<div class="caption">
-																<div class="clearfix"></div>
+
+														<%
+															AlbumImg aImg = (AlbumImg) pageContext.getAttribute("aImg");
+														%>
+
+														<c:if
+															test="<%=aImg.getImgExtName().startsWith(\"video\")%>">
+															<div class="thumbnail">
+																<video controls class="img-responsive">
+																	<source
+																		src="<%=request.getContextPath() %>/front_end/album/AImgReader.do?imgNo=${aImg.imgNo}"
+																		type="video/mp4" alt="您的瀏覽器不支援此撥放程式"
+																		data-toggle="modal" data-target="#myModal${s.index}">
+																</video>
+																<div class="caption">
+																	<div class="clearfix"></div>
+																</div>
 															</div>
-														</div>
 														</c:if>
 
 
-														<c:if test="<%=aImg.getImgExtName().startsWith(\"image\") %>">
-														<div class="thumbnail">
-															<img class="img-responsive"
-																src="<%=request.getContextPath() %>/front_end/album/AImgReader.do?imgNo=${aImg.imgNo}"
-																alt="The awesome description" data-toggle="modal"
-																data-target="#myModal${s.index}">
-															<div class="caption">
-																<div class="clearfix"></div>
+														<c:if
+															test="<%=aImg.getImgExtName().startsWith(\"image\")%>">
+															<div class="thumbnail">
+																<img class="img-responsive"
+																	src="<%=request.getContextPath() %>/front_end/album/AImgReader.do?imgNo=${aImg.imgNo}"
+																	alt="The awesome description" data-toggle="modal"
+																	data-target="#myModal${s.index}">
+																<div class="caption">
+																	<div class="clearfix"></div>
+																</div>
 															</div>
-														</div>
 														</c:if>
 
 
@@ -281,14 +291,15 @@
 																</form>
 
 
-<%-- 																<form id="updateImg${s.index}" --%>
-<%-- 																	action="<%=request.getContextPath()%>/front_end/album/Album.do" --%>
-<!-- 																	method="post"> -->
-<!-- 																	<input type='hidden' name='action' value='updateImg'> -->
-<%-- 																	<input type='hidden' name='imgNo' value='${aImg.imgNo}'> --%>
-<%-- 																	<input type='hidden' name='albumNo' value='${aImg.albumNo}'>  --%>
-																	<a href='#' data-toggle="modal" data-target="#updateModal${s.index}">編輯相片</a>
-<!-- 																</form> -->
+																<%-- 																<form id="updateImg${s.index}" --%>
+																<%-- 																	action="<%=request.getContextPath()%>/front_end/album/Album.do" --%>
+																<!-- 																	method="post"> -->
+																<!-- 																	<input type='hidden' name='action' value='updateImg'> -->
+																<%-- 																	<input type='hidden' name='imgNo' value='${aImg.imgNo}'> --%>
+																<%-- 																	<input type='hidden' name='albumNo' value='${aImg.albumNo}'>  --%>
+																<a href='#' data-toggle="modal"
+																	data-target="#updateModal${s.index}">編輯相片</a>
+																<!-- 																</form> -->
 
 
 																<form id="delete${s.index}"
@@ -305,150 +316,149 @@
 														</div>
 													</div>
 												</div>
-												
+
 												<c:if test="${s.index%4==3}">
-													</div>
-												</c:if>
+								</div>
+								</c:if>
 
 
 
-												<!-- 修改Modal-->
-												<div class="modal fade" id="updateModal${s.index}"
-													role="dialog">
-													<div class="modal-dialog">
+								<!-- 修改Modal-->
+								<div class="modal fade" id="updateModal${s.index}" role="dialog">
+									<div class="modal-dialog">
 
-														<!-- Modal content-->
-														<div class="modal-content">
-															<div class="modal-header">
-																<button type="button" class="close" data-dismiss="modal">&times;</button>
-																<h4 class="modal-title">編輯相片</h4>
-															</div>
-															<div class="modal-body">
-																<form id="updateImg${s.index}" method="post"
-																	action="<%=request.getContextPath()%>/front_end/album/Album.do"
-																	method="post">
-																	<input type='hidden' name='action' value='updateImg'>
-																	<input type='hidden' name='imgNo' value='${aImg.imgNo}'>
-																	<input type='hidden' name='albumNo' value='${aImg.albumNo}'> 
-																	<input type="text" class="form-control" name="imgTitle" id="imgTitle" placeholder="為您的照片輸入標題吧!" />
-																	<textarea class="form-control" id="imgDesc" name="imgDesc" placeholder="為您的照片輸入點故事吧!"></textarea>
-																	<img class="img-responsive"
-																		src="<%=request.getContextPath() %>/front_end/album/AImgReader.do?imgNo=${aImg.imgNo}"
-																		alt="The awesome description">
-																</form>
-															</div>
-															<div class="modal-footer">
-																<button type="button" class="btn btn-default"
-																	data-dismiss="modal">取消</button>
-																<button type="button" class="btn btn-danger"
-																	data-dismiss="modal" id='deletebtn'
-																	onclick="document.getElementById('updateImg${s.index}').submit();">送出</button>
+										<!-- Modal content-->
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h4 class="modal-title">編輯相片</h4>
+											</div>
+											<div class="modal-body">
+												<form id="updateImg${s.index}" method="post"
+													action="<%=request.getContextPath()%>/front_end/album/Album.do"
+													method="post">
+													<input type='hidden' name='action' value='updateImg'>
+													<input type='hidden' name='imgNo' value='${aImg.imgNo}'>
+													<input type='hidden' name='albumNo' value='${aImg.albumNo}'>
+													<input type="text" class="form-control" name="imgTitle"
+														id="imgTitle" placeholder="為您的照片輸入標題吧!" />
+													<textarea class="form-control" id="imgDesc" name="imgDesc"
+														placeholder="為您的照片輸入點故事吧!"></textarea>
+													<img class="img-responsive"
+														src="<%=request.getContextPath() %>/front_end/album/AImgReader.do?imgNo=${aImg.imgNo}"
+														alt="The awesome description">
+												</form>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default"
+													data-dismiss="modal">取消</button>
+												<button type="button" class="btn btn-danger"
+													data-dismiss="modal" id='deletebtn'
+													onclick="document.getElementById('updateImg${s.index}').submit();">送出</button>
 
-															</div>
+											</div>
 
-														</div>
+										</div>
 
-													</div>
-												</div>
-
-
-
-
-
-
-
-
-
-
-
-												<!-- 刪除Modal-->
-												<div class="modal fade" id="deleteModal${s.index}"
-													role="dialog">
-													<div class="modal-dialog">
-
-														<!-- Modal content-->
-														<div class="modal-content">
-															<div class="modal-header">
-																<button type="button" class="close" data-dismiss="modal">&times;</button>
-																<h4 class="modal-title">刪除相片</h4>
-															</div>
-															<div class="modal-body">
-																<p>刪除相片後將無法復原，確定刪除嗎?</p>
-															</div>
-															<div class="modal-footer">
-																<button type="button" class="btn btn-default"
-																	data-dismiss="modal">取消</button>
-
-																<button type="button" class="btn btn-danger"
-																	data-dismiss="modal" id='deletebtn'
-																	onclick="document.getElementById('delete${s.index}').submit();">刪除</button>
-
-															</div>
-														</div>
-
-													</div>
-												</div>
-
-
-
-
-
-
-
-
-												<!--瀏覽相片Modal -->
-												<div class="modal fade" id="myModal${s.index}" tabindex="-1"
-													role="dialog" aria-labelledby="myModalLabel"
-													aria-hidden="true">
-													<div class="modal-dialog">
-														<div class="modal-content">
-															<div class="modal-header">
-																<button type="button" class="close" data-dismiss="modal">
-																	<span aria-hidden="true">×</span><span class="sr-only">Close</span>
-																</button>
-																<h4 class="modal-title" id="myModalLabel">${aImg.imgTitle}</h4>
-																<h5 class="modal-title" id="myModalLabel">${aImg.imgDesc}</h4>
-															</div>
-															<div class="modal-body">
-																<img class="img-responsive"
-																	src="<%=request.getContextPath() %>/front_end/album/AImgReader.do?imgNo=${aImg.imgNo}"
-																	alt="The awesome description">
-															</div>
-														</div>
-													</div>
-												</div>
-
-											</c:forEach>
-										</ul>
-									</c:if>
+									</div>
 								</div>
 
 
 
 
+
+
+
+
+
+
+
+								<!-- 刪除Modal-->
+								<div class="modal fade" id="deleteModal${s.index}" role="dialog">
+									<div class="modal-dialog">
+
+										<!-- Modal content-->
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h4 class="modal-title">刪除相片</h4>
+											</div>
+											<div class="modal-body">
+												<p>刪除相片後將無法復原，確定刪除嗎?</p>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default"
+													data-dismiss="modal">取消</button>
+
+												<button type="button" class="btn btn-danger"
+													data-dismiss="modal" id='deletebtn'
+													onclick="document.getElementById('delete${s.index}').submit();">刪除</button>
+
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+
+
+
+
+
+
+
+								<!--瀏覽相片Modal -->
+								<div class="modal fade" id="myModal${s.index}" tabindex="-1"
+									role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">
+													<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+												</button>
+												<h4 class="modal-title" id="myModalLabel">${aImg.imgTitle}</h4>
+												<h5 class="modal-title" id="myModalLabel">${aImg.imgDesc}</h4>
+											</div>
+											<div class="modal-body">
+												<img class="img-responsive"
+													src="<%=request.getContextPath() %>/front_end/album/AImgReader.do?imgNo=${aImg.imgNo}"
+													alt="The awesome description">
+											</div>
+										</div>
+									</div>
+								</div>
+
+								</c:forEach>
+								</ul>
+								</c:if>
 							</div>
 
+
+
+
 						</div>
+
 					</div>
 				</div>
-
-
-
-
-
-
-
-
-
-
-				<%@ include file="memButtom.file"%>
-
-
 			</div>
+
+
+
+
+
+
+
+
+
+
+			<%@ include file="memButtom.file"%>
+
+
 		</div>
+	</div>
 
 
-		<script>
+	<script>
 		$("#input-20").fileinput({
 		    uploadUrl: "<%=request.getContextPath()%>/front_end/album/AImgUpload.do?albumNo=<%=albumNo%>", // server upload action
 		    uploadAsync: true,
@@ -459,13 +469,14 @@
 		});
 		
 		$('#input-20').on('filebatchuploadcomplete', function (event, data, previewId, index) {
-			top.location.href="<%=request.getContextPath()%>/front_end/album/aImgShow.jsp?albumNo=<%=albumNo%>";
-							});
-		</script>
+			top.location.href="<%=request.getContextPath()%>/front_end/album/aImgShow.jsp?albumNo=<%=albumNo%>
+		";
+						});
+	</script>
 
 
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 
 </html>
