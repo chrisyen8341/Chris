@@ -85,6 +85,7 @@ pageContext.setAttribute("rests", rests);
         <a class="btn btn-info" data-toggle="modal" data-target="#googleMap" href="">
         	¦a¹ÏÂsÄý
         </a>
+
 		</td></tr>
 		
 		
@@ -197,6 +198,8 @@ pageContext.setAttribute("rests", rests);
 		    google.maps.event.trigger(map, "resize");
 		    console.log("qwe");
 		});
+	  
+	
   })
   
   
@@ -304,6 +307,7 @@ pageContext.setAttribute("rests", rests);
   		$('#googleMap').modal('hide');
 	  }
   	  
+
   </script>
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAUbYcDBdfK_UjTWa9G6FSe3EfERMpEZQ&callback=initMap">
