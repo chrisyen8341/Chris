@@ -21,6 +21,7 @@ import com.emp.model.EmpService;
 import com.member.model.Member;
 import com.member.model.MemberService;
 import com.pet.model.Pet;
+import com.pet.model.PetService;
 import com.restaurant.model.Restaurant;
 import com.restaurant.model.RestaurantService;
 @WebServlet("/front_end/dateitem/dateitem.do")
@@ -358,23 +359,30 @@ public class DateItemServlet extends HttpServlet {
 //					session.setAttribute("map", map2);
 //					map = (HashMap<String, String[]>) req.getParameterMap();
 //				}
+				
 				/*************************** 2.開始複合查詢 ***************************************/
 				DateItemService dateItemSvc = new DateItemService();
 				List<DateItemVO> list = dateItemSvc.getAll(map);
+				MemberService memSvc=new MemberService();
+				PetService petSvc=new PetService();
+				System.out.println("******************************新測試*************************************");
 				for(DateItemVO dateItem:list){
-					System.out.println(dateItem);
+					System.out.println("商品編號: :"+dateItem.getDateItemNo());
+					System.out.println("商品約會時間: :"+dateItem.getDateMeetingTime());
+					System.out.println("會元性別: "+memSvc.getOneMember(dateItem.getBuyerNo()).getMemGender());
+					System.out.println("寵物種類: "+petSvc.getOnePet(dateItem.getPetNo()).getPetKind());
+					System.out.println("===================================");
 				}
 				/**************************** 3.查詢完成,準備轉交(Send the Success view)************/
-//				req.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
-//				RequestDispatcher successView = req.getRequestDispatcher("/back_end/emp/listEmps_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
-//				successView.forward(req, res);
+				req.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
+				RequestDispatcher successView = req.getRequestDispatcher("/front_end/dateitem/select_page.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				System.out.println("daed");
-				//RequestDispatcher failureView = req.getRequestDispatcher("/back_end/emp/authManage.jsp");
-				//failureView.forward(req, res);
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/dateitem/select_page.jsp");
+				failureView.forward(req, res);
 			}
 		}
 

@@ -38,8 +38,6 @@ public class InsertDummyBlob2 {
 	
 	public static void main(String[] args) {
 
-   
-    
 	// 餐廳會員照片修改
 	int r = 7001;
     for (File file : new File("WebContent/DummyImg/restImg").listFiles()) { 
@@ -119,12 +117,12 @@ public class InsertDummyBlob2 {
 	System.out.println("=============幻燈片修改完了================");
     
 	// 約會商品圖片修改
-	int di=4001;
+	int di=4011;
     for (File file : new File("WebContent/DummyImg/dateitem").listFiles()) { 
     	DateItemJDBCDAO dao=new DateItemJDBCDAO();
     	DateItemVO dateItem=dao.findByPk(di++);
         try {
-			byte[] b = getPictureByteArray(file);
+			byte[] b = getPictureByteArrayForMemberAndDateItem(file);
 			dateItem.setDateItemImg(b);
 			dao.update(dateItem);
 		} catch (IOException e) {
@@ -137,7 +135,7 @@ public class InsertDummyBlob2 {
 	}
 
 	
-	private static BufferedImage resizeImage(BufferedImage originalImage, int type){
+	private static BufferedImage resizeImage(BufferedImage originalImage, int type,int fixed_width,int fixed_height ){
 		BufferedImage resizedImage = new BufferedImage(fixed_width, fixed_height, type);
 		Graphics2D g = resizedImage.createGraphics();
 		g.drawImage(originalImage, 0, 0, fixed_width, fixed_height, null);
@@ -150,7 +148,20 @@ public class InsertDummyBlob2 {
 	public static byte[] getPictureByteArray(File file) throws IOException {
 		BufferedImage originalImage = ImageIO.read(file);
 		int type = originalImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
-		BufferedImage resizeImageJpg = resizeImage(originalImage, type);
+		BufferedImage resizeImageJpg = resizeImage(originalImage, type,fixed_width,fixed_height);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write( resizeImageJpg, "jpg", baos );
+		baos.flush();
+		baos.close();
+
+		return baos.toByteArray();
+	}
+	
+	
+	public static byte[] getPictureByteArrayForMemberAndDateItem(File file) throws IOException {
+		BufferedImage originalImage = ImageIO.read(file);
+		int type = originalImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
+		BufferedImage resizeImageJpg = resizeImage(originalImage, type,300,300);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ImageIO.write( resizeImageJpg, "jpg", baos );
 		baos.flush();

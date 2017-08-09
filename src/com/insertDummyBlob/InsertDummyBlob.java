@@ -61,7 +61,7 @@ public class InsertDummyBlob {
     	PetJDBCDAO dao=new PetJDBCDAO();
     	Pet pet=dao.findByPk(p++);
         try {
-			byte[] b = getPictureByteArray(file);
+			byte[] b = getPictureByteArrayForMemberAndDateItem(file);
 			pet.setPetImg(b);
 			dao.update(pet);
 		} catch (IOException e) {
@@ -119,7 +119,7 @@ public class InsertDummyBlob {
 	    
 	}
 
-	private static BufferedImage resizeImage(BufferedImage originalImage, int type){
+	private static BufferedImage resizeImage(BufferedImage originalImage, int type,int fixed_width,int fixed_height ){
 		BufferedImage resizedImage = new BufferedImage(fixed_width, fixed_height, type);
 		Graphics2D g = resizedImage.createGraphics();
 		g.drawImage(originalImage, 0, 0, fixed_width, fixed_height, null);
@@ -129,17 +129,28 @@ public class InsertDummyBlob {
 	    }
 	
 	
-	
 	public static byte[] getPictureByteArray(File file) throws IOException {
-		
 		BufferedImage originalImage = ImageIO.read(file);
 		int type = originalImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
-		BufferedImage resizeImageJpg = resizeImage(originalImage, type);
+		BufferedImage resizeImageJpg = resizeImage(originalImage, type,fixed_width,fixed_height);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ImageIO.write( resizeImageJpg, "jpg", baos );
 		baos.flush();
 		baos.close();
-		
+
+		return baos.toByteArray();
+	}
+	
+	
+	public static byte[] getPictureByteArrayForMemberAndDateItem(File file) throws IOException {
+		BufferedImage originalImage = ImageIO.read(file);
+		int type = originalImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
+		BufferedImage resizeImageJpg = resizeImage(originalImage, type,300,300);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write( resizeImageJpg, "jpg", baos );
+		baos.flush();
+		baos.close();
+
 		return baos.toByteArray();
 	}
 	

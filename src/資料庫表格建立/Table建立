@@ -703,6 +703,20 @@ INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5004,7004,
          2,0,3500,1,0,1600,5010,1,null,null,0,1001);
 
 
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5009,7004,
+	'測試機器人第5筆',EMPTY_BLOB(),'AI約會',TO_DATE('20170718 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170804 20:30:20','YYYYMMDD HH24:MI:SS'),'台中市',
+         2,0,3500,1,0,1600,5010,1,null,null,0,1005);
+         
+         
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5020,7004,
+	'測試機器人第5筆',EMPTY_BLOB(),'AI約會',TO_DATE('20170718 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170805 20:30:20','YYYYMMDD HH24:MI:SS'),'台中市',
+         2,0,3500,1,0,1600,5010,1,null,null,0,1004);         
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5017,7004,
+	'測試機器人第5筆',EMPTY_BLOB(),'AI約會',TO_DATE('20170718 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170809 20:30:20','YYYYMMDD HH24:MI:SS'),'台中市',
+         2,0,3500,1,0,1600,5010,1,null,null,0,1005);    
+
 CREATE TABLE msg
 (msgno number(10) constraint msg_msgno_pk primary key,
 sendno number(10) not null constraint msg_sendno_fk references member(memno),

@@ -8,6 +8,7 @@
 
 <%@ include file="header.file"%>
 
+
 <jsp:useBean id = "dSvc" scope="page" class="com.dateitem.model.DateItemService" />
 <jsp:useBean id = "memSvc" scope="page" class="com.member.model.MemberService" />
 <%
@@ -32,9 +33,8 @@
 
 <div class="col-xd-12 col-sm-10  main-page-show">
 <div class="col-sm-10 col-sm-offset-1">
-<Form method="post" action="<%=request.getContextPath() %>/front_end/dateitem/dateitem.do">
-<span >
 
+<span >
 <input type="hidden" name="action" value="searchDateItem">
 <input type="date" id="datepicker" name="dateMeetingTime">
   <select class="w3-select selectpicker" name="memGender">
@@ -45,31 +45,37 @@
     <option value="2">不願透露</option>
   </select>
   
-  <select class="w3-select selectpicker" name="petGender">
+  <select class="w3-select selectpicker" name="petKind">
     <option value="" disabled selected>請選擇寵物</option>
     <option value="">皆可</option>
-    <option value="0">狗</option>
-    <option value="1">貓</option>
-    <option value="2">其他</option>
+    <option value="狗">狗</option>
+    <option value="貓">貓</option>
+    <option value="其他">其他</option>
   </select>
     
 	<input type="submit">
 <!--   <button class="btn btn-lg btn-warning glyphicon glyphicon-search"> </button> -->
 
  </span> 
-</Form>
+
  </div>
  
- 
+
   <c:forEach var="dateitem" items="${list}">
           <div class="col-sm-4 ">
             <div class="bg-color">
             <div class="card hovercard">
-                <div class="cardheader" style="background-image:url('<%=request.getContextPath()%>/ImgReader?dateItemNo=${dateitem.dateItemNo}&action=dateImg');">
+                <div class="cardheader" style="background-image:url('ImgReader?dateItemNo=${dateitem.dateItemNo}&action=dateImg');">
+
+                <input  type="hidden" value="${dateitem.sellerNo}">
+                <input class="no1" type="hidden" value="${dateitem.dateItemNo}">
 
                 </div>
                 <div class="avatar">
-                    <img src="<%=request.getContextPath()%>/ImgReader?sellerNo=${dateitem.sellerNo}&action=memImg">
+                	 <input  type="hidden" value="${dateitem.sellerNo}">
+                    <img class="img1" src="ImgReader?sellerNo=${dateitem.sellerNo}&action=memImg">
+                    <input  type="hidden" value="${dateitem.dateItemNo}">
+   l
                 </div>
                 <div class="info">
                     <div class="title dateDes">
@@ -184,16 +190,91 @@
 
 <!-- </script> -->
 
-
-
-
-
-
-
-
 <%@ include file="footer.file"%>
 
-
-
-
-
+<script>
+$(document).ready(function(){
+		var but1 = $('#button1');
+		but1.click(function() {
+			if(this.value == 'showppl'){
+			but1.val('showpet');
+			but1.html('以寵物顯示約會')
+			
+		
+			$.ajax({
+				url : 'dateitem.do',
+				data : {
+					action : this.value,
+				},
+				type : 'POST',
+				error : function(xhr) {
+					alert('Ajax request 發生錯誤');
+				},
+				success : function(result) {
+// 					alert('sucess1');
+					$('.cardheader').each(function(index){
+// 						$(this).attr('style', "background-image: url("'ImgReader?sellerNo='+$(this).next('input').val()+'&action=memImg'")");
+						$(this).css('background-image','url("ImgReader?sellerNo='+$(this).find('input').val()+'&action=memImg")');
+					});
+					$('.img1').each(function(index){
+						$(this).attr('src','ImgReader?dateItemNo='+$(this).next('input').val()+'&action=dateImg');
+					});
+// 					$('.avatar').find('img').attr('src','ImgReader?dateItemNo=${dateitem.dateItemNo}&action=dateImg');
+				}
+			});
+			this.value = "showpet";
+			
+			}else if(this.value == 'showpet'){
+				but1.val('showppl');
+				but1.html('以主人顯示約會')
+				$.ajax({
+					url : 'dateitem.do',
+					data : {
+						action : this.value,
+					},
+					type : 'POST',
+					error : function(xhr) {
+						alert('Ajax request 發生錯誤');
+					},
+					success : function(result) {
+// 						alert('sucess2');
+						$('.cardheader').each(function(index){
+//	 						$(this).attr('style', "background-image: url("'ImgReader?sellerNo='+$(this).next('input').val()+'&action=memImg'")");
+							$(this).css('background-image','url("ImgReader?dateItemNo='+$(this).find('.no1').val()+'&action=dateImg")');
+						});
+						$('.img1').each(function(index){
+							$(this).attr('src','ImgReader?sellerNo='+$(this).prev('input').val()+'&action=memImg');
+						});
+//	 					$('.avatar').find('img').attr('src','ImgReader?dateItemNo=${dateitem.dateItemNo}&action=dateImg');
+					}
+				});
+				this.value = "showppl";
+			} 
+			
+			
+		});
+});
+// 			else if(this.value = '確定';{
+// 			but2.val('取消');
+// 			$.ajax({
+// 				url : 'Board',
+// 				data : {
+// 					action : this.value,
+//  					text : div.find('textarea').text()
+// 				},
+// 				type : 'POST',
+// 				error : function(xhr) {
+// 					alert('Ajax request 發生錯誤');
+// 				},
+// 				success : function(result) {
+<%-- 					$('.cardheader').css('background-image', '<%=request.getContextPath()%>/ImgReader?sellerNo=${dateitem.sellerNo}&action=memImg'); --%>
+<%-- 					$('.avatar').filter('img').attr('src','<%=request.getContextPath()%>/ImgReader?dateItemNo=${dateitem.dateItemNo}&action=dateImg'); --%>
+					
+// 				}
+// 			});
+// 			this.value = "showpet";
+// 			but2.val('刪除');
+// 		}		
+// 		});
+// });
+</script>
