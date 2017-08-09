@@ -9,19 +9,19 @@ package jdbc.util.CompositeQuery;
 
 import java.util.*;
 
-public class jdbcUtil_CompositeQuery_Emp2 {
+public class jdbcUtil_CompositeQuery_DateItem {
 
 	public static String get_aCondition_For_Oracle(String columnName, String value) {
 
 		String aCondition = null;
 
-		if ("empNo".equals(columnName)||"memGender".equals(columnName)||"petGender".equals(columnName)|| "memNo".equals(columnName)||"memGender".equals(columnName)) // 用於其他
+		if ("memGender".equals(columnName)|| "petGender".equals(columnName)||"memGender".equals(columnName)) // 用於其他
 			aCondition = columnName + "=" + value;
 		else if ("empName".equals(columnName) || "empId".equals(columnName)|| "empName".equals(columnName)
 				|| "empJob".equals(columnName)|| "memId".equals(columnName)|| "memName".equals(columnName)
 				|| "memEmail".equals(columnName)) // 用於varchar
 			aCondition = columnName + " like '%" + value + "%'";
-		else if ("empHireDate".equals(columnName)|| "dateMeetingTime".equals(columnName))                          // 用於Oracle的date
+		else if ("empHireDate".equals(columnName))                          // 用於Oracle的date
 			aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";
 
 		return aCondition + " ";
@@ -63,7 +63,7 @@ public class jdbcUtil_CompositeQuery_Emp2 {
 		map.put("action", new String[] { "getXXX" }); // 注意Map裡面會含有action的key
 
 		String finalSQL = "select * from emp2 "
-				          + jdbcUtil_CompositeQuery_Emp2.get_WhereCondition(map)
+				          + jdbcUtil_CompositeQuery_DateItem.get_WhereCondition(map)
 				          + "order by empno";
 		System.out.println("●●finalSQL = " + finalSQL);
 

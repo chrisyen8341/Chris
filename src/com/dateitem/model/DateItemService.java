@@ -4,8 +4,11 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.annotation.MultipartConfig;
+
+import com.emp.model.Emp;
 
 
 public class DateItemService {
@@ -142,6 +145,11 @@ public class DateItemService {
 	
 	public void updateByVO(DateItemVO dateItemVO){
 		dao.updateByVO(dateItemVO);
+	}
+	
+	
+	public List<DateItemVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
 	}
 	
 	

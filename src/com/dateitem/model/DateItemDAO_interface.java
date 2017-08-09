@@ -1,6 +1,9 @@
 package com.dateitem.model;
 
 import java.util.List;
+import java.util.Map;
+
+import com.emp.model.Emp;
 
 
 	public interface DateItemDAO_interface {
@@ -16,6 +19,7 @@ import java.util.List;
 		List<DateItemVO> findByBuyer_future(int buyerNo);
 		List<DateItemVO> findByBuyer_history(int buyerNo);
 		void updateByVO(DateItemVO dateItemVO);
+		List<DateItemVO> getAll(Map<String, String[]> map); 
 	}
 	
 

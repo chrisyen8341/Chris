@@ -10,11 +10,16 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.emp.model.Emp;
+
+import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_Emp2;
 
 import java.sql.Clob;
 
@@ -828,6 +833,82 @@ public class DateItemDAO implements DateItemDAO_interface{
 			}
 		}
 		return dateItemList;
+	}
+
+	@Override
+	public List<DateItemVO> getAll(Map<String, String[]> map) {
+		List<DateItemVO> list = new ArrayList<DateItemVO>();
+	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+			
+			con = ds.getConnection();
+			String finalSQL = "select * from MEMBER M"
+					+ " JOIN DATEITEM D ON M.Memno = D.Sellerno "
+					+ " join PET P on D.PETNO = P.PETNO "
+		          + jdbcUtil_CompositeQuery_Emp2.get_WhereCondition(map)
+		          + "order by DATEITEMNO";
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("¡´¡´finalSQL(by DAO) = "+finalSQL);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+				DateItemVO dateItemVO=new DateItemVO();
+				dateItemVO.setDateItemNo(rs.getInt("dateItemNo"));
+				dateItemVO.setSellerNo(rs.getInt("sellerNo"));
+				dateItemVO.setRestListNo(rs.getInt("restListNo"));
+				dateItemVO.setDateItemTitle(rs.getString("dateItemTitle"));
+				dateItemVO.setDateItemImg(rs.getBytes("dateItemImg"));
+				dateItemVO.setDateItemText(rs.getString("dateItemText"));
+				dateItemVO.setDateItemTime(rs.getTimestamp("dateItemTime"));
+				dateItemVO.setDateMeetingTime(rs.getTimestamp("dateMeetingTime"));
+				dateItemVO.setDateItemLocate(rs.getString("dateItemLocate"));
+				dateItemVO.setDateItemPeople(rs.getInt("dateItemPeople"));
+				dateItemVO.setHasMate(rs.getBoolean("hasMate"));
+				dateItemVO.setDateItemPrice(rs.getInt("dateItemPrice"));
+				dateItemVO.setDateItemStatus(rs.getInt("dateItemStatus"));
+				dateItemVO.setDateItemShow(rs.getInt("dateItemShow"));
+				dateItemVO.setDateItemViewer(rs.getInt("dateItemShow"));
+				dateItemVO.setBuyerNo(rs.getInt("buyerNo"));
+				dateItemVO.setIsQRCChecked(rs.getBoolean("isQRCChecked"));
+				dateItemVO.setBuyerRep(rs.getInt("buyerRep"));
+				dateItemVO.setSellerRep(rs.getInt("SellerRep"));
+				dateItemVO.setIsInstantDate(rs.getBoolean("isInstantDate"));
+				dateItemVO.setPetNo(rs.getInt("petNo"));
+				list.add(dateItemVO);	
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 	}
 				
 }

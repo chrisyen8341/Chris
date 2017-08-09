@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 import java.sql.Clob;
 
 public class DateItemJDBCDAO implements DateItemDAO_interface{
@@ -483,6 +484,12 @@ public class DateItemJDBCDAO implements DateItemDAO_interface{
 	public void updateByVO(DateItemVO dateItemVO) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<DateItemVO> getAll(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

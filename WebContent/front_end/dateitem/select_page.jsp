@@ -8,7 +8,6 @@
 
 <%@ include file="header.file"%>
 
-
 <jsp:useBean id = "dSvc" scope="page" class="com.dateitem.model.DateItemService" />
 <jsp:useBean id = "memSvc" scope="page" class="com.member.model.MemberService" />
 <%
@@ -33,30 +32,32 @@
 
 <div class="col-xd-12 col-sm-10  main-page-show">
 <div class="col-sm-10 col-sm-offset-1">
-
+<Form method="post" action="<%=request.getContextPath() %>/front_end/dateitem/dateitem.do">
 <span >
- <select class="w3-select selectpicker " name="option">
-    <option value="" disabled selected>請選擇地點</option>
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option>
+
+<input type="hidden" name="action" value="searchDateItem">
+<input type="date" id="datepicker" name="dateMeetingTime">
+  <select class="w3-select selectpicker" name="memGender">
+    <option value="" disabled selected>請選擇主人性別</option>
+    <option value="">皆可</option>
+    <option value="0">男</option>
+    <option value="1">女</option>
+    <option value="2">不願透露</option>
   </select>
-  <select class="w3-select selectpicker" name="option">
-    <option value="" disabled selected>請選擇主人</option>
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option>
-  </select>
-  <select class="w3-select selectpicker" name="option">
+  
+  <select class="w3-select selectpicker" name="petGender">
     <option value="" disabled selected>請選擇寵物</option>
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option></select>
-	
-  <button class="btn btn-lg btn-warning glyphicon glyphicon-search"> </button>
+    <option value="">皆可</option>
+    <option value="0">狗</option>
+    <option value="1">貓</option>
+    <option value="2">其他</option>
+  </select>
+    
+	<input type="submit">
+<!--   <button class="btn btn-lg btn-warning glyphicon glyphicon-search"> </button> -->
 
  </span> 
-
+</Form>
  </div>
  
  
@@ -182,6 +183,13 @@
 <!-- // }); -->
 
 <!-- </script> -->
+
+
+
+
+
+
+
 
 <%@ include file="footer.file"%>
 
