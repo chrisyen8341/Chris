@@ -15,13 +15,13 @@ public class jdbcUtil_CompositeQuery_DateItem {
 
 		String aCondition = null;
 
-		if ("memGender".equals(columnName)|| "petGender".equals(columnName)||"memGender".equals(columnName)) // 用於其他
+		if ("empNo".equals(columnName)||"memGender".equals(columnName)||"petGender".equals(columnName)|| "memNo".equals(columnName)||"memGender".equals(columnName)) // 用於其他
 			aCondition = columnName + "=" + value;
 		else if ("empName".equals(columnName) || "empId".equals(columnName)|| "empName".equals(columnName)
 				|| "empJob".equals(columnName)|| "memId".equals(columnName)|| "memName".equals(columnName)
-				|| "memEmail".equals(columnName)) // 用於varchar
+				|| "memEmail".equals(columnName)|| "petKind".equals(columnName)) // 用於varchar
 			aCondition = columnName + " like '%" + value + "%'";
-		else if ("empHireDate".equals(columnName))                          // 用於Oracle的date
+		else if ("empHireDate".equals(columnName)|| "dateMeetingTime".equals(columnName))                          // 用於Oracle的date
 			aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";
 
 		return aCondition + " ";
@@ -37,9 +37,6 @@ public class jdbcUtil_CompositeQuery_DateItem {
 				count++;
 				String aCondition = get_aCondition_For_Oracle(key, value.trim());
 
-				if (count == 1)
-					whereCondition.append(" where " + aCondition);
-				else
 					whereCondition.append(" and " + aCondition);
 
 				System.out.println("有送出查詢資料的欄位數count = " + count);

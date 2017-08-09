@@ -61,7 +61,7 @@ public class InsertDummyBlob {
     	PetJDBCDAO dao=new PetJDBCDAO();
     	Pet pet=dao.findByPk(p++);
         try {
-			byte[] b = getPictureByteArrayForMemberAndDateItem(file);
+			byte[] b = getPictureByteArray(file);
 			pet.setPetImg(b);
 			dao.update(pet);
 		} catch (IOException e) {

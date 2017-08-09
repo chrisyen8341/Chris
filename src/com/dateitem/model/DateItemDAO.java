@@ -19,6 +19,7 @@ import javax.sql.DataSource;
 
 import com.emp.model.Emp;
 
+import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_DateItem;
 import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_Emp2;
 
 import java.sql.Clob;
@@ -849,7 +850,8 @@ public class DateItemDAO implements DateItemDAO_interface{
 			String finalSQL = "select * from MEMBER M"
 					+ " JOIN DATEITEM D ON M.Memno = D.Sellerno "
 					+ " join PET P on D.PETNO = P.PETNO "
-		          + jdbcUtil_CompositeQuery_Emp2.get_WhereCondition(map)
+					+ " where DATEITEMSHOW = 0 "
+		          + jdbcUtil_CompositeQuery_DateItem.get_WhereCondition(map)
 		          + "order by DATEITEMNO";
 			pstmt = con.prepareStatement(finalSQL);
 			System.out.println("¡´¡´finalSQL(by DAO) = "+finalSQL);

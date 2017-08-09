@@ -336,7 +336,7 @@ public class DateItemServlet extends HttpServlet {
 		}
 
 		// 來自select_page.jsp複合查詢約會商品
-		if ("searchDateItem".equals(action)) {
+		if ("listDItems_ByCompositeQuery".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -349,16 +349,16 @@ public class DateItemServlet extends HttpServlet {
 				// 採用Map<String,String[]> getParameterMap()的方法
 				// 注意:an immutable java.util.Map
 				// Map<String, String[]> map = req.getParameterMap();
-				HashMap<String, String[]> map = (HashMap<String, String[]>) req.getParameterMap();
-//				HttpSession session = req.getSession();
-//				Map<String, String[]> map = (Map<String, String[]>) session.getAttribute("map");
-//				if (req.getParameter("whichPage") == null) {
-//					HashMap<String, String[]> map1 = (HashMap<String, String[]>) req.getParameterMap();
-//					HashMap<String, String[]> map2 = new HashMap<String, String[]>();
-//					map2 = (HashMap<String, String[]>) map1.clone();
-//					session.setAttribute("map", map2);
-//					map = (HashMap<String, String[]>) req.getParameterMap();
-//				}
+//				HashMap<String, String[]> map = (HashMap<String, String[]>) req.getParameterMap();
+				HttpSession session = req.getSession();
+				Map<String, String[]> map = (Map<String, String[]>) session.getAttribute("map");
+				if (req.getParameter("whichPage") == null) {
+					HashMap<String, String[]> map1 = (HashMap<String, String[]>) req.getParameterMap();
+					HashMap<String, String[]> map2 = new HashMap<String, String[]>();
+					map2 = (HashMap<String, String[]>) map1.clone();
+					session.setAttribute("map", map2);
+					map = (HashMap<String, String[]>) req.getParameterMap();
+				}
 				
 				/*************************** 2.開始複合查詢 ***************************************/
 				DateItemService dateItemSvc = new DateItemService();
@@ -375,13 +375,13 @@ public class DateItemServlet extends HttpServlet {
 				}
 				/**************************** 3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
-				RequestDispatcher successView = req.getRequestDispatcher("/front_end/dateitem/select_page.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+				RequestDispatcher successView = req.getRequestDispatcher("/front_end/dateitem/compositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/dateitem/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/dateitem/compositeQuery.jsp");
 				failureView.forward(req, res);
 			}
 		}

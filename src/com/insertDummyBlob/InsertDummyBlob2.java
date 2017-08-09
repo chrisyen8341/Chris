@@ -117,12 +117,12 @@ public class InsertDummyBlob2 {
 	System.out.println("=============幻燈片修改完了================");
     
 	// 約會商品圖片修改
-	int di=4011;
+	int di=4001;
     for (File file : new File("WebContent/DummyImg/dateitem").listFiles()) { 
     	DateItemJDBCDAO dao=new DateItemJDBCDAO();
     	DateItemVO dateItem=dao.findByPk(di++);
         try {
-			byte[] b = getPictureByteArrayForMemberAndDateItem(file);
+			byte[] b = getPictureByteArray(file);
 			dateItem.setDateItemImg(b);
 			dao.update(dateItem);
 		} catch (IOException e) {

@@ -12,8 +12,11 @@
 <jsp:useBean id = "dSvc" scope="page" class="com.dateitem.model.DateItemService" />
 <jsp:useBean id = "memSvc" scope="page" class="com.member.model.MemberService" />
 <%
-    List<DateItemVO> list= dSvc.getAllItems();
-    pageContext.setAttribute("list",list);
+
+    List<DateItemVO> listEmps_ByCompositeQuery=(List<DateItemVO>)request.getAttribute("listEmps_ByCompositeQuery");
+    if(listEmps_ByCompositeQuery!=null){
+		pageContext.setAttribute("listEmps_ByCompositeQuery",listEmps_ByCompositeQuery);
+	}
 %>
 
 
@@ -60,8 +63,8 @@
 </Form>
  </div>
  
-	<%@ include file="pages/page1.file"%>
-  <c:forEach var="dateitem" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+	<%@ include file="pages/page1_ByCompositeQuery.file"%>
+  <c:forEach var="dateitem" items="${listEmps_ByCompositeQuery}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
           <div class="col-sm-4 ">
             <div class="bg-color">
             <div class="card hovercard">
@@ -96,7 +99,7 @@
         </div>
  
  </c:forEach>       
-    <%@ include file="pages/page2.file"%>
+    <%@ include file="pages/page2_ByCompositeQuery.file"%>
   
   
 <!--   <table class="table text-align:center"> -->
