@@ -5,6 +5,10 @@ drop table ord;
 Drop Table Product;
 drop table CHARGES;
 Drop Table Withdraw;
+drop table msg;
+Drop Table Dateitemrep;
+Drop Table Dateitemapp;
+drop table dateitem;
 DROP TABLE APPREPREC;
 drop table pet;
 DROP TABLE ACTDETIAL ;
@@ -56,6 +60,10 @@ DROP SEQUENCE DIAMSG_SEQ;
 DROP SEQUENCE DIARY_SEQ;
 Drop Sequence Letter_Seq;
 DROP SEQUENCE LETTERTYPE_SEQ;
+drop sequence msgno_SQ;
+drop sequence DATEITEMNO_SQ;
+DROP SEQUENCE DATEITEMAPP_SEQ;
+DROP SEQUENCE DATEITEMREP_SEQ;
 
 
 

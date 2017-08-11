@@ -2,6 +2,7 @@ package com.dateitem.model;
 
 import java.sql.Blob;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -58,8 +59,13 @@ public class DateItemDAO implements DateItemDAO_interface{
 	private static final String FINDBYSELLERFUTURE = "SELECT * FROM DATEITEM WHERE (SELLERNO = ? AND DATEITEMSTATUS =1)";
 	private static final String FINDBYSELLERHISTORY = "SELECT * FROM DATEITEM WHERE (SELLERNO = ? AND (DATEITEMSTATUS =2 OR DATEITEMSTATUS =3 ))";
 	private static final String FINDBYSELLERONSALE = "SELECT * FROM DATEITEM WHERE (SELLERNO = ? AND ( DATEITEMSTATUS = 0 and DATEITEMSHOW = 0))";
-	
-	
+	private static final String FINDBYDATE="select * from DATEITEM D"
+					+ " JOIN MEMBER M ON D.Sellerno = M.Memno"
+					+ " join PET P on D.PETNO = P.PETNO "
+					+ " join Rest R on D.restListNo = R.restNo "
+					+ " where DATEITEMSHOW = 0 AND to_char(dateMeetingTime,'yyyy-mm-dd') = ?"
+					+ "order by DATEITEMNO";
+	   
 	
 	
 	@Override
@@ -911,6 +917,79 @@ public class DateItemDAO implements DateItemDAO_interface{
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public List<SDateItemVO> findByDate(String date) {
+		List<SDateItemVO> dateItemList = new ArrayList<>();
+		PreparedStatement pstmt=null;
+		Connection con=null;
+		ResultSet rs=null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt=con.prepareStatement(FINDBYDATE);
+			pstmt.setString(1, date);
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				SDateItemVO dateItemVO=new SDateItemVO();
+				dateItemVO.setDateItemNo(rs.getInt("dateItemNo"));
+				dateItemVO.setSellerNo(rs.getInt("sellerNo"));
+				dateItemVO.setRestListNo(rs.getInt("restListNo"));
+				dateItemVO.setDateMeetingTime(rs.getTimestamp("dateMeetingTime"));
+				dateItemVO.setDateItemLocate(rs.getString("dateItemLocate"));
+				dateItemVO.setDateItemPeople(rs.getInt("dateItemPeople"));
+				dateItemVO.setHasMate(rs.getBoolean("hasMate"));
+				dateItemVO.setDateItemPrice(rs.getInt("dateItemPrice"));
+				dateItemVO.setDateItemStatus(rs.getInt("dateItemStatus"));
+				dateItemVO.setDateItemShow(rs.getInt("dateItemShow"));
+				dateItemVO.setDateItemViewer(rs.getInt("dateItemShow"));
+				dateItemVO.setIsInstantDate(rs.getBoolean("isInstantDate"));
+				dateItemVO.setPetNo(rs.getInt("petNo"));
+				dateItemVO.setMemGender(rs.getInt("memGender"));
+				dateItemVO.setMemId(rs.getString("memId"));
+				dateItemVO.setMemSname(rs.getString("memSname"));
+				dateItemVO.setPetGender(rs.getInt("petGender"));
+				dateItemVO.setPetKind(rs.getString("petKind"));
+				dateItemVO.setPetName(rs.getString("petName"));
+				dateItemVO.setPetSpecies(rs.getString("petSpecies"));
+				dateItemVO.setRestLatitude(rs.getDouble("restLatitude"));
+				dateItemVO.setRestLongtitude(rs.getDouble("restLongtitude"));
+				dateItemVO.setRestName(rs.getString("restName"));
+				dateItemVO.setRestAdd(rs.getString("restAdd"));
+				dateItemVO.setRestLocate(rs.getString("restLocate"));
+				dateItemVO.setRestPhone(rs.getString("restPhone"));
+				dateItemList.add(dateItemVO);		
+			}
+			
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return dateItemList;
 	}
 				
 }

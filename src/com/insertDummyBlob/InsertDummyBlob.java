@@ -46,7 +46,7 @@ public class InsertDummyBlob {
     	MemberJDBCDAO dao=new MemberJDBCDAO();
         Member member=dao.findByPk(i++);
         try {
-        	byte[] b = getPictureByteArray(file);
+        	byte[] b = getPictureByteArrayNoChangeSize(file);
 			member.setMemImg(b);
 			dao.update(member);
 		} catch (IOException e) {
@@ -137,6 +137,20 @@ public class InsertDummyBlob {
 		ImageIO.write( resizeImageJpg, "jpg", baos );
 		baos.flush();
 		baos.close();
+
+		return baos.toByteArray();
+	}
+	
+	public static byte[] getPictureByteArrayNoChangeSize(File file) throws IOException {
+		FileInputStream fis = new FileInputStream(file);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		byte[] buffer = new byte[8192];
+		int i;
+		while ((i = fis.read(buffer)) != -1) {
+			baos.write(buffer, 0, i);
+		}
+		baos.close();
+		fis.close();
 
 		return baos.toByteArray();
 	}

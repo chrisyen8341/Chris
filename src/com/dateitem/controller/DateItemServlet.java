@@ -385,7 +385,56 @@ public class DateItemServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		
+		// 來自googleMapQuery.jsp複合查詢約會商品
+		if ("googleMapQuery".equals(action)) {
 
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				/*************************** 1.將輸入資料轉為Map **********************************/
+				String date = null;
+				try{
+					date=req.getParameter("dateMeetingTime");
+					System.out.println(date);
+				}
+				catch(Exception e){
+					errorMsgs.add("日期有誤");
+				}
+				System.out.println(date);
+				/*************************** 2.開始複合查詢 ***************************************/
+				DateItemService dateItemSvc = new DateItemService();
+				List<SDateItemVO> list = dateItemSvc.findByDate(date);
+				System.out.println(list.size());
+				System.out.println(list);
+				System.out.println("******************************新測試*************************************");
+				for(SDateItemVO dateItem:list){
+					System.out.println("商品編號: :"+dateItem.getDateItemNo());
+					System.out.println("商品約會時間: :"+dateItem.getDateMeetingTime());
+					System.out.println("===================================");
+				}
+				/**************************** 3.查詢完成,準備轉交(Send the Success view)************/
+				req.setAttribute("googleMaplist", list); // 資料庫取出的list物件,存入request
+				RequestDispatcher successView = req.getRequestDispatcher("/front_end/dateitem/googleMapQuery2.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/dateitem/googleMapQuery2.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		
+		
+
+		
 	}
 
 	public byte[] getByteArrayImg(Part part) {

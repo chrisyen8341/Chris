@@ -36,8 +36,9 @@
 
 <div class="col-xd-12 col-sm-10  main-page-show">
 <div class="col-sm-10 col-sm-offset-1">
-<Form action="<%=request.getContextPath() %>/front_end/dateitem/dateitem.do" method="post">
 <span >
+<Form action="<%=request.getContextPath() %>/front_end/dateitem/dateitem.do" method="post">
+
 <input type="hidden" name="action" value="listDItems_ByCompositeQuery">
 <input type="date" id="datepicker" name="dateMeetingTime">
   <select class="w3-select selectpicker" name="memGender">
@@ -59,8 +60,12 @@
 	<input type="submit">
 <!--   <button class="btn btn-lg btn-warning glyphicon glyphicon-search"> </button> -->
 
- </span> 
+
 </Form>
+  <button class="btn btn-lg btn-warning glyphicon glyphicon-search"> </button>
+  <button class="btn btn-lg btn-default" id="button1" value="showppl" >以主人顯示約會</button>
+  <button class="btn btn-lg btn-default" id="button1" value="showppl" >以地圖顯示</button>
+  </span> 
  </div>
  
 	<%@ include file="pages/page1_ByCompositeQuery.file"%>

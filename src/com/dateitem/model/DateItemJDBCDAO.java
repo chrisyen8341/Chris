@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -488,6 +489,12 @@ public class DateItemJDBCDAO implements DateItemDAO_interface{
 
 	@Override
 	public List<DateItemVO> getAll(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<SDateItemVO> findByDate(String date) {
 		// TODO Auto-generated method stub
 		return null;
 	}
