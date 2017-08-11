@@ -172,7 +172,7 @@ pageContext.setAttribute("list", list);
 		+"<H2><%=date.getRestPhone() %></H2>"
 		+"<H3><%=date.getRestAdd() %></H3>"
 		+"<Form method=\"post\" action=\"<%=request.getContextPath()%>/front_end/dateitem/dateitem.do\">"
-		+"<input type=\"hidden\" name=\"dateItemNo\" value=\"<%=dateNoMap.get(date.getRestListNo()).toString %>\"> "
+		+"<input type=\"hidden\" name=\"dateItemNo\" value=\"<%=dateNoMap.get(date.getRestListNo()).toString() %>\"> "
 		+"<input type=\"hidden\" name=\"action\" value=\"showDItemFromMap\" > "
 		+"<input type=\"submit\" name=\"action\" value=\"查看此區<%=map.get(date.getRestListNo()) %>個約會明細\"> "
 		+"</Form>";
