@@ -433,6 +433,42 @@ public class DateItemServlet extends HttpServlet {
 		
 		
 		
+		
+		// 來自googleMapQuery.jsp查詢各餐廳約會商品
+		if ("showDItemFromMap".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				/*************************** 1.將輸入資料轉為Map **********************************/
+				String dateItemNos=req.getParameter("dateItemNo");	
+				List list=Arrays.asList(dateItemNos.split(","));
+				/*************************** 2.開始複合查詢 ***************************************/
+				DateItemService dateItemSvc = new DateItemService();
+
+
+				System.out.println("******************************新測試*************************************");
+				
+				System.out.println(dateItemNos);
+				System.out.println(list);
+				/**************************** 3.查詢完成,準備轉交(Send the Success view)************/
+//				req.setAttribute("googleMaplist", list); // 資料庫取出的list物件,存入request
+//				RequestDispatcher successView = req.getRequestDispatcher("/front_end/dateitem/googleMapQuery2.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+//				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				System.out.println("error");
+//				errorMsgs.add(e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/dateitem/googleMapQuery2.jsp");
+//				failureView.forward(req, res);
+			}
+		}
+		
 
 		
 	}
