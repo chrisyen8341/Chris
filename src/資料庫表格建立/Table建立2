@@ -35,49 +35,189 @@ petno number(10) constraint dateitem_petno_fk references pet(petno));
 Create sequence dateitemno_sq increment by 1 start with 4001 nocache nocycle;
 
 
-INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5001,7021,
-	'快來一起玩吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170902 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 20:30:20','YYYYMMDD HH24:MI:SS'),'台北市',
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5001,7010,
+	'快來一起玩吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
          2,0,1500,1,0,1600,5008,0,0,0,0,1001);
 
-INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5002,7022,
-	'我家寵物的美麗與哀愁',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170903 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 20:30:20','YYYYMMDD HH24:MI:SS'),'桃園市',
-         2,1,500,0,0,16,5006,5008,0,0,0,1001);
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5002,7010,
+	'我家寵物的美麗與哀愁',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,1,500,0,0,16,5006,5008,0,0,0,1004);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5003,7010,
+	'陽光約會募集中',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,1,500,0,0,16,5007,5008,0,0,1,1008);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5004,7010,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1010);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5005,7010,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1013);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5006,7010,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1016);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5007,7010,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1019);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5008,7010,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1022);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5009,7010,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1025);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5010,7010,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1028);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5011,7010,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1032);
 
 
-INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5003,7023,
-	'陽光約會募集中',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170917 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170831 20:30:20','YYYYMMDD HH24:MI:SS'),'桃園市',
-         2,1,500,0,0,16,5007,5008,0,0,1,1003);
-
-INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5004,7061,
-	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170901 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170829 20:30:20','YYYYMMDD HH24:MI:SS'),'高雄市',
-         2,0,1500,1,0,1600,5009,0,0,0,0,1002);
 
 
-INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5005,7065,
-	'我哭著說沒事你怎麼就相信了呢',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170902 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 20:30:20','YYYYMMDD HH24:MI:SS'),'台中市',
-         2,0,3500,1,0,1600,5010,1,0,0,0,1001);
 
-INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5006,7066,
-	'歡迎都來看看有空一起吃吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170918 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 20:30:20','YYYYMMDD HH24:MI:SS'),'台北市',
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5001,7020,
+	'快來一起玩吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
          2,0,1500,1,0,1600,5008,0,0,0,0,1001);
 
-INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5007,7077,
-	'雖然我家阿寶怕生還是可以一起玩喔',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170901 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170831 20:30:20','YYYYMMDD HH24:MI:SS'),'桃園市',
-         2,1,500,0,0,16,5006,5008,0,0,0,1001);
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5002,7020,
+	'我家寵物的美麗與哀愁',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,1,500,0,0,16,5006,5008,0,0,0,1004);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5003,7020,
+	'陽光約會募集中',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,1,500,0,0,16,5007,5008,0,0,1,1008);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5004,7020,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1010);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5005,7020,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1013);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5006,7020,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1016);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5007,7020,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1019);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5008,7020,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1022);
 
 
-INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5008,7081,
-	'葉子的飄落是風的邀約還是樹的不挽留',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170716 20:30:20','YYYYMMDD HH24:MI:SS'),'桃園市',
-         2,1,500,0,0,16,5007,5008,0,0,1,1003);
 
-INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5009,7082,
-	'度渺如年難挨的離騷',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170903 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170831 20:30:20','YYYYMMDD HH24:MI:SS'),'高雄市',
-         2,0,1500,1,0,1600,5009,0,0,0,0,1002);
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5001,7030,
+	'快來一起玩吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5008,0,0,0,0,1001);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5002,7030,
+	'我家寵物的美麗與哀愁',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,1,500,0,0,16,5006,5008,0,0,0,1004);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5003,7030,
+	'陽光約會募集中',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,1,500,0,0,16,5007,5008,0,0,1,1008);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5004,7030,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1010);
 
 
-INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5010,7075,
-	'第一次po文請多多指教',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170902 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 20:30:20','YYYYMMDD HH24:MI:SS'),'台中市',
-         2,0,3500,1,0,1600,5010,1,0,0,0,1001);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5007,7040,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1019);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5008,7040,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1022);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5009,7040,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1025);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5010,7040,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1028);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5011,7040,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1032);
+
+
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5001,7045,
+	'快來一起玩吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5008,0,0,0,0,1001);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5002,7045,
+	'我家寵物的美麗與哀愁',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,1,500,0,0,16,5006,5008,0,0,0,1004);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5003,7045,
+	'陽光約會募集中',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,1,500,0,0,16,5007,5008,0,0,1,1008);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5004,7045,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1010);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5005,7045,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1013);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5006,7045,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1016);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5007,7045,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1019);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5008,7045,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1022);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5009,7045,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1025);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5010,7045,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1028);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5011,7045,
+	'來交交朋友吧~來看看吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5009,0,0,0,0,1032);
+         
+         
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5001,7049,
+	'快來一起玩吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5008,0,0,0,0,1001);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5002,7049,
+	'我家寵物的美麗與哀愁',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,1,500,0,0,16,5006,5008,0,0,0,1004);         
+         
+         
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5001,7051,
+	'快來一起玩吧',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,0,1500,1,0,1600,5008,0,0,0,0,1001);
+
+INSERT INTO DATEITEM values (DATEITEMNO_SQ.NEXTVAL,5002,7051,
+	'我家寵物的美麗與哀愁',EMPTY_BLOB(),'Hey～ 親愛的你們，最近好嘛～ 好一陣子沒有跟你們喝杯咖啡、下午茶了。伴著這美麗的沉靜，就這樣我們開始了美好的一天晨霧慢慢散去，就成了這番景象好了，天亮了，我們可以盡情的玩耍了。',TO_DATE('20170827 18:30:20','YYYYMMDD HH24:MI:SS'),TO_DATE('20170830 18:30:20','YYYYMMDD HH24:MI:SS'),'台北縣',
+         2,1,500,0,0,16,5006,5008,0,0,0,1004);        
 
 
 

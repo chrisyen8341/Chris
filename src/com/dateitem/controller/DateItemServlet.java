@@ -446,26 +446,31 @@ public class DateItemServlet extends HttpServlet {
 
 				/*************************** 1.將輸入資料轉為Map **********************************/
 				String dateItemNos=req.getParameter("dateItemNo");	
-				List list=Arrays.asList(dateItemNos.split(","));
+				List<String> list=Arrays.asList(dateItemNos.split(","));
 				/*************************** 2.開始複合查詢 ***************************************/
 				DateItemService dateItemSvc = new DateItemService();
+				List<DateItemVO> dlist=new ArrayList<DateItemVO>();
+				try{
+				for(String dItemNo:list){
+					Integer dNo=Integer.parseInt(dItemNo);
+					DateItemVO dIVO=dateItemSvc.findByPK(dNo);
+					dlist.add(dIVO);
+				}
+				}
+				catch(Exception e){
+					errorMsgs.add("查詢發生了一點小問題");
+				}
 
-
-				System.out.println("******************************新測試*************************************");
-				
-				System.out.println(dateItemNos);
-				System.out.println(list);
 				/**************************** 3.查詢完成,準備轉交(Send the Success view)************/
-//				req.setAttribute("googleMaplist", list); // 資料庫取出的list物件,存入request
-//				RequestDispatcher successView = req.getRequestDispatcher("/front_end/dateitem/googleMapQuery2.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
-//				successView.forward(req, res);
+				req.setAttribute("dlist", dlist); // 資料庫取出的list物件,存入request
+				RequestDispatcher successView = req.getRequestDispatcher("/front_end/dateitem/googleMapQuery3.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
-				System.out.println("error");
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/dateitem/googleMapQuery2.jsp");
-//				failureView.forward(req, res);
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/dateitem/googleMapQuery3.jsp");
+				failureView.forward(req, res);
 			}
 		}
 		

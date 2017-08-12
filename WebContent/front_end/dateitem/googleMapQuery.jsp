@@ -41,7 +41,7 @@
 			<span>
 				<Form action="<%=request.getContextPath()%>/front_end/dateitem/dateitem.do" method="post">
 					<input type="hidden" name="action" value="googleMapQuery"> 
-					<input type="date" id="datepicker" name="dateMeetingTime">
+<!-- 					<input type="date" id="datepicker" name="dateMeetingTime"> -->
 <!-- 					  <select class="w3-select selectpicker" name="memGender"> -->
 <!-- 					    <option value="" disabled selected>請選擇主人性別</option> -->
 <!-- 					    <option value="">皆可</option> -->

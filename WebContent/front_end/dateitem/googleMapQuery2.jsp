@@ -47,7 +47,21 @@ pageContext.setAttribute("list", list);
 				<Form action="<%=request.getContextPath()%>/front_end/dateitem/dateitem.do" method="post">
 					<input type="hidden" name="action" value="googleMapQuery"> 
 					<input type="date" id="datepicker" name="dateMeetingTime">
+					  <select class="w3-select selectpicker" name="memGender">
+					    <option value="" disabled selected>請選擇主人性別</option>
+					    <option value="">皆可</option>
+					    <option value="0">男</option>
+					    <option value="1">女</option>
+					    <option value="2">不願透露</option>
+					  </select>
 
+					  <select class="w3-select selectpicker" name="petKind">
+					    <option value="" disabled selected>請選擇寵物</option>
+					    <option value="">皆可</option>
+					    <option value="狗">狗</option>
+					    <option value="貓">貓</option>
+					    <option value="其他">其他</option>
+					  </select>
 
 					<input type="submit">
 					<!--   <button class="btn btn-lg btn-warning glyphicon glyphicon-search"> </button> -->
@@ -60,7 +74,6 @@ pageContext.setAttribute("list", list);
 
 
 
-<h1>p2</h1>
 			<div id="map_canvas"></div>
 
 
@@ -233,10 +246,10 @@ function generateIcon(marker, callback) {
 	var fontSize = 16,
 	imageWidth = imageHeight = 35;
 
-	if (marker.count >= 1000) {
+	if (marker.count >= 10) {
 		fontSize = 10;
 		imageWidth = imageHeight = 55;
-	} else if (marker.count < 1000 && marker.count > 100) {
+	} else if (marker.count < 10 && marker.count > 5) {
 		fontSize = 14;
 		imageWidth = imageHeight = 45;
 	}
