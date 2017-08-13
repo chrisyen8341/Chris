@@ -420,13 +420,14 @@ public class DateItemServlet extends HttpServlet {
 				}
 				/**************************** 3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("googleMaplist", list); // 資料庫取出的list物件,存入request
-				RequestDispatcher successView = req.getRequestDispatcher("/front_end/dateitem/googleMapQuery2.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+				req.setAttribute("date", date);
+				RequestDispatcher successView = req.getRequestDispatcher("/front_end/dateitem/googleMapQuery5.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/dateitem/googleMapQuery2.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/dateitem/googleMapQuery5.jsp");
 				failureView.forward(req, res);
 			}
 		}

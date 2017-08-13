@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
@@ -279,7 +280,7 @@ public class Update extends HttpServlet {
 			for (Part part : parts) {
 				if (part.getName().equals("memImg") && getFileNameFromPart(part) != null
 						&& part.getContentType().startsWith("image")) {
-					memImg = getPictureByteArray(part.getInputStream());
+					memImg = getPictureByteArrayNoChangeSize(part.getInputStream());
 				}
 				if (getFileNameFromPart(part) != null && part.getName().equals("memImg")
 						&& !(part.getContentType().startsWith("image"))) {
@@ -531,6 +532,21 @@ public class Update extends HttpServlet {
 		baos.close();
 		return baos.toByteArray();
 	}
+	
+	
+	public static byte[] getPictureByteArrayNoChangeSize(InputStream fis) throws IOException {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		byte[] buffer = new byte[8192];
+		int i;
+		while ((i = fis.read(buffer)) != -1) {
+			baos.write(buffer, 0, i);
+		}
+		baos.close();
+		fis.close();
+
+		return baos.toByteArray();
+	}
+	
 
 	public String getFileNameFromPart(Part part) {
 		String header = part.getHeader("content-disposition");

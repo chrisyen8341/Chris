@@ -20,7 +20,7 @@ public class DBGifReader extends HttpServlet {
 		try {
 			Member member=(Member)session.getAttribute("member");
 			out.write(member.getMemImg());
-
+			
 		} catch (Exception e) {
 			res.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}

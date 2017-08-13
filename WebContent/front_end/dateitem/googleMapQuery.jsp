@@ -41,7 +41,7 @@
 			<span>
 				<Form action="<%=request.getContextPath()%>/front_end/dateitem/dateitem.do" method="post">
 					<input type="hidden" name="action" value="googleMapQuery"> 
-<!-- 					<input type="date" id="datepicker" name="dateMeetingTime"> -->
+					<input type="date" id="datepicker" name="dateMeetingTime">
 <!-- 					  <select class="w3-select selectpicker" name="memGender"> -->
 <!-- 					    <option value="" disabled selected>請選擇主人性別</option> -->
 <!-- 					    <option value="">皆可</option> -->
@@ -112,7 +112,7 @@
 	<script>
 
  function initializeMaps() {
-
+	 console.log(typeof window.XMLSerializer==null);
 
  	var options = {
  		zoom:10,
@@ -145,12 +145,13 @@
 
 
     for(var i = 0;i < markers.length;i++){
-        // Add marker
+
 
         generateIcon(markers[i], function(src,marker) {
         		var pos = new google.maps.LatLng(Number(marker.lat),Number(marker.lng));
-        		console.log(i);
-	  	// bounds.extend(pos);
+
+
+
 
 	  	var markerf = new google.maps.Marker({
 	  		position: pos,
@@ -198,40 +199,45 @@ function generateIcon(marker, callback) {
 	var svg = d3.select(document.createElement('div')).append('svg')
 	.attr('viewBox', '0 0 54.4 54.4')
 	.append('g')
-
+	
 	var circles = svg.append('circle')
 	.attr('cx', '27.2')
 	.attr('cy', '27.2')
 	.attr('r', '21.2')
 	.style('fill', '#2063C6');
 
+	
 	var path = svg.append('path')
 	.attr('d', 'M27.2,0C12.2,0,0,12.2,0,27.2s12.2,27.2,27.2,27.2s27.2-12.2,27.2-27.2S42.2,0,27.2,0z M6,27.2 C6,15.5,15.5,6,27.2,6s21.2,9.5,21.2,21.2c0,11.7-9.5,21.2-21.2,21.2S6,38.9,6,27.2z')
 	.attr('fill', '#FFFFFF');
 
+	
 	var text = svg.append('text')
 	.attr('dx', 27)
 	.attr('dy', 32)
 	.attr('text-anchor', 'middle')
 	.attr('style', 'font-size:' + fontSize + 'px; fill: #FFFFFF; font-family: Arial, Verdana; font-weight: bold')
 	.text(marker.count);
+	
 
-	var svgNode = svg.node().parentNode.cloneNode(true),
+	var svgNode = svg.node().parentNode.cloneNode(true);
+	
+
 	image = new Image();
 
 	d3.select(svgNode).select('clippath').remove();
 
 	var xmlSource = (new XMLSerializer()).serializeToString(svgNode);
 
+
 	image.onload = (function(imageWidth, imageHeight) {
 		var canvas = document.createElement('canvas'),
 		context = canvas.getContext('2d'),
 		dataURL;
-
+		
 		d3.select(canvas)
 		.attr('width', imageWidth)
 		.attr('height', imageHeight);
-
 		context.drawImage(image, 0, 0, imageWidth, imageHeight);
 
 		dataURL = canvas.toDataURL();
@@ -240,9 +246,12 @@ function generateIcon(marker, callback) {
 		callback(dataURL,marker);
 	}).bind(this, imageWidth, imageHeight);
 
+	
+
 	image.src = 'data:image/svg+xml;base64,' + btoa(encodeURIComponent(xmlSource).replace(/%([0-9A-F]{2})/g, function(match, p1) {
 		return String.fromCharCode('0x' + p1);
 	}));
+	
 }
 
 initializeMaps();
