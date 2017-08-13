@@ -8,6 +8,15 @@
 <% 
 List<SDateItemVO> list=(List<SDateItemVO>)request.getAttribute("googleMaplist"); 
 pageContext.setAttribute("list", list);
+List<SDateItemVO> filterList=(List<SDateItemVO>)request.getAttribute("filterList"); 
+if(filterList!=null){
+	pageContext.setAttribute("list", filterList);
+	list=filterList;
+}
+Integer memGender=(Integer)request.getAttribute("memGender");
+String petKind=(String)request.getAttribute("petKind");
+pageContext.setAttribute("memGender", memGender);
+pageContext.setAttribute("petKind", petKind);
 // String date=(String)request.getAttribute("date");
 // pageContext.setAttribute("date", date);
 %>
@@ -46,28 +55,32 @@ pageContext.setAttribute("list", list);
 	<div class="col-xd-12 col-sm-10  main-page-show">
 		<div class="col-sm-10 col-sm-offset-1">
 			<span>
-				<Form
-					action="<%=request.getContextPath()%>/front_end/dateitem/dateitem.do"
-					method="post">
+			<H1>${date}</H1>
+			<H1>${memGender} ${petKind}</H1>
+				<Form action="<%=request.getContextPath()%>/front_end/dateitem/dateitem.do" method="post">
 					<input type="hidden" name="action" value="googleMapQuery">
 					<input type="date" id="datepicker" name="dateMeetingTime" value=${date}>
-					<select class="w3-select selectpicker" name="memGender">
-						<option value="" disabled selected>請選擇主人性別</option>
-						<option value="">皆可</option>
-						<option value="0">男</option>
-						<option value="1">女</option>
-						<option value="2">不願透露</option>
-					</select> <select class="w3-select selectpicker" name="petKind">
-						<option value="" disabled selected>請選擇寵物</option>
-						<option value="">皆可</option>
-						<option value="狗">狗</option>
-						<option value="貓">貓</option>
-						<option value="其他">其他</option>
-					</select> <input type="submit">
-					<!--   <button class="btn btn-lg btn-warning glyphicon glyphicon-search"> </button> -->
-
-
+					<input type="submit">
 				</Form>
+				<Form action="<%=request.getContextPath()%>/front_end/dateitem/dateitem.do" method="post">
+					<input type="hidden" name="action" value="googleMapFilter">
+					<input type="hidden" name="date" value=${date}>
+					<select class="w3-select selectpicker" name="memGender">
+<!-- 						<option value="" disabled selected>請選擇主人性別</option> -->
+						<option value="4" <c:if test="${memGender==4}">selected</c:if>>不限主人性別</option>
+						<option value="0" <c:if test="${memGender==0}">selected</c:if>>男</option>
+						<option value="1" <c:if test="${memGender==1}">selected</c:if>>女</option>
+						<option value="2" <c:if test="${memGender==2}">selected</c:if>>不願透露</option>
+					</select> 
+					<select class="w3-select selectpicker" name="petKind">
+<!-- 						<option value="" disabled selected>請選擇寵物</option> -->					
+						<option value="all" <c:if test="${petKind=='all'}">selected</c:if>>不限寵物種類</option>
+						<option value="狗" <c:if test="${petKind=='狗'}">selected</c:if>>狗</option>
+						<option value="貓" <c:if test="${petKind=='貓'}">selected</c:if>>貓</option>
+						<option value="其他" <c:if test="${petKind=='其他'}">selected</c:if>>其他</option>
+					</select> 
+				</Form> 
+				<!--   <button class="btn btn-lg btn-warning glyphicon glyphicon-search"> </button> -->
 
 			</span>
 
@@ -116,6 +129,25 @@ pageContext.setAttribute("list", list);
 
 	<script>
 
+	
+	
+	
+	$(function(){
+		
+		$('.selectpicker').on('change', function () {
+			   console.log("touch");
+				$(this).closest('form').submit();
+			});
+
+	});
+	
+	
+	
+	
+	
+	
+	
+	
  function initializeMaps() {
 
 
@@ -175,7 +207,11 @@ pageContext.setAttribute("list", list);
 		+"<input type=\"hidden\" name=\"action\" value=\"showDItemFromMap\" > "
 		+"<input type=\"submit\" name=\"action\" value=\"查看此區<%=map.get(date.getRestListNo()) %>個約會明細\"> "
 		+ "</Form>";
-		marker.icon = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+<%=map.get(date.getRestListNo())%>+"|FF0000|000000";
+<%-- 		marker.icon = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+<%=map.get(date.getRestListNo())%>+"|FF0000|000000"; --%>
+<%-- 		marker.icon = <%=request.getContextPath() %>+"/mapNumber/number_"+<%=map.get(date.getRestListNo())%>+".png"; --%>
+			marker.icon = {
+					url:"<%=request.getContextPath()%>/front_end/mapNumber/number_<%=map.get(date.getRestListNo())%>.png",
+			}
 		markers.push(marker);
 	<%tList.add(date.getRestListNo());
 				}

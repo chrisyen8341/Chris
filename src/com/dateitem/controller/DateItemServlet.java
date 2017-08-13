@@ -3,10 +3,13 @@ package com.dateitem.controller;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
@@ -410,17 +413,22 @@ public class DateItemServlet extends HttpServlet {
 				/*************************** 2.開始複合查詢 ***************************************/
 				DateItemService dateItemSvc = new DateItemService();
 				List<SDateItemVO> list = dateItemSvc.findByDate(date);
-				System.out.println(list.size());
-				System.out.println(list);
-				System.out.println("******************************新測試*************************************");
-				for(SDateItemVO dateItem:list){
-					System.out.println("商品編號: :"+dateItem.getDateItemNo());
-					System.out.println("商品約會時間: :"+dateItem.getDateMeetingTime());
-					System.out.println("===================================");
-				}
+			    
+				//下面四行是印印看此list共多大
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			    ObjectOutputStream out = new ObjectOutputStream(baos);
+			    out.writeObject(list);
+			    out.close();
+			    System.out.print(list.size());
+			    System.out.println(list.getClass().getSimpleName() +" used " + baos.toByteArray().length + " bytes");
+				
+
+
 				/**************************** 3.查詢完成,準備轉交(Send the Success view)************/
+				HttpSession session=req.getSession();
 				req.setAttribute("googleMaplist", list); // 資料庫取出的list物件,存入request
 				req.setAttribute("date", date);
+				session.setAttribute("result",list);
 				RequestDispatcher successView = req.getRequestDispatcher("/front_end/dateitem/googleMapQuery5.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 				successView.forward(req, res);
 
@@ -445,10 +453,10 @@ public class DateItemServlet extends HttpServlet {
 
 			try {
 
-				/*************************** 1.將輸入資料轉為Map **********************************/
+				/*************************** 1.取得輸入資料 **********************************/
 				String dateItemNos=req.getParameter("dateItemNo");	
 				List<String> list=Arrays.asList(dateItemNos.split(","));
-				/*************************** 2.開始複合查詢 ***************************************/
+				/*************************** 2.開始查詢 ***************************************/
 				DateItemService dateItemSvc = new DateItemService();
 				List<DateItemVO> dlist=new ArrayList<DateItemVO>();
 				try{
@@ -474,6 +482,94 @@ public class DateItemServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		
+		
+		
+		
+		
+		// 來自googleMapQuery.jsp塞選約會商品
+		if ("googleMapFilter".equals(action)) {
+		
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			try {
+
+				/*************************** 1.接收請求參數**********************************/
+				Integer memGender=null;
+				try{
+				memGender=Integer.parseInt(req.getParameter("memGender"));	
+				}
+				catch(Exception e){
+					errorMsgs.add("查詢發生問題");
+				}
+
+				String petKind=req.getParameter("petKind");
+//				if(petKind==null){
+//					errorMsgs.add("查詢發生問題");
+//				}
+				
+				String date=req.getParameter("date");
+		
+				
+				/*************************** 2.開始塞選 ***************************************/
+				HttpSession session=req.getSession();
+				List<SDateItemVO> list=(List<SDateItemVO>)session.getAttribute("result");
+
+
+				Predicate<SDateItemVO> predicate_gender = sDate -> (sDate.getMemGender()==0||sDate.getMemGender()==1||sDate.getMemGender()==2);
+				if(memGender==0){
+					predicate_gender = sDate -> sDate.getMemGender()==0;
+				}
+				if(memGender==1){
+					predicate_gender = sDate -> sDate.getMemGender()==1;
+				}
+				if(memGender==2){
+					predicate_gender = sDate -> sDate.getMemGender()==2;	
+				}
+				
+
+				Predicate<SDateItemVO> predicate_petKind = sDate -> (sDate.getPetKind().equals("狗")||sDate.getPetKind().equals("貓")||sDate.getPetKind().equals("其他"));
+				if(petKind.equals("狗")){
+					predicate_petKind = sDate -> sDate.getPetKind().equals("狗");
+				}
+				if(petKind.equals("貓")){
+					predicate_petKind = sDate -> sDate.getPetKind().equals("貓");
+				}
+				if(petKind.equals("其他")){
+					predicate_petKind = sDate -> sDate.getPetKind().equals("其他");	
+				}
+				
+				List<SDateItemVO> fList = 
+					     list
+					     .stream()
+					     .filter(predicate_gender)
+					     .filter(predicate_petKind)
+					     .distinct()
+					     .collect(Collectors.toList());
+
+				/**************************** 3.修改完成,準備轉交(Send the Success view)************/
+				req.setAttribute("filterList",fList); // 資料庫取出的list物件,存入request
+				req.setAttribute("memGender", memGender);
+				req.setAttribute("petKind", petKind);
+				req.setAttribute("date", date);
+				RequestDispatcher successView = req.getRequestDispatcher("/front_end/dateitem/googleMapQuery5.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/dateitem/googleMapQuery5.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		
+		
+		
+		
 		
 
 		
