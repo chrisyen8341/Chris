@@ -55,8 +55,6 @@ pageContext.setAttribute("petKind", petKind);
 	<div class="col-xd-12 col-sm-10  main-page-show">
 		<div class="col-sm-10 col-sm-offset-1">
 			<span>
-			<H1>${date}</H1>
-			<H1>${memGender} ${petKind}</H1>
 				<Form action="<%=request.getContextPath()%>/front_end/dateitem/dateitem.do" method="post">
 					<input type="hidden" name="action" value="googleMapQuery">
 					<input type="date" id="datepicker" name="dateMeetingTime" value=${date}>
@@ -207,8 +205,6 @@ pageContext.setAttribute("petKind", petKind);
 		+"<input type=\"hidden\" name=\"action\" value=\"showDItemFromMap\" > "
 		+"<input type=\"submit\" name=\"action\" value=\"查看此區<%=map.get(date.getRestListNo()) %>個約會明細\"> "
 		+ "</Form>";
-<%-- 		marker.icon = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+<%=map.get(date.getRestListNo())%>+"|FF0000|000000"; --%>
-<%-- 		marker.icon = <%=request.getContextPath() %>+"/mapNumber/number_"+<%=map.get(date.getRestListNo())%>+".png"; --%>
 			marker.icon = {
 					url:"<%=request.getContextPath()%>/front_end/mapNumber/number_<%=map.get(date.getRestListNo())%>.png",
 			}
@@ -230,7 +226,7 @@ pageContext.setAttribute("petKind", petKind);
 					position : props.coords,
 					map : map,
 					icon : props.icon,
-					animation: google.maps.Animation.DROP,
+					animation: google.maps.Animation.DROP,			
 				//icon:props.iconImage
 				});
 
@@ -250,10 +246,35 @@ pageContext.setAttribute("petKind", petKind);
 						infoWindow.open(map, marker);
 					});
 				}
+				
+				marker.addListener('click', toggleBounce);
+				
+				
+				
+				 function toggleBounce() {
+				     if (marker.getAnimation() !== null) {
+				       marker.setAnimation(null);
+				     } else {
+				       marker.setAnimation(google.maps.Animation.BOUNCE);
+				     }
+				   }
+				 
 			}
 
 		}
 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 		initializeMaps();
 	</script>
 
