@@ -42,6 +42,9 @@
 <link
 	href="<%=request.getContextPath()%>/front_end/css/fileinput.min.css"
 	media="all" rel="stylesheet" type="text/css" />
+<link
+	href="<%=request.getContextPath()%>/front_end/css/jquery.fancybox.min.css"
+	media="all" rel="stylesheet" type="text/css" />
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script
 	src="<%=request.getContextPath()%>/front_end/js/fileinput.min.js"></script>
@@ -50,7 +53,8 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
             <![endif]-->
 </script>
-
+<script
+	src="<%=request.getContextPath()%>/front_end/js/jquery.fancybox.min.js"></script>
 
 
 
@@ -239,7 +243,7 @@
 															<div class="thumbnail">
 																<video controls class="img-responsive">
 																	<source
-																		src="<%=request.getContextPath() %>/front_end/album/AImgReader.do?imgNo=${aImg.imgNo}"
+																		src="<%=request.getContextPath() %>/front_end/album/AVideoReader.do?imgNo=${aImg.imgNo}"
 																		type="video/mp4" alt="您的瀏覽器不支援此撥放程式"
 																		data-toggle="modal" data-target="#myModal${s.index}">
 																</video>
@@ -320,7 +324,7 @@
 								<div class="modal fade" id="updateModal${s.index}" role="dialog">
 									<div class="modal-dialog">
 
-										<!-- Modal content-->
+										Modal content
 										<div class="modal-content">
 											<div class="modal-header">
 												<button type="button" class="close" data-dismiss="modal">&times;</button>

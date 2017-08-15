@@ -73,7 +73,7 @@ public class AlbumC extends HttpServlet {
 			}
 
 			albumSvc.addAlbumWithImg(member.getMemNo(), albumTitle, currentTime, currentTime, 0,
-					aImgs.get(1).getImgFile(), aImgs);
+					aImgs.get(0).getImgFile(), aImgs);
 
 			res.sendRedirect(req.getContextPath() + "/front_end/album/albumShow.jsp");
 

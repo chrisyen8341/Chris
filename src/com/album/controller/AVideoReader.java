@@ -12,17 +12,18 @@ import com.albumimg.model.AlbumImgService;
 import com.member.model.Member;
 import com.member.model.MemberService;
 
-@WebServlet("/front_end/album/AImgReader.do")
-public class AImgReader extends HttpServlet {
+@WebServlet("/front_end/album/AVideoReader.do")
+public class AVideoReader extends HttpServlet {
 
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		Integer imgNo=Integer.parseInt(req.getParameter("imgNo"));
 		AlbumImgService albumImgSvc=new AlbumImgService();
-		res.setContentType("image/gif");
+		res.setBufferSize(1024*1024);
+		res.setContentType("video/mp4");
 		ServletOutputStream out = res.getOutputStream();
-		
+		System.out.print("come here");
 		try {
 			AlbumImg albumImg=albumImgSvc.getOneAlbumImg(imgNo);
 			BufferedInputStream in = new BufferedInputStream(new ByteArrayInputStream(albumImg.getImgFile()));
@@ -32,7 +33,6 @@ public class AImgReader extends HttpServlet {
 				out.write(buf, 0, len);
 			}
 			in.close();
-
 		} catch (Exception e) {
 			res.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}
