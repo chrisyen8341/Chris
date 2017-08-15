@@ -278,14 +278,13 @@ public class Update extends HttpServlet {
 			byte[] memImg = null;
 			Collection<Part> parts = req.getParts();
 			for (Part part : parts) {
-				if (part.getName().equals("memImg") && getFileNameFromPart(part) != null
-						&& part.getContentType().startsWith("image")) {
+				if (part.getName().equals("memImg") && getFileNameFromPart(part) != null) {
 					memImg = getPictureByteArrayNoChangeSize(part.getInputStream());
 				}
-				if (getFileNameFromPart(part) != null && part.getName().equals("memImg")
-						&& !(part.getContentType().startsWith("image"))) {
-					errorMsgs.add("會員照片格式有誤");
-				}
+//				if (getFileNameFromPart(part) != null && part.getName().equals("memImg")
+//						&& !(part.getContentType().startsWith("image"))) {
+//					errorMsgs.add("會員照片格式有誤");
+//				}
 			}
 
 			/****************** 有寵物會執行下方 *****************/
@@ -320,7 +319,7 @@ public class Update extends HttpServlet {
 			}
 
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/newFileBig5.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/memberInfo.jsp");
 				req.setAttribute("errorMsgs", errorMsgs);
 				failureView.forward(req, res);
 				return;// 程式中斷

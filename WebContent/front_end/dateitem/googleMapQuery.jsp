@@ -42,21 +42,6 @@
 				<Form action="<%=request.getContextPath()%>/front_end/dateitem/dateitem.do" method="post">
 					<input type="hidden" name="action" value="googleMapQuery"> 
 					<input type="date" id="datepicker" name="dateMeetingTime">
-<!-- 					  <select class="w3-select selectpicker" name="memGender"> -->
-<!-- 					    <option value="" disabled selected>請選擇主人性別</option> -->
-<!-- 					    <option value="">皆可</option> -->
-<!-- 					    <option value="0">男</option> -->
-<!-- 					    <option value="1">女</option> -->
-<!-- 					    <option value="2">不願透露</option> -->
-<!-- 					  </select> -->
-
-<!-- 					  <select class="w3-select selectpicker" name="petKind"> -->
-<!-- 					    <option value="" disabled selected>請選擇寵物</option> -->
-<!-- 					    <option value="">皆可</option> -->
-<!-- 					    <option value="狗">狗</option> -->
-<!-- 					    <option value="貓">貓</option> -->
-<!-- 					    <option value="其他">其他</option> -->
-<!-- 					  </select> -->
 
 					<input type="submit">
 					<!--   <button class="btn btn-lg btn-warning glyphicon glyphicon-search"> </button> -->
@@ -124,135 +109,11 @@
 	// var bounds = new google.maps.LatLngBounds();
 
 
-	var markers = new Array();
-
-
-	marker1=new Object();
-	marker1.lat=25.040302; 
-	marker1.lng=121.552108;
-	marker1.content="<H1>test500</H1>"
-	marker1.count=500;
-	markers.push(marker1);
-
-
-	marker2=new Object();
-	marker2.lat=25.031097;
-	marker2.lng=121.551705;
-	marker2.content="<H1>test123</H1>"
-	marker2.count=2000;
-	markers.push(marker2);
-
-
-
-    for(var i = 0;i < markers.length;i++){
-
-
-        generateIcon(markers[i], function(src,marker) {
-        		var pos = new google.maps.LatLng(Number(marker.lat),Number(marker.lng));
-
-
-
-
-	  	var markerf = new google.maps.Marker({
-	  		position: pos,
-	  		map: map,
-	  		icon: src,
-	  		animation: google.maps.Animation.DROP
-	  	});
-
-	  	var infoWindow = new google.maps.InfoWindow({
-	  		content:String(marker.content)
-	  	});
-
-	  	markerf.addListener('click', function(){
-	  		infoWindow.open(map, markerf);
-	  	});
-	  }
-
-	  );
-    }
 
 }
 
 
 
-
-
-var generateIconCache = {};
-
-function generateIcon(marker, callback) {
-	if (generateIconCache[marker.count] !== undefined) {
-		callback(generateIconCache[marker.count],marker);
-	}
-
-	var fontSize = 16,
-	imageWidth = imageHeight = 35;
-
-	if (marker.count >= 1000) {
-		fontSize = 10;
-		imageWidth = imageHeight = 55;
-	} else if (marker.count < 1000 && marker.count > 100) {
-		fontSize = 14;
-		imageWidth = imageHeight = 45;
-	}
-
-	var svg = d3.select(document.createElement('div')).append('svg')
-	.attr('viewBox', '0 0 54.4 54.4')
-	.append('g')
-	
-	var circles = svg.append('circle')
-	.attr('cx', '27.2')
-	.attr('cy', '27.2')
-	.attr('r', '21.2')
-	.style('fill', '#2063C6');
-
-	
-	var path = svg.append('path')
-	.attr('d', 'M27.2,0C12.2,0,0,12.2,0,27.2s12.2,27.2,27.2,27.2s27.2-12.2,27.2-27.2S42.2,0,27.2,0z M6,27.2 C6,15.5,15.5,6,27.2,6s21.2,9.5,21.2,21.2c0,11.7-9.5,21.2-21.2,21.2S6,38.9,6,27.2z')
-	.attr('fill', '#FFFFFF');
-
-	
-	var text = svg.append('text')
-	.attr('dx', 27)
-	.attr('dy', 32)
-	.attr('text-anchor', 'middle')
-	.attr('style', 'font-size:' + fontSize + 'px; fill: #FFFFFF; font-family: Arial, Verdana; font-weight: bold')
-	.text(marker.count);
-	
-
-	var svgNode = svg.node().parentNode.cloneNode(true);
-	
-
-	image = new Image();
-
-	d3.select(svgNode).select('clippath').remove();
-
-	var xmlSource = (new XMLSerializer()).serializeToString(svgNode);
-
-
-	image.onload = (function(imageWidth, imageHeight) {
-		var canvas = document.createElement('canvas'),
-		context = canvas.getContext('2d'),
-		dataURL;
-		
-		d3.select(canvas)
-		.attr('width', imageWidth)
-		.attr('height', imageHeight);
-		context.drawImage(image, 0, 0, imageWidth, imageHeight);
-
-		dataURL = canvas.toDataURL();
-		generateIconCache[marker.count] = dataURL;
-
-		callback(dataURL,marker);
-	}).bind(this, imageWidth, imageHeight);
-
-	
-
-	image.src = 'data:image/svg+xml;base64,' + btoa(encodeURIComponent(xmlSource).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-		return String.fromCharCode('0x' + p1);
-	}));
-	
-}
 
 initializeMaps();
 

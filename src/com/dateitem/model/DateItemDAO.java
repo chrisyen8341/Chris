@@ -78,48 +78,48 @@ public class DateItemDAO implements DateItemDAO_interface{
 			pstmt=con.prepareStatement(INSERT_STMT);
 			System.out.println("連線成功");
 			pstmt.setInt(1, dateItemVO.getSellerNo());
-			System.out.println("1");
+
 			pstmt.setInt(2, dateItemVO.getRestListNo());
-			System.out.println("2");
+
 			pstmt.setString(3, dateItemVO.getDateItemTitle());
-			System.out.println("3");
+
 			pstmt.setBytes(4, dateItemVO.getDateItemImg());
-			System.out.println("4");
+
 			pstmt.setString(5, dateItemVO.getDateItemText());
-			System.out.println("5");
+
 			pstmt.setTimestamp(6, dateItemVO.getDateItemTime());
-			System.out.println("6");
+
 			pstmt.setTimestamp(7, dateItemVO.getDateMeetingTime());
-			System.out.println("7");
+
 			pstmt.setString(8, dateItemVO.getDateItemLocate());
-			System.out.println("8");
+
 			pstmt.setInt(9, dateItemVO.getDateItemPeople());
-			System.out.println("9");
+
 			pstmt.setBoolean(10, dateItemVO.getHasMate());
-			System.out.println("10");
+
 			pstmt.setInt(11, dateItemVO.getDateItemPrice());
-			System.out.println("11");
+
 			pstmt.setInt(12, dateItemVO.getDateItemStatus());
-			System.out.println("12");
-			System.out.println(dateItemVO.getDateItemShow());
+
+
 			pstmt.setInt(13, dateItemVO.getDateItemShow());
-			System.out.println("13");
+
 			pstmt.setInt(14, dateItemVO.getDateItemViewer());
-			System.out.println("14");
+
 			pstmt.setInt(15, dateItemVO.getBuyerNo());
-			System.out.println("15");
+
 			pstmt.setBoolean(16, dateItemVO.getIsQRCChecked());
-			System.out.println("16");
+
 			pstmt.setInt(17, dateItemVO.getBuyerRep());
-			System.out.println("17");
+
 			pstmt.setInt(18, dateItemVO.getSellerRep());
-			System.out.println("18");
+
 			pstmt.setBoolean(19, dateItemVO.getIsInstantDate());
-			System.out.println("19");
+
 			pstmt.setInt(20, dateItemVO.getPetNo());
-			System.out.println("20");
+
 			pstmt.executeUpdate();
-			System.out.println("here");
+
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

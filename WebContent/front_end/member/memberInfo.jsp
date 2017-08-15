@@ -39,10 +39,11 @@
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-md-3 col-lg-3 " align="center">
-										<img alt="User Pic" id="memImg"
-											src="<%=request.getContextPath()%>/DBGifReader"
-											height="350px" width="250px"
-											class="img-circle img-responsive">
+<%-- 										<img alt="User Pic" id="memImg" src="<%=request.getContextPath()%>/DBGifReader" height="350px" width="250px" --%>
+<!-- 											class="img-circle img-responsive"> -->
+										<video  autoplay loop muted width="150px" height="200px">
+											<source src="<%=request.getContextPath()%>/DBGifReader" type="video/mp4">
+										</video>
 									</div>
 
 

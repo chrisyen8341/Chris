@@ -184,7 +184,7 @@
 
 
 								<!-- Add photo MODAL -->
-								<div class="modal fade" id="addAlbum" tabindex="-1"
+									<div class="modal fade" id="addAlbum" tabindex="-1"
 									role="dialog" aria-labelledby="exampleModalLabel"
 									aria-hidden="true">
 									<div class="modal-dialog" role="document">
@@ -197,15 +197,8 @@
 												</h4>
 											</div>
 
-
-
-
-											<p>
-												輸入欲查詢的地址<input id="address" type="text" size="50" value="">
-												<input type="button" value="查經緯度並在地圖上顯示"
-													onClick="codeAddress()">
-											</p>
-											<div id="map"></div>
+											<input id="input-20" name="img" type="file"
+												class="file-loading" multiple>
 
 										</div>
 									</div>
@@ -469,14 +462,11 @@
 		});
 		
 		$('#input-20').on('filebatchuploadcomplete', function (event, data, previewId, index) {
-			top.location.href="<%=request.getContextPath()%>/front_end/album/aImgShow.jsp?albumNo=<%=albumNo%>
-		";
-						});
+			top.location.href="<%=request.getContextPath()%>/front_end/album/aImgShow.jsp?albumNo=<%=albumNo%>";});
 	</script>
 
 
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 
 </html>
